@@ -1,12 +1,13 @@
 import React from 'react';
 import {StatusBar, SafeAreaView} from 'react-native';
-import {Item, Label, Input, Button} from 'native-base';
+import {Item, Label, Input, Button, Text} from 'native-base';
 
 const UserTypes = {Consumer: 'consumer', Seller: 'seller'};
 
 export default class OTPSubmission extends React.Component {
   constructor() {
-    this.state = {
+    super();
+    state = {
       userType: UserTypes.Consumer,
     };
   }
@@ -17,14 +18,18 @@ export default class OTPSubmission extends React.Component {
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
           <Item floatingLabel>
-            <Label> Mobile Number </Label>
+            <Label> Enter OTP </Label>
             <Input />
           </Item>
-          <Button rounded click={console.log('ashwin')}>
-            <Text>Login</Text>
+          <Button
+            rounded
+            onPress={() => {
+              this.props.navigation.navigate('Consumer');
+            }}>
+            <Text>GO</Text>
           </Button>
           <Button rounded warning>
-            <Text>Sign Up</Text>
+            <Text>Back</Text>
           </Button>
         </SafeAreaView>
       </>
