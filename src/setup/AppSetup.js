@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import {Provider} from 'react-redux';
-import store from './store';
-import Login from '../components/login/Login';
+// import store from './store';
+import LoginNavigation from './LoginNavigation';
 
 export default class AppSetup extends Component {
   render() {
+    // store={store}
     return (
-      <Provider store={store}>
-        <Login />
-      </Provider>
+      // <Provider>
+      <LoginNavigation />
+      // </Provider>
     );
   }
 }

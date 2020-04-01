@@ -1,13 +1,12 @@
 import React from 'react';
 import {StatusBar, SafeAreaView} from 'react-native';
-import {Item, Label, Input, Button, Text} from 'native-base';
+import {Item, Label, Input, Button} from 'native-base';
 
 const UserTypes = {Consumer: 'consumer', Seller: 'seller'};
 
-export default class Login extends React.Component {
+export default class SignUp extends React.Component {
   constructor() {
-    super();
-    state = {
+    this.state = {
       userType: UserTypes.Consumer,
     };
   }
