@@ -1,15 +1,13 @@
 import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet, View} from 'react-native';
-import {Item, Label, Input, Button, Text, Content} from 'native-base';
+import {Item, Label, Input, Button, Text} from 'native-base';
 
-const UserTypes = {Consumer: 'consumer', Seller: 'seller'};
+const UserTypes = {Consumer: 'Consumer', Seller: 'Seller'};
 
 export default class Login extends React.Component {
   constructor() {
     super();
-    state = {
-      userType: UserTypes.Consumer,
-    };
+    this.mobileNumber = '';
   }
 
   render() {
@@ -20,17 +18,45 @@ export default class Login extends React.Component {
           <View style={styles.content}>
             <Item floatingLabel>
               <Label> Mobile Number </Label>
-              <Input keyboardType="numeric" />
+              <Input
+                keyboardType="numeric"
+                onChangeText={text => {
+                  this.mobileNumber.concat(text);
+                }}
+              />
             </Item>
             <Button
               rounded
               onPress={() => {
-                this.props.navigation.navigate('OTP');
+                let userType =
+                  this.mobileNumber === '123'
+                    ? UserTypes.Consumer
+                    : UserTypes.Seller;
+                this.props.navigation.navigate('OTP', {
+                  userType,
+                });
               }}>
               <Text>Login</Text>
             </Button>
-            <Button rounded warning>
-              <Text>Sign Up</Text>
+            <Button
+              rounded
+              warning
+              onPress={() => {
+                this.props.navigation.navigate('Signup', {
+                  userType: UserTypes.Consumer,
+                });
+              }}>
+              <Text>Sign Up as Customer</Text>
+            </Button>
+            <Button
+              rounded
+              warning
+              onPress={() => {
+                this.props.navigation.navigate('Signup', {
+                  userType: UserTypes.Seller,
+                });
+              }}>
+              <Text>Sign Up as Seller</Text>
             </Button>
           </View>
         </SafeAreaView>
