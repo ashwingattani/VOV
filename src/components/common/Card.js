@@ -1,22 +1,22 @@
 import React from 'react';
 import {StyleSheet, View, Image} from 'react-native';
 import {Text, Picker, Item, Button} from 'native-base';
-
-const Quantities = [
-  {label: '100gms', value: '0'},
-  {label: '250gms', value: '1'},
-  {label: '500gms', value: '2'},
-  {label: '750gms', value: '3'},
-  {label: '1kg', value: '4'},
-];
+import {quantities} from '../../constants/Enums';
 
 export default class Card extends React.Component {
   constructor() {
     super();
     this.state = {
-      selectedValue: '0',
+      selectedValue: '1',
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.shouldReset) {
+      this.setState({selectedValue: '1'});
+    }
+  }
+
   render() {
     return (
       <View style={styles.body}>
@@ -28,19 +28,13 @@ export default class Card extends React.Component {
           <Item picker>
             <Picker
               mode="dropdown"
-              // iosIcon={<Icon name="arrow-down" />}
-              style={{width: undefined}}
-              // placeholder={
-              //   Quantities.find(item => item.value === this.state.selectedValue)
-              //     .label
-              // }
               placeholderStyle={{color: '#bfc6ea'}}
               placeholderIconColor="#007aff"
               selectedValue={this.state.selectedValue}
               onValueChange={value => {
                 this.setState({selectedValue: value});
               }}>
-              {Quantities.map((quantity, index) => {
+              {quantities.map((quantity, index) => {
                 return (
                   <Picker.Item
                     key={index}

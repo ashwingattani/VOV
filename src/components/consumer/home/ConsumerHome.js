@@ -10,12 +10,19 @@ import {
   Body,
   Title,
   Left,
+  Toast,
+  Root,
 } from 'native-base';
+import Modal from 'react-native-modal';
 import Card from '../../common/Card';
+import OrderList from '../../common/OrderList';
 
 export default class ConsumerHome extends React.Component {
   constructor() {
     super();
+    this.state = {
+      showModal: false,
+    };
     this.items = [
       {
         id: 0,
@@ -46,13 +53,50 @@ export default class ConsumerHome extends React.Component {
         name: 'Lady Finger',
       },
     ];
+    this.cart = [];
+    this.shouldResetCards = false;
   }
 
-  updateQuantityForItem = (item, selectedValue) => {};
+  componentDidUpdate() {
+    this.shouldResetCards = false;
+  }
+
+  updateQuantityForItem = (item, selectedValue) => {
+    if (parseInt(selectedValue)) {
+      item.selectedValue = selectedValue;
+    }
+    this.cart.push(item);
+  };
+
+  createOrderList = () => {
+    if (this.cart.length === 0) {
+      Toast.show({
+        text: 'Please add items to the cart before proceeding!',
+        position: 'bottom',
+        type: 'warning',
+        duration: 2000,
+      });
+    } else {
+      this.setState({showModal: true});
+    }
+  };
+
+  confirmOrderList = () => {
+    this.cart = [];
+    this.shouldResetCards = true;
+    this.setState({showModal: false}, () => {
+      Toast.show({
+        text: 'Order generated successfully!!',
+        position: 'bottom',
+        type: 'success',
+        duration: 2000,
+      });
+    });
+  };
 
   render() {
     return (
-      <>
+      <Root>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
           <Header>
@@ -61,12 +105,7 @@ export default class ConsumerHome extends React.Component {
               <Title>Home</Title>
             </Body>
             <Right>
-              <Button
-                hasText
-                transparent
-                onPress={() => {
-                  console.log('Proceed to buy');
-                }}>
+              <Button hasText transparent onPress={this.createOrderList}>
                 <Text>Buy</Text>
               </Button>
             </Right>
@@ -77,6 +116,7 @@ export default class ConsumerHome extends React.Component {
                 return (
                   <ListItem key={index}>
                     <Card
+                      shouldReset={this.shouldResetCards}
                       item={item}
                       updateQuantityForItem={this.updateQuantityForItem}
                     />
@@ -85,8 +125,24 @@ export default class ConsumerHome extends React.Component {
               })}
             </List>
           </View>
+          <Modal isVisible={this.state.showModal} transparent={true}>
+            <View style={styles.modal}>
+              <OrderList items={this.cart} />
+              <View style={styles.modalActions}>
+                <Button onPress={this.confirmOrderList}>
+                  <Text>Confirm</Text>
+                </Button>
+                <Button
+                  onPress={() => {
+                    this.setState({showModal: false});
+                  }}>
+                  <Text>Cancel</Text>
+                </Button>
+              </View>
+            </View>
+          </Modal>
         </SafeAreaView>
-      </>
+      </Root>
     );
   }
 }
@@ -96,5 +152,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     width: '100%',
     height: 500,
+  },
+  modal: {
+    opacity: 0.9,
+    bottom: 0,
+    backgroundColor: 'white',
+  },
+  modalActions: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
 });
