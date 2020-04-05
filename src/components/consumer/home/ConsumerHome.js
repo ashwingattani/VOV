@@ -30,7 +30,7 @@ class ConsumerHome extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.items || this.props.items.length == 0) {
+    if (this.state.items.length == 0) {
       this.props.getVegetableList();
     }
   }
@@ -97,17 +97,18 @@ class ConsumerHome extends React.Component {
           </Header>
           <View style={styles.body}>
             <List>
-              {this.state.items.map((item, index) => {
-                return (
-                  <ListItem key={index}>
-                    <Card
-                      shouldReset={this.shouldResetCards}
-                      item={item}
-                      updateQuantityForItem={this.updateQuantityForItem}
-                    />
-                  </ListItem>
-                );
-              })}
+              {this.state.items.length > 0 &&
+                this.state.items.map((item, index) => {
+                  return (
+                    <ListItem key={index}>
+                      <Card
+                        shouldReset={this.shouldResetCards}
+                        item={item}
+                        updateQuantityForItem={this.updateQuantityForItem}
+                      />
+                    </ListItem>
+                  );
+                })}
             </List>
           </View>
           <Modal isVisible={this.state.showModal} transparent={true}>
@@ -164,6 +165,6 @@ const mapStateToProps = state => {
 };
 
 export default ConsumerHomeModule = connect(
-  mapDispatchToProps,
   mapStateToProps,
+  mapDispatchToProps,
 )(ConsumerHome);
