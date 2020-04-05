@@ -16,45 +16,29 @@ import {
 import Modal from 'react-native-modal';
 import Card from '../../common/Card';
 import OrderList from '../../common/OrderList';
-
-export default class ConsumerHome extends React.Component {
+import {getVegetableList, createOrder} from '../../../actions/ConsumerActions';
+import {connect} from 'react-redux';
+class ConsumerHome extends React.Component {
   constructor() {
     super();
     this.state = {
       showModal: false,
+      items: [],
     };
-    this.items = [
-      {
-        id: 0,
-        name: 'Onion',
-      },
-      {
-        id: 1,
-        name: 'Potato',
-      },
-      {
-        id: 2,
-        name: 'Cauliflower',
-      },
-      {
-        id: 3,
-        name: 'Sweet Potato',
-      },
-      {
-        id: 4,
-        name: 'Coriander',
-      },
-      {
-        id: 5,
-        name: 'Spinach',
-      },
-      {
-        id: 6,
-        name: 'Lady Finger',
-      },
-    ];
     this.cart = [];
     this.shouldResetCards = false;
+  }
+
+  componentDidMount() {
+    if (!this.props.items || this.props.items.length == 0) {
+      this.props.getVegetableList();
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.items !== prevState.items) {
+      return {items: nextProps.items};
+    } else return null;
   }
 
   componentDidUpdate() {
@@ -82,6 +66,7 @@ export default class ConsumerHome extends React.Component {
   };
 
   confirmOrderList = () => {
+    this.props.createOrder(this.cart);
     this.cart = [];
     this.shouldResetCards = true;
     this.setState({showModal: false}, () => {
@@ -112,7 +97,7 @@ export default class ConsumerHome extends React.Component {
           </Header>
           <View style={styles.body}>
             <List>
-              {this.items.map((item, index) => {
+              {this.state.items.map((item, index) => {
                 return (
                   <ListItem key={index}>
                     <Card
@@ -164,3 +149,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
 });
+
+const mapDispatchToProps = () => {
+  return {
+    getVegetableList,
+    createOrder,
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    items: state.consumer.items,
+  };
+};
+
+export default ConsumerHomeModule = connect(
+  mapDispatchToProps,
+  mapStateToProps,
+)(ConsumerHome);

@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
   body: {
     width: '100%',
     height: 50,
-    // justifyContent: 'space-around',
     flexDirection: 'column',
     backgroundColor: 'green',
   },
