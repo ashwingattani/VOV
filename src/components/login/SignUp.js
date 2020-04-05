@@ -1,6 +1,6 @@
 import React from 'react';
 import {StatusBar, SafeAreaView} from 'react-native';
-import {Item, Label, Input, Button, Text} from 'native-base';
+import {Item, Label, Input, Button, Text, Header} from 'native-base';
 
 export default class SignUp extends React.Component {
   constructor() {
@@ -15,12 +15,15 @@ export default class SignUp extends React.Component {
       <>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
+          <Header>
+            <Text>SIGN UP</Text>
+          </Header>
           <Item floatingLabel>
             <Label> Name </Label>
             <Input
               autoCapitalize="words"
               onChangeText={text => {
-                this.username.concat(text);
+                this.username = text;
               }}
             />
           </Item>
@@ -29,7 +32,7 @@ export default class SignUp extends React.Component {
             <Input
               keyboardType="numeric"
               onChangeText={text => {
-                this.mobileNumber.concat(text);
+                this.mobileNumber = text;
               }}
             />
           </Item>

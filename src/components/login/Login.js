@@ -21,7 +21,7 @@ export default class Login extends React.Component {
               <Input
                 keyboardType="numeric"
                 onChangeText={text => {
-                  this.mobileNumber.concat(text);
+                  this.mobileNumber = text;
                 }}
               />
             </Item>
@@ -29,7 +29,7 @@ export default class Login extends React.Component {
               rounded
               onPress={() => {
                 let userType =
-                  this.mobileNumber === '123'
+                  this.mobileNumber == '1234567890'
                     ? UserTypes.Consumer
                     : UserTypes.Seller;
                 this.props.navigation.navigate('OTP', {

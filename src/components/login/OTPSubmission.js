@@ -1,6 +1,6 @@
 import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet, View} from 'react-native';
-import {Item, Label, Input, Button, Text} from 'native-base';
+import {Item, Label, Input, Button, Text, Header} from 'native-base';
 
 export default class OTPSubmission extends React.Component {
   constructor() {
@@ -14,13 +14,16 @@ export default class OTPSubmission extends React.Component {
       <>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
+          <Header>
+            <Text>OTP</Text>
+          </Header>
           <View style={styles.body}>
             <Item floatingLabel>
               <Label> Enter OTP </Label>
               <Input
                 keyboardType="numeric"
                 onChangeText={text => {
-                  this.otp.concat(text);
+                  this.otp = text;
                 }}
               />
             </Item>
