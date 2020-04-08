@@ -6,10 +6,14 @@ export function getVegetableList() {
   };
 }
 
-export function createOrder(payload) {
+export function createOrder(items) {
+  let orderDetails = {
+    date: Date.now(),
+    items: items,
+  };
   return {
     type: ConsumerTypes.CREATE_ORDER,
-    payload,
+    payload: orderDetails,
   };
 }
 

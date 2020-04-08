@@ -84,7 +84,7 @@ class ConsumerHome extends React.Component {
       <Root>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
-          <Header>
+          <Header noLeft>
             <Left />
             <Body>
               <Title>Home</Title>
@@ -142,11 +142,13 @@ const styles = StyleSheet.create({
   modal: {
     opacity: 0.9,
     bottom: 0,
+    height: 200,
     backgroundColor: 'white',
   },
   modalActions: {
     flex: 1,
     flexDirection: 'row',
+    overflow: 'scroll',
     justifyContent: 'space-around',
   },
 });

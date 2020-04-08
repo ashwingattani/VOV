@@ -14,9 +14,6 @@ export default class OTPSubmission extends React.Component {
       <>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
-          <Header>
-            <Text>OTP</Text>
-          </Header>
           <View style={styles.body}>
             <Item floatingLabel>
               <Label> Enter OTP </Label>
