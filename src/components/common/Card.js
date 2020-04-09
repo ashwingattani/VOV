@@ -1,6 +1,16 @@
 import React from 'react';
 import {StyleSheet, View, Image} from 'react-native';
-import {Text, Picker, Item, Button} from 'native-base';
+import {
+  Text,
+  Picker,
+  Item,
+  Button,
+  ListItem,
+  Left,
+  Thumbnail,
+  Body,
+  Right,
+} from 'native-base';
 import {quantities} from '../../constants/Enums';
 
 export default class Card extends React.Component {
@@ -19,33 +29,37 @@ export default class Card extends React.Component {
 
   render() {
     return (
-      <View style={styles.body}>
-        <View style={styles.itemInfo}>
-          <Image source="" />
-          <Text> {this.props.item.name} </Text>
-        </View>
-        <View style={styles.quantity}>
-          <Item picker>
-            <Picker
-              mode="dropdown"
-              placeholderStyle={{color: '#bfc6ea'}}
-              placeholderIconColor="#007aff"
-              selectedValue={this.state.selectedValue}
-              onValueChange={value => {
-                this.setState({selectedValue: value});
-              }}>
-              {quantities.map((quantity, index) => {
-                return (
-                  <Picker.Item
-                    key={index}
-                    label={quantity.label}
-                    value={quantity.value}
-                  />
-                );
-              })}
-            </Picker>
-          </Item>
+      <ListItem thumbnail>
+        <Left>
+          <Thumbnail square source />
+        </Left>
+        <Body style={styles.itemInfo}>
+          <Text>{this.props.item.name}</Text>
+          <Text note numberOfLines={1}>
+            {this.props.item.name} {/* will contain marathi name later */}
+          </Text>
+        </Body>
+        <Right style={styles.quantity}>
+          <Picker
+            mode="dropdown"
+            placeholderStyle={{color: '#bfc6ea'}}
+            placeholderIconColor="#007aff"
+            selectedValue={this.state.selectedValue}
+            onValueChange={value => {
+              this.setState({selectedValue: value});
+            }}>
+            {quantities.map((quantity, index) => {
+              return (
+                <Picker.Item
+                  key={index}
+                  label={quantity.label}
+                  value={quantity.value}
+                />
+              );
+            })}
+          </Picker>
           <Button
+            transparent={true}
             onPress={() => {
               this.props.updateQuantityForItem(
                 this.props.item,
@@ -54,24 +68,25 @@ export default class Card extends React.Component {
             }}>
             <Text>Add to cart</Text>
           </Button>
-        </View>
-      </View>
+        </Right>
+      </ListItem>
     );
   }
 }
 
 const styles = StyleSheet.create({
   body: {
-    width: '100%',
     height: 50,
-    flexDirection: 'column',
-    backgroundColor: 'green',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
   },
   itemInfo: {
-    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   quantity: {
     flexDirection: 'row',
     right: 0,
+    alignItems: 'center',
   },
 });

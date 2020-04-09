@@ -32,9 +32,14 @@ const initialState = {
     },
   ],
   orderDetails: {
-    date: Date(),
-    id: 6,
-    name: 'Lady Finger',
+    date: new Date(),
+    items: [
+      {
+        id: 6,
+        name: 'Lady Finger',
+        selectedValue: '1',
+      },
+    ],
   },
 };
 

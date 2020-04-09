@@ -35,10 +35,6 @@ class ConsumerHome extends React.Component {
     }
   }
 
-  componentWillUpdate() {
-    console.log('component will update');
-  }
-
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.items && nextProps.items !== prevState.items) {
       return {items: nextProps.items};
@@ -105,13 +101,14 @@ class ConsumerHome extends React.Component {
                 this.state.items.length > 0 &&
                 this.state.items.map((item, index) => {
                   return (
-                    <ListItem key={index}>
-                      <Card
-                        shouldReset={this.shouldResetCards}
-                        item={item}
-                        updateQuantityForItem={this.updateQuantityForItem}
-                      />
-                    </ListItem>
+                    // <ListItem key={index}>
+                    <Card
+                      key={index}
+                      shouldReset={this.shouldResetCards}
+                      item={item}
+                      updateQuantityForItem={this.updateQuantityForItem}
+                    />
+                    // </ListItem>
                   );
                 })}
             </List>
@@ -140,20 +137,17 @@ class ConsumerHome extends React.Component {
 
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: 'red',
     width: '100%',
     height: 500,
   },
   modal: {
     opacity: 0.9,
     bottom: 0,
-    // height: 200,
     backgroundColor: 'white',
   },
   modalActions: {
     flex: 1,
     flexDirection: 'row',
-    // overflow: 'scroll',
     justifyContent: 'space-around',
   },
 });

@@ -28,6 +28,7 @@ class ConsumerOrders extends React.Component {
 
   componentDidMount() {
     this.props.getOrderDetails();
+    this.props.getOrderHistory();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {

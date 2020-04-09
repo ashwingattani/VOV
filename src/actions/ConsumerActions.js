@@ -8,7 +8,7 @@ export function getVegetableList() {
 
 export function createOrder(items) {
   let orderDetails = {
-    date: Date.now(),
+    date: Date(),
     items: items,
   };
   return {
