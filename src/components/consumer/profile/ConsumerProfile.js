@@ -44,7 +44,11 @@ class ConsumerProfile extends React.Component {
             <Text> {this.state.user.address} </Text>
           </View>
         </View>
-        <Button style={styles.actions} onPress={() => {}}>
+        <Button
+          style={styles.actions}
+          onPress={() => {
+            this.props.navigation.navigate('Login');
+          }}>
           <Text> Logout </Text>
         </Button>
       </SafeAreaView>

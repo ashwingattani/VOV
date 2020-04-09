@@ -7,7 +7,7 @@ import SellerProfile from '../components/seller/profile/SellerProfile';
 const navigator = createBottomTabNavigator(
   {
     Home: SellerHome,
-    Orders: SellerOrders,
+    'Order History': SellerOrders,
     Profile: SellerProfile,
   },
   {

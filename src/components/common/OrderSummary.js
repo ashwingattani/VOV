@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {List, ListItem, Text} from 'native-base';
 import {quantities} from '../../constants/Enums';
 
-export default OrderList = props => {
+export default OrderSummary = props => {
   return (
     <View>
       <List>

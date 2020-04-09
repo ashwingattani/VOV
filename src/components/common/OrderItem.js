@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Label, Text, Icon, Button} from 'native-base';
 import Modal from 'react-native-modal';
-import OrderList from './OrderList';
+import OrderSummary from './OrderSummary';
 
 function getDisplayFormatForDate(date) {
   return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
@@ -28,7 +28,7 @@ export default OrderItem = props => {
         name="ios-arrow-forward"
       />
       <Modal style={styles.modal} isVisible={render} transparent={true}>
-        <OrderList items={props.item.items} />
+        <OrderSummary items={props.item.items} />
       </Modal>
     </View>
   );

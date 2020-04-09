@@ -18,7 +18,7 @@ class Login extends React.Component {
       address: 'some address',
       pincode: '098765',
       type:
-        this.mobileNumber != '1234567890'
+        this.mobileNumber == '1234567890'
           ? UserTypes.Consumer
           : UserTypes.Seller,
     };

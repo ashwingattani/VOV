@@ -15,7 +15,7 @@ import {
 } from 'native-base';
 import Modal from 'react-native-modal';
 import Card from '../../common/Card';
-import OrderList from '../../common/OrderList';
+import OrderSummary from '../../common/OrderSummary';
 import {getVegetableList, createOrder} from '../../../actions/ConsumerActions';
 import {connect} from 'react-redux';
 class ConsumerHome extends React.Component {
@@ -52,7 +52,7 @@ class ConsumerHome extends React.Component {
     this.cart.push(item);
   };
 
-  createOrderList = () => {
+  createOrderSummary = () => {
     if (this.cart.length === 0) {
       Toast.show({
         text: 'Please add items to the cart before proceeding!',
@@ -65,7 +65,7 @@ class ConsumerHome extends React.Component {
     }
   };
 
-  confirmOrderList = () => {
+  confirmOrderSummary = () => {
     this.props.createOrder(this.cart);
     this.cart = [];
     this.shouldResetCards = true;
@@ -90,7 +90,7 @@ class ConsumerHome extends React.Component {
               <Title>Home</Title>
             </Body>
             <Right>
-              <Button hasText transparent onPress={this.createOrderList}>
+              <Button hasText transparent onPress={this.createOrderSummary}>
                 <Text>Buy</Text>
               </Button>
             </Right>
@@ -115,9 +115,9 @@ class ConsumerHome extends React.Component {
           </View>
           <Modal isVisible={this.state.showModal} transparent={true}>
             <View style={styles.modal}>
-              <OrderList items={this.cart} />
+              <OrderSummary items={this.cart} />
               <View style={styles.modalActions}>
-                <Button onPress={this.confirmOrderList}>
+                <Button onPress={this.confirmOrderSummary}>
                   <Text>Confirm</Text>
                 </Button>
                 <Button
