@@ -31,6 +31,11 @@ const initialState = {
       name: 'Lady Finger',
     },
   ],
+  orderDetails: {
+    date: Date(),
+    id: 6,
+    name: 'Lady Finger',
+  },
 };
 
 export default consumerReducer = (state = initialState, action) => {
@@ -42,7 +47,7 @@ export default consumerReducer = (state = initialState, action) => {
     case ConsumerTypes.CREATE_ORDER:
       state.orderDetails = action.payload;
       return {
-        state,
+        ...state,
       };
     case ConsumerTypes.GET_ORDER_DETAILS:
       return {

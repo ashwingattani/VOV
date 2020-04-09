@@ -35,6 +35,10 @@ class ConsumerHome extends React.Component {
     }
   }
 
+  componentWillUpdate() {
+    console.log('component will update');
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.items !== prevState.items) {
       return {items: nextProps.items};
@@ -142,13 +146,13 @@ const styles = StyleSheet.create({
   modal: {
     opacity: 0.9,
     bottom: 0,
-    height: 200,
+    // height: 200,
     backgroundColor: 'white',
   },
   modalActions: {
     flex: 1,
     flexDirection: 'row',
-    overflow: 'scroll',
+    // overflow: 'scroll',
     justifyContent: 'space-around',
   },
 });
