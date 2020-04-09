@@ -40,7 +40,7 @@ class ConsumerHome extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.items !== prevState.items) {
+    if (nextProps.items && nextProps.items !== prevState.items) {
       return {items: nextProps.items};
     } else return null;
   }
@@ -88,7 +88,7 @@ class ConsumerHome extends React.Component {
       <Root>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
-          <Header noLeft>
+          <Header>
             <Left />
             <Body>
               <Title>Home</Title>
@@ -101,7 +101,8 @@ class ConsumerHome extends React.Component {
           </Header>
           <View style={styles.body}>
             <List>
-              {this.state.items.length > 0 &&
+              {this.state.items &&
+                this.state.items.length > 0 &&
                 this.state.items.map((item, index) => {
                   return (
                     <ListItem key={index}>
@@ -157,10 +158,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = dispatch => {
   return {
-    getVegetableList,
-    createOrder,
+    getVegetableList: () => dispatch(getVegetableList()),
+    createOrder: cart => dispatch(createOrder(cart)),
   };
 };
 

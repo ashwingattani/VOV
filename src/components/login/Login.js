@@ -1,14 +1,32 @@
 import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet, View} from 'react-native';
 import {Item, Label, Input, Button, Text} from 'native-base';
-
+import {saveUser} from '../../actions/UserActions';
+import {connect} from 'react-redux';
 const UserTypes = {Consumer: 'Consumer', Seller: 'Seller'};
 
-export default class Login extends React.Component {
+class Login extends React.Component {
   constructor() {
     super();
     this.mobileNumber = '';
   }
+
+  handleLoginPress = () => {
+    let user = {
+      name: 'Test Login',
+      mobileNumber: this.mobileNumber,
+      address: 'some address',
+      pincode: '098765',
+      type:
+        this.mobileNumber != '1234567890'
+          ? UserTypes.Consumer
+          : UserTypes.Seller,
+    };
+    this.props.saveUser(user);
+    this.props.navigation.navigate('OTP', {
+      userType: user.type,
+    });
+  };
 
   render() {
     return (
@@ -25,17 +43,7 @@ export default class Login extends React.Component {
                 }}
               />
             </Item>
-            <Button
-              rounded
-              onPress={() => {
-                let userType =
-                  this.mobileNumber != '1234567890'
-                    ? UserTypes.Consumer
-                    : UserTypes.Seller;
-                this.props.navigation.navigate('OTP', {
-                  userType,
-                });
-              }}>
+            <Button rounded onPress={this.handleLoginPress}>
               <Text>Login</Text>
             </Button>
             <Button
@@ -71,3 +79,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+const mapDispatchToProps = dispatch => {
+  return {
+    saveUser: user => dispatch(saveUser(user)),
+  };
+};
+
+export default LoginModule = connect(null, mapDispatchToProps)(Login);

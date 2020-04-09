@@ -51,10 +51,12 @@ export default consumerReducer = (state = initialState, action) => {
       };
     case ConsumerTypes.GET_ORDER_DETAILS:
       return {
+        ...state,
         orderDetails: state.orderDetails,
       };
     case ConsumerTypes.GET_ORDER_HISTORY:
       return {
+        ...state,
         orderHistory: [state.orderDetails],
       };
     default:

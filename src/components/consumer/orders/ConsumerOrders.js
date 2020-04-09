@@ -78,10 +78,10 @@ class ConsumerOrders extends React.Component {
   }
 }
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = dispatch => {
   return {
-    getOrderDetails,
-    getOrderHistory,
+    getOrderDetails: () => dispatch(getOrderDetails()),
+    getOrderHistory: () => dispatch(getOrderHistory()),
   };
 };
 
