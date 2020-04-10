@@ -9,19 +9,17 @@ export default OrderSummary = props => {
       <List>
         {props.items.map((item, index) => {
           return (
-            <View key={index} style={styles.listBox}>
-              <ListItem>
-                <Text>{item.name}</Text>
-                <Text>
-                  {
-                    quantities.find(
-                      quantity => quantity.value === item.selectedValue,
-                    ).label
-                  }
-                </Text>
-              </ListItem>
+            <ListItem key={index} style={styles.listBox}>
+              <Text>{item.name}</Text>
+              <Text>
+                {
+                  quantities.find(
+                    quantity => quantity.value === item.selectedValue,
+                  ).label
+                }
+              </Text>
               {props.accessoryView ? props.accessoryView : <></>}
-            </View>
+            </ListItem>
           );
         })}
       </List>

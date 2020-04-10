@@ -9,7 +9,7 @@ export default class OrderDetails extends React.Component {
   }
 
   render() {
-    let {order} = this.props.navigation.state.params;
+    let {order, isCurrentOrder} = this.props.navigation.state.params;
     return (
       <SafeAreaView>
         <Header>
@@ -33,33 +33,41 @@ export default class OrderDetails extends React.Component {
             style={{top: 200}}
             items={order.items}
             accessoryView={
-              <Button
-                style={{alignSelf: 'center'}}
-                transparent
-                small
-                onPress={() => {
-                  console.log('not available');
-                }}>
-                <Text>Not Available</Text>
-              </Button>
+              isCurrentOrder ? (
+                <Button
+                  style={{alignSelf: 'center'}}
+                  transparent
+                  small
+                  onPress={() => {
+                    console.log('not available');
+                  }}>
+                  <Text>Not Available</Text>
+                </Button>
+              ) : (
+                <></>
+              )
             }
           />
-          <View style={styles.actions}>
-            <Button
-              success
-              onPress={() => {
-                this.props.navigation.goBack();
-              }}>
-              <Text>Delivered</Text>
-            </Button>
-            <Button
-              danger
-              onPress={() => {
-                this.props.navigation.goBack();
-              }}>
-              <Text>Not Delivered</Text>
-            </Button>
-          </View>
+          {isCurrentOrder ? (
+            <View style={styles.actions}>
+              <Button
+                success
+                onPress={() => {
+                  this.props.navigation.goBack();
+                }}>
+                <Text>Delivered</Text>
+              </Button>
+              <Button
+                danger
+                onPress={() => {
+                  this.props.navigation.goBack();
+                }}>
+                <Text>Not Delivered</Text>
+              </Button>
+            </View>
+          ) : (
+            <></>
+          )}
         </View>
       </SafeAreaView>
     );

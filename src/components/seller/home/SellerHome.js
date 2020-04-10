@@ -54,6 +54,7 @@ class SellerHome extends React.Component {
                         orders: this.state.currentOrders.filter(
                           order => order.houseName === houseName,
                         ),
+                        isCurrentOrder: true,
                       });
                     }}
                     name="ios-arrow-forward"
