@@ -29,7 +29,21 @@ export default class OrderDetails extends React.Component {
           </Right>
         </Header>
         <View>
-          <OrderSummary style={{top: 200}} items={order.items} />
+          <OrderSummary
+            style={{top: 200}}
+            items={order.items}
+            accessoryView={
+              <Button
+                style={{alignSelf: 'center'}}
+                transparent
+                small
+                onPress={() => {
+                  console.log('not available');
+                }}>
+                <Text>Not Available</Text>
+              </Button>
+            }
+          />
           <View style={styles.actions}>
             <Button
               success
