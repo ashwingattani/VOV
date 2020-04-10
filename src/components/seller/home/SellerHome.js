@@ -12,6 +12,10 @@ class SellerHome extends React.Component {
     };
   }
 
+  static navigationOptions = {
+    headerMode: 'none',
+  };
+
   componentDidMount() {
     if (this.state.currentOrders.length == 0) {
       this.props.getCurrentOrders();
@@ -44,7 +48,16 @@ class SellerHome extends React.Component {
                   <Label>
                     <Text> {houseName} </Text>
                   </Label>
-                  <Icon onPress={() => {}} name="ios-arrow-forward" />
+                  <Icon
+                    onPress={() => {
+                      this.props.navigation.navigate('Order List', {
+                        orders: this.state.currentOrders.filter(
+                          order => order.houseName === houseName,
+                        ),
+                      });
+                    }}
+                    name="ios-arrow-forward"
+                  />
                 </ListItem>
               );
             })}
