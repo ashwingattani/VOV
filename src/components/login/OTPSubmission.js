@@ -5,8 +5,32 @@ import {Item, Label, Input, Button, Text, Header} from 'native-base';
 export default class OTPSubmission extends React.Component {
   constructor() {
     super();
-    this.otp = '';
+    this.state = {
+      verificationCode: '',
+    };
   }
+
+  verifyOTP = () => {
+    // Request for OTP verification
+    const {confirmResult, userType} = this.props.navigation.state.params;
+    if (this.state.verificationCode.length == 6) {
+      confirmResult
+        .confirm(this.state.verificationCode)
+        .then(() => {
+          if (userType === 'Consumer') {
+            this.props.navigation.navigate('Consumer');
+          } else {
+            this.props.navigation.navigate('Seller');
+          }
+        })
+        .catch(error => {
+          alert(error.message);
+          console.log(error);
+        });
+    } else {
+      alert('Please enter a 6 digit OTP code.');
+    }
+  };
 
   render() {
     let {navigation} = this.props;
@@ -20,20 +44,12 @@ export default class OTPSubmission extends React.Component {
               <Input
                 keyboardType="numeric"
                 onChangeText={text => {
-                  this.otp = text;
+                  this.setState({verificationCode: text});
                 }}
               />
             </Item>
             <View style={styles.actionItems}>
-              <Button
-                rounded
-                onPress={() => {
-                  if (navigation.state.params.userType === 'Consumer') {
-                    navigation.navigate('Consumer');
-                  } else {
-                    navigation.navigate('Seller');
-                  }
-                }}>
+              <Button rounded onPress={this.verifyOTP}>
                 <Text>GO</Text>
               </Button>
               <Button

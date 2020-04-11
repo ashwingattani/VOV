@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>128503970599-am7u7v7qlhqfnokkeghjreacn0kloq8u.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.128503970599-am7u7v7qlhqfnokkeghjreacn0kloq8u</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAuGU2B1y7wF4N4M912ZYp2m3PzQlw_IUo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>128503970599</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com-atizriicon-vov</string>
+	<key>PROJECT_ID</key>
+	<string>com-atizriicon-vov</string>
+	<key>STORAGE_BUCKET</key>
+	<string>com-atizriicon-vov.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:128503970599:ios:65a072a4cfeb14e6324702</string>
+	<key>DATABASE_URL</key>
+	<string>https://com-atizriicon-vov.firebaseio.com</string>
+</dict>
+</plist>

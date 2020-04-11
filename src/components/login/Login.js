@@ -4,27 +4,60 @@ import {Item, Label, Input, Button, Text} from 'native-base';
 import {saveUser} from '../../actions/UserActions';
 import {connect} from 'react-redux';
 const UserTypes = {Consumer: 'Consumer', Seller: 'Seller'};
+import firebase from 'react-native-firebase';
 
 class Login extends React.Component {
   constructor() {
     super();
-    this.mobileNumber = '';
+    this.state = {
+      mobileNumber: '',
+      confirmResult: null,
+      verificationCode: '',
+      userId: '',
+    };
   }
+
+  validatePhoneNumber = () => {
+    var regexp = /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/;
+    return regexp.test('+91' + this.state.mobileNumber);
+  };
+
+  handleSendCode = () => {
+    // Request to send OTP
+    if (this.validatePhoneNumber()) {
+      firebase
+        .auth()
+        .signInWithPhoneNumber('+91' + this.state.mobileNumber)
+        .then(confirmResult => {
+          this.setState({confirmResult}, () => {
+            this.handleLoginPress();
+          });
+        })
+        .catch(error => {
+          alert(error.message);
+
+          console.log(error);
+        });
+    } else {
+      alert('Invalid Phone Number');
+    }
+  };
 
   handleLoginPress = () => {
     let user = {
       name: 'Test Login',
-      mobileNumber: this.mobileNumber,
+      mobileNumber: this.state.mobileNumber,
       address: 'some address',
       pincode: '098765',
       type:
-        this.mobileNumber == '1234567890'
+        this.state.mobileNumber == '1234567890'
           ? UserTypes.Consumer
           : UserTypes.Seller,
     };
     this.props.saveUser(user);
     this.props.navigation.navigate('OTP', {
       userType: user.type,
+      confirmResult: this.state.confirmResult,
     });
   };
 
@@ -39,11 +72,11 @@ class Login extends React.Component {
               <Input
                 keyboardType="numeric"
                 onChangeText={text => {
-                  this.mobileNumber = text;
+                  this.setState({mobileNumber: text});
                 }}
               />
             </Item>
-            <Button rounded onPress={this.handleLoginPress}>
+            <Button rounded onPress={this.handleSendCode}>
               <Text>Login</Text>
             </Button>
             <Button
