@@ -1,36 +1,6 @@
 import * as ConsumerTypes from '../types/ConsumerTypes';
 
 const initialState = {
-  items: [
-    {
-      id: 0,
-      name: 'Onion',
-    },
-    {
-      id: 1,
-      name: 'Potato',
-    },
-    {
-      id: 2,
-      name: 'Cauliflower',
-    },
-    {
-      id: 3,
-      name: 'Sweet Potato',
-    },
-    {
-      id: 4,
-      name: 'Coriander',
-    },
-    {
-      id: 5,
-      name: 'Spinach',
-    },
-    {
-      id: 6,
-      name: 'Lady Finger',
-    },
-  ],
   orderDetails: {
     date: new Date(),
     items: [
@@ -48,6 +18,19 @@ export default consumerReducer = (state = initialState, action) => {
     case ConsumerTypes.GET_VEGETABLE_LIST:
       return {
         ...state,
+        isLoading: true,
+      };
+    case ConsumerTypes.GET_VEGETABLE_LIST_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        items: action.payload.data,
+      };
+    case ConsumerTypes.GET_VEGETABLE_LIST_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error,
       };
     case ConsumerTypes.CREATE_ORDER:
       state.orderDetails = action.payload;

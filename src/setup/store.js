@@ -5,7 +5,7 @@ import axiosMiddleware from 'redux-axios-middleware';
 import reducer from '../reducers';
 
 const client = axios.create({
-  baseURL: 'https://api.github.com', // TODO: need to update
+  baseURL: 'https://us-central1-com-atizriicon-vov.cloudfunctions.net/',
   responseType: 'json',
 });
 
