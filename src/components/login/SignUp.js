@@ -9,6 +9,22 @@ export default class SignUp extends React.Component {
     this.mobileNumber = '';
   }
 
+  signupUser = () => {
+    let user = {
+      name: this.username,
+      mobileNumber: this.mobileNumber,
+      houseNumber: '',
+      houseName: '',
+      street: '',
+      pincode: '',
+      type: navigation.state.params.userType,
+    };
+    navigation.navigate('OTP', {
+      user,
+      isNewUser: true,
+    });
+  };
+
   render() {
     let {navigation} = this.props;
     return (
@@ -22,7 +38,7 @@ export default class SignUp extends React.Component {
             <Label> Name </Label>
             <Input
               autoCapitalize="words"
-              onChangeText={text => {
+              onChangeText={(text) => {
                 this.username = text;
               }}
             />
@@ -31,18 +47,12 @@ export default class SignUp extends React.Component {
             <Label> Mobile Number </Label>
             <Input
               keyboardType="numeric"
-              onChangeText={text => {
+              onChangeText={(text) => {
                 this.mobileNumber = text;
               }}
             />
           </Item>
-          <Button
-            rounded
-            onPress={() => {
-              navigation.navigate('OTP', {
-                userType: navigation.state.params.userType,
-              });
-            }}>
+          <Button rounded onPress={this.signupUser}>
             <Text>Login</Text>
           </Button>
           <Button

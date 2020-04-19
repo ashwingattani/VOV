@@ -1,5 +1,5 @@
 import * as ConsumerTypes from '../types/ConsumerTypes';
-import URLS from '../api/urls';
+import {URLS} from '../api/urls';
 
 export function getVegetableList() {
   return {
@@ -37,7 +37,7 @@ export function getOrderDetails(type, userId) {
       request: {
         url: URLS.CURRENT_ORDERS,
         method: 'GET',
-        body: {
+        data: {
           userId: userId,
           userType: type,
         },
@@ -46,14 +46,14 @@ export function getOrderDetails(type, userId) {
   };
 }
 
-export function getOrderHistory() {
+export function getOrderHistory(type, userId) {
   return {
     type: ConsumerTypes.GET_ORDER_HISTORY,
     payload: {
       request: {
         url: URLS.PREVIOUS_ORDERS,
         method: 'GET',
-        body: {
+        data: {
           userId: userId,
           userType: type,
         },

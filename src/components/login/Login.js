@@ -1,10 +1,10 @@
 import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet, View} from 'react-native';
 import {Item, Label, Input, Button, Text} from 'native-base';
-import {saveUser} from '../../actions/UserActions';
+import {getUser} from '../../actions/UserActions';
 import {connect} from 'react-redux';
-const UserTypes = {Consumer: 'Consumer', Seller: 'Seller'};
 import firebase from 'react-native-firebase';
+import {UserTypes} from '../../constants/Enums';
 
 class Login extends React.Component {
   constructor() {
@@ -12,24 +12,35 @@ class Login extends React.Component {
     this.state = {
       mobileNumber: '',
       confirmResult: null,
-      verificationCode: '',
-      userId: '',
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.user && prevProps.user !== this.props.user) {
+      this.handleSendCode();
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.user && nextProps.user !== prevState.user) {
+      return {
+        user: nextProps.user,
+      };
+    }
+    return null;
   }
 
   validatePhoneNumber = () => {
     var regexp = /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/;
-    return regexp.test('+91' + this.state.mobileNumber);
+    return regexp.test('+91' + this.props.user.mobileNumber);
   };
 
   handleSendCode = () => {
-    this.handleLoginPress();
-    return;
     // Request to send OTP
     if (this.validatePhoneNumber()) {
       firebase
         .auth()
-        .signInWithPhoneNumber('+91' + this.state.mobileNumber)
+        .signInWithPhoneNumber('+91' + this.props.user.mobileNumber)
         .then((confirmResult) => {
           this.setState({confirmResult}, () => {
             this.handleLoginPress();
@@ -46,19 +57,9 @@ class Login extends React.Component {
   };
 
   handleLoginPress = () => {
-    let user = {
-      name: 'Test Login',
-      mobileNumber: this.state.mobileNumber,
-      address: 'some address',
-      pincode: '098765',
-      type:
-        this.state.mobileNumber == '8408909335'
-          ? UserTypes.Consumer
-          : UserTypes.Seller,
-    };
-    this.props.saveUser(user);
     this.props.navigation.navigate('OTP', {
-      userType: user.type,
+      user: this.props.user,
+      isNewUser: false,
       confirmResult: this.state.confirmResult,
     });
   };
@@ -78,7 +79,9 @@ class Login extends React.Component {
                 }}
               />
             </Item>
-            <Button rounded onPress={this.handleSendCode}>
+            <Button
+              rounded
+              onPress={() => this.props.getUser(this.state.mobileNumber)}>
               <Text>Login</Text>
             </Button>
             <Button
@@ -115,10 +118,19 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    saveUser: (user) => dispatch(saveUser(user)),
+    user: state.user.user,
   };
 };
 
-export default LoginModule = connect(null, mapDispatchToProps)(Login);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUser: (mobileNumber) => dispatch(getUser(mobileNumber)),
+  };
+};
+
+export default LoginModule = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Login);

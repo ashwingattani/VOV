@@ -1,8 +1,11 @@
 import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet, View} from 'react-native';
 import {Item, Label, Input, Button, Text} from 'native-base';
+import {saveUser, addNewUser} from '../../actions/UserActions';
+import {connect} from 'react-redux';
+import {UserTypes} from '../../constants/Enums';
 
-export default class OTPSubmission extends React.Component {
+class OTPSubmission extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -11,20 +14,19 @@ export default class OTPSubmission extends React.Component {
   }
 
   verifyOTP = () => {
-    const {confirmResult, userType} = this.props.navigation.state.params;
-    if (userType === 'Consumer') {
-      this.props.navigation.navigate('Consumer');
-    } else {
-      this.props.navigation.navigate('Seller');
-    }
-    return;
     // Request for OTP verification
-    // const {confirmResult, userType} = this.props.navigation.state.params;
+    const {confirmResult, user, isNewUser} = this.props.navigation.state.params;
     if (this.state.verificationCode.length == 6) {
       confirmResult
         .confirm(this.state.verificationCode)
         .then(() => {
-          if (userType === 'Consumer') {
+          if (isNewUser) {
+            this.props.addNewUser(user);
+          } else {
+            this.props.saveUser(user);
+          }
+
+          if (user.type === UserTypes.Consumer) {
             this.props.navigation.navigate('Consumer');
           } else {
             this.props.navigation.navigate('Seller');
@@ -85,3 +87,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 });
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveUser: (user) => dispatch(saveUser(user)),
+    addNewUser: (user) => dispatch(addNewUser(user)),
+  };
+};
+
+export default OTPModule = connect(null, mapDispatchToProps)(OTPSubmission);

@@ -5,3 +5,5 @@ export const quantities = [
   {label: '750gms', value: '4'},
   {label: '1kg', value: '5'},
 ];
+
+export const UserTypes = {Consumer: 'consumer', Seller: 'seller'};
