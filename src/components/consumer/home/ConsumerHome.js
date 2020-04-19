@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, StatusBar, SafeAreaView, StyleSheet} from 'react-native';
+import {
+  View,
+  StatusBar,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import {
   Header,
   Text,
@@ -127,20 +133,22 @@ class ConsumerHome extends React.Component {
                 <Text>{CATEGORIES.FRUITS}</Text>
               </Button>
             </Segment>
-            <List>
-              {this.state.items &&
-                this.state.items.length > 0 &&
-                this.state.items.map((item, index) => {
-                  return (
-                    <Card
-                      key={index}
-                      shouldReset={this.shouldResetCards}
-                      item={item}
-                      updateQuantityForItem={this.updateQuantityForItem}
-                    />
-                  );
-                })}
-            </List>
+            <ScrollView>
+              <List>
+                {this.state.items &&
+                  this.state.items.length > 0 &&
+                  this.state.items.map((item, index) => {
+                    return (
+                      <Card
+                        key={index}
+                        shouldReset={this.shouldResetCards}
+                        item={item}
+                        updateQuantityForItem={this.updateQuantityForItem}
+                      />
+                    );
+                  })}
+              </List>
+            </ScrollView>
           </View>
           <Modal isVisible={this.state.showModal} transparent={true}>
             <View style={styles.modal}>
@@ -167,7 +175,6 @@ class ConsumerHome extends React.Component {
 const styles = StyleSheet.create({
   body: {
     width: '100%',
-    height: 500,
   },
   modal: {
     opacity: 0.9,

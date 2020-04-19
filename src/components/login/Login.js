@@ -23,6 +23,8 @@ class Login extends React.Component {
   };
 
   handleSendCode = () => {
+    this.handleLoginPress();
+    return;
     // Request to send OTP
     if (this.validatePhoneNumber()) {
       firebase

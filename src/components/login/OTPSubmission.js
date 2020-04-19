@@ -11,7 +11,6 @@ export default class OTPSubmission extends React.Component {
   }
 
   verifyOTP = () => {
-    // Request for OTP verification
     const {confirmResult, userType} = this.props.navigation.state.params;
     if (userType === 'Consumer') {
       this.props.navigation.navigate('Consumer');
@@ -19,6 +18,8 @@ export default class OTPSubmission extends React.Component {
       this.props.navigation.navigate('Seller');
     }
     return;
+    // Request for OTP verification
+    // const {confirmResult, userType} = this.props.navigation.state.params;
     if (this.state.verificationCode.length == 6) {
       confirmResult
         .confirm(this.state.verificationCode)

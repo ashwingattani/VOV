@@ -29,23 +29,28 @@ export default class Card extends React.Component {
 
   render() {
     return (
-      <ListItem thumbnail>
+      <ListItem thumbnail style={styles.body}>
         <Left>
           <Thumbnail square source />
         </Left>
         <Body style={styles.itemInfo}>
-          <Text>{this.props.item.name}</Text>
+          <Text numberOfLines={2}>{this.props.item.name}</Text>
+          <Text note numberOfLines={1}>
+            {this.props.item.name} {/* will contain hindi name later */}
+          </Text>
           <Text note numberOfLines={1}>
             {this.props.item.name} {/* will contain marathi name later */}
           </Text>
         </Body>
-        <Right style={styles.quantity}>
+        <Body style={styles.itemInfo}>
+          <Text note numberOfLines={1}>
+            Quantity
+          </Text>
           <Picker
             mode="dropdown"
-            placeholderStyle={{color: '#bfc6ea'}}
             placeholderIconColor="#007aff"
             selectedValue={this.state.selectedValue}
-            onValueChange={value => {
+            onValueChange={(value) => {
               this.setState({selectedValue: value});
             }}>
             {quantities.map((quantity, index) => {
@@ -58,6 +63,8 @@ export default class Card extends React.Component {
               );
             })}
           </Picker>
+        </Body>
+        <Right style={styles.addItem}>
           <Button
             transparent={true}
             onPress={() => {
@@ -76,17 +83,17 @@ export default class Card extends React.Component {
 
 const styles = StyleSheet.create({
   body: {
-    height: 50,
-    justifyContent: 'space-around',
-    flexDirection: 'row',
+    borderBottomWidth: 1,
   },
   itemInfo: {
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderBottomWidth: 0,
   },
-  quantity: {
+  addItem: {
     flexDirection: 'row',
     right: 0,
     alignItems: 'center',
+    borderBottomWidth: 0,
   },
 });
