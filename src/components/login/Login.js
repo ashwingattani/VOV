@@ -28,12 +28,12 @@ class Login extends React.Component {
       firebase
         .auth()
         .signInWithPhoneNumber('+91' + this.state.mobileNumber)
-        .then(confirmResult => {
+        .then((confirmResult) => {
           this.setState({confirmResult}, () => {
             this.handleLoginPress();
           });
         })
-        .catch(error => {
+        .catch((error) => {
           alert(error.message);
 
           console.log(error);
@@ -50,7 +50,7 @@ class Login extends React.Component {
       address: 'some address',
       pincode: '098765',
       type:
-        this.state.mobileNumber == '1234567890'
+        this.state.mobileNumber == '8408909335'
           ? UserTypes.Consumer
           : UserTypes.Seller,
     };
@@ -71,7 +71,7 @@ class Login extends React.Component {
               <Label> Mobile Number </Label>
               <Input
                 keyboardType="numeric"
-                onChangeText={text => {
+                onChangeText={(text) => {
                   this.setState({mobileNumber: text});
                 }}
               />
@@ -113,9 +113,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    saveUser: user => dispatch(saveUser(user)),
+    saveUser: (user) => dispatch(saveUser(user)),
   };
 };
 

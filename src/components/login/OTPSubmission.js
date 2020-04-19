@@ -1,6 +1,6 @@
 import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet, View} from 'react-native';
-import {Item, Label, Input, Button, Text, Header} from 'native-base';
+import {Item, Label, Input, Button, Text} from 'native-base';
 
 export default class OTPSubmission extends React.Component {
   constructor() {
@@ -13,6 +13,12 @@ export default class OTPSubmission extends React.Component {
   verifyOTP = () => {
     // Request for OTP verification
     const {confirmResult, userType} = this.props.navigation.state.params;
+    if (userType === 'Consumer') {
+      this.props.navigation.navigate('Consumer');
+    } else {
+      this.props.navigation.navigate('Seller');
+    }
+    return;
     if (this.state.verificationCode.length == 6) {
       confirmResult
         .confirm(this.state.verificationCode)
@@ -23,7 +29,7 @@ export default class OTPSubmission extends React.Component {
             this.props.navigation.navigate('Seller');
           }
         })
-        .catch(error => {
+        .catch((error) => {
           alert(error.message);
           console.log(error);
         });
@@ -43,7 +49,7 @@ export default class OTPSubmission extends React.Component {
               <Label> Enter OTP </Label>
               <Input
                 keyboardType="numeric"
-                onChangeText={text => {
+                onChangeText={(text) => {
                   this.setState({verificationCode: text});
                 }}
               />

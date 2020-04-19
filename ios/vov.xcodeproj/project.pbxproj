@@ -58,6 +58,7 @@
 		2D02E47B1E0B4A5D006451C7 /* vov-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "vov-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* vov-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "vov-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E03BBB2E1054918EFC09D9D /* libPods-vov-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-vov-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3900363C2442603F00084C50 /* vovRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = vovRelease.entitlements; path = vov/vovRelease.entitlements; sourceTree = "<group>"; };
 		39BB2D4A2441AD7500EE4D2E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		69F09B995A1C921CE71A5660 /* libPods-vov.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-vov.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C97400B61B26A29C02CE6A8 /* Pods-vov-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vov-tvOS.release.xcconfig"; path = "Target Support Files/Pods-vov-tvOS/Pods-vov-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -127,6 +128,7 @@
 		13B07FAE1A68108700A75B9A /* vov */ = {
 			isa = PBXGroup;
 			children = (
+				3900363C2442603F00084C50 /* vovRelease.entitlements */,
 				39BB2D4A2441AD7500EE4D2E /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -770,6 +772,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = vov/vovRelease.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T8RYTVQ4BP;
 				INFOPLIST_FILE = vov/Info.plist;

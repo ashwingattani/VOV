@@ -4,7 +4,6 @@ import {
   Header,
   Text,
   List,
-  ListItem,
   Button,
   Right,
   Body,
@@ -12,18 +11,26 @@ import {
   Left,
   Toast,
   Root,
+  Segment,
 } from 'native-base';
 import Modal from 'react-native-modal';
 import Card from '../../common/Card';
 import OrderSummary from '../../common/OrderSummary';
 import {getVegetableList, createOrder} from '../../../actions/ConsumerActions';
 import {connect} from 'react-redux';
+
+const CATEGORIES = {
+  VEGGY: 'Vegetables',
+  LEAFY_VEGGY: 'Leafy Vegetables',
+  FRUITS: 'Fruits',
+};
 class ConsumerHome extends React.Component {
   constructor() {
     super();
     this.state = {
       showModal: false,
       items: [],
+      category: CATEGORIES.VEGGY,
     };
     this.cart = [];
     this.shouldResetCards = false;
@@ -96,19 +103,41 @@ class ConsumerHome extends React.Component {
             </Right>
           </Header>
           <View style={styles.body}>
+            <Segment>
+              <Button
+                first
+                active={this.state.category == CATEGORIES.VEGGY}
+                onPress={() => {
+                  this.setState({category: CATEGORIES.VEGGY});
+                }}>
+                <Text>{CATEGORIES.VEGGY}</Text>
+              </Button>
+              <Button
+                active={this.state.category == CATEGORIES.LEAFY_VEGGY}
+                onPress={() => {
+                  this.setState({category: CATEGORIES.LEAFY_VEGGY});
+                }}>
+                <Text>{CATEGORIES.LEAFY_VEGGY}</Text>
+              </Button>
+              <Button
+                active={this.state.category == CATEGORIES.FRUITS}
+                onPress={() => {
+                  this.setState({category: CATEGORIES.FRUITS});
+                }}>
+                <Text>{CATEGORIES.FRUITS}</Text>
+              </Button>
+            </Segment>
             <List>
               {this.state.items &&
                 this.state.items.length > 0 &&
                 this.state.items.map((item, index) => {
                   return (
-                    // <ListItem key={index}>
                     <Card
                       key={index}
                       shouldReset={this.shouldResetCards}
                       item={item}
                       updateQuantityForItem={this.updateQuantityForItem}
                     />
-                    // </ListItem>
                   );
                 })}
             </List>
@@ -152,14 +181,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getVegetableList: () => dispatch(getVegetableList()),
-    createOrder: cart => dispatch(createOrder(cart)),
+    createOrder: (cart) => dispatch(createOrder(cart)),
   };
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     items: state.consumer.items,
   };
