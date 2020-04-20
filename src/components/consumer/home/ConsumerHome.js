@@ -18,24 +18,30 @@ import {
   Toast,
   Root,
   Segment,
+  Item,
+  Icon,
+  Input,
 } from 'native-base';
 import Modal from 'react-native-modal';
 import Card from '../../common/Card';
 import OrderSummary from '../../common/OrderSummary';
 import {getVegetableList, createOrder} from '../../../actions/ConsumerActions';
+import {camelize} from '../../../constants/utils';
 import {connect} from 'react-redux';
 
 const CATEGORIES = {
-  VEGGY: 'Vegetables',
-  LEAFY_VEGGY: 'Leafy Vegetables',
-  FRUITS: 'Fruits',
+  VEGGY: 'Vegetable',
+  LEAFY_VEGGY: 'Leafy Vegetable',
+  FRUITS: 'Fruit',
 };
 class ConsumerHome extends React.Component {
   constructor() {
     super();
     this.state = {
       showModal: false,
+      showSearchBar: false,
       items: [],
+      filtredItems: [],
       category: CATEGORIES.VEGGY,
     };
     this.cart = [];
@@ -50,7 +56,10 @@ class ConsumerHome extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.items && nextProps.items !== prevState.items) {
-      return {items: nextProps.items};
+      let categoryItems = nextProps.items.filter((item) => {
+        item.type == camelize(this.state.category);
+      });
+      return {items: nextProps.items, filtredItems: categoryItems};
     } else return null;
   }
 
@@ -65,13 +74,32 @@ class ConsumerHome extends React.Component {
     this.cart.push(item);
   };
 
+  updateCategory = (category) => {
+    let categoryItems = this.state.items.filter((item) => {
+      item.type == camelize(category);
+    });
+    this.setState({category: category, filtredItems: categoryItems});
+  };
+
+  filtetSearchedItems = (search) => {
+    if (search.length >= 3) {
+      this.setState({
+        filtredItems: this.state.filtredItems.filter((item) => {
+          item.name.includes(search) ||
+            item.marathiName.includes(search) ||
+            item.hindiName.includes(search);
+        }),
+      });
+    }
+  };
+
   createOrderSummary = () => {
     if (this.cart.length === 0) {
       Toast.show({
         text: 'Please add items to the cart before proceeding!',
         position: 'bottom',
         type: 'warning',
-        duration: 2000,
+        duration: 1000,
       });
     } else {
       this.setState({showModal: true});
@@ -87,7 +115,7 @@ class ConsumerHome extends React.Component {
         text: 'Order generated successfully!!',
         position: 'bottom',
         type: 'success',
-        duration: 2000,
+        duration: 1000,
       });
     });
   };
@@ -98,7 +126,15 @@ class ConsumerHome extends React.Component {
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
           <Header>
-            <Left />
+            <Left>
+              <Button
+                transparent
+                onPress={() => {
+                  this.setState({showSearchBar: !this.state.showSearchBar});
+                }}>
+                <Icon name="ios-search" />
+              </Button>
+            </Left>
             <Body>
               <Title>Home</Title>
             </Body>
@@ -108,36 +144,51 @@ class ConsumerHome extends React.Component {
               </Button>
             </Right>
           </Header>
+          {this.state.showSearchBar && (
+            <Header searchBar rounded hasTabs={true}>
+              <Item>
+                <Icon name="ios-search" />
+                <Input
+                  placeholder="for eg. Potato or बटाटा or आलू"
+                  onChangeText={(text) => {
+                    this.filtetSearchedItems(text);
+                  }}
+                />
+                <Icon name="leaf" />
+              </Item>
+            </Header>
+          )}
           <View style={styles.body}>
             <Segment>
               <Button
                 first
                 active={this.state.category == CATEGORIES.VEGGY}
                 onPress={() => {
-                  this.setState({category: CATEGORIES.VEGGY});
+                  this.updateCategory(CATEGORIES.VEGGY);
                 }}>
                 <Text>{CATEGORIES.VEGGY}</Text>
               </Button>
               <Button
                 active={this.state.category == CATEGORIES.LEAFY_VEGGY}
                 onPress={() => {
-                  this.setState({category: CATEGORIES.LEAFY_VEGGY});
+                  this.updateCategory(CATEGORIES.LEAFY_VEGGY);
                 }}>
                 <Text>{CATEGORIES.LEAFY_VEGGY}</Text>
               </Button>
               <Button
+                last
                 active={this.state.category == CATEGORIES.FRUITS}
                 onPress={() => {
-                  this.setState({category: CATEGORIES.FRUITS});
+                  this.updateCategory(CATEGORIES.FRUITS);
                 }}>
                 <Text>{CATEGORIES.FRUITS}</Text>
               </Button>
             </Segment>
             <ScrollView>
               <List>
-                {this.state.items &&
-                  this.state.items.length > 0 &&
-                  this.state.items.map((item, index) => {
+                {this.state.filtredItems &&
+                  this.state.filtredItems.length > 0 &&
+                  this.state.filtredItems.map((item, index) => {
                     return (
                       <Card
                         key={index}

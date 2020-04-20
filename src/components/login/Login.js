@@ -36,6 +36,8 @@ class Login extends React.Component {
   };
 
   handleSendCode = () => {
+    this.handleLoginPress();
+    return;
     // Request to send OTP
     if (this.validatePhoneNumber()) {
       firebase
@@ -57,8 +59,15 @@ class Login extends React.Component {
   };
 
   handleLoginPress = () => {
+    let user = {
+      name: 'Test',
+      mobileNumber: '1234567890',
+      address: 'A2, ABC Complex, Road, City',
+      pincode: 123456,
+      type: 'consumer',
+    };
     this.props.navigation.navigate('OTP', {
-      user: this.props.user,
+      user,
       isNewUser: false,
       confirmResult: this.state.confirmResult,
     });
