@@ -57,7 +57,7 @@ class ConsumerHome extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.items && nextProps.items !== prevState.items) {
       let categoryItems = nextProps.items.filter((item) => {
-        item.type == camelize(this.state.category);
+        item.type == camelize(prevState.category);
       });
       return {items: nextProps.items, filtredItems: categoryItems};
     } else return null;

@@ -34,12 +34,12 @@ export default userReducer = (state = initalState, action) => {
       return {
         isLoading: true,
       };
-    case UserTypes.ADD_NEW_USER_FAIL:
+    case UserTypes.ADD_NEW_USER_SUCCESS:
       return {
         loggedinUser: action.payload.data,
         isLoading: false,
       };
-    case UserTypes.ADD_NEW_USER_SUCCESS:
+    case UserTypes.ADD_NEW_USER_FAIL:
       return {
         error: action.error,
         isLoading: false,

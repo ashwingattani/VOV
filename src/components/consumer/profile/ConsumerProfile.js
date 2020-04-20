@@ -1,8 +1,7 @@
 import React from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
-import {Label, Text, Header, Body, Title, Button} from 'native-base';
+import {Label, Text, Header, Body, Title, Button, Separator} from 'native-base';
 import {connect} from 'react-redux';
-import {getUser} from '../../../actions/UserActions';
 
 class ConsumerProfile extends React.Component {
   constructor() {
@@ -10,10 +9,6 @@ class ConsumerProfile extends React.Component {
     this.state = {
       user: {},
     };
-  }
-
-  componentDidMount() {
-    this.props.getUser();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -31,17 +26,23 @@ class ConsumerProfile extends React.Component {
           </Body>
         </Header>
         <View style={styles.userInfoContainer}>
-          <View style={styles.userInfo}>
-            <Label>Name</Label>
-            <Text> {this.state.user.name} </Text>
+          <View style={styles.personalDetails}>
+            <View style={styles.userInfo}>
+              <Text> {this.state.user.name} </Text>
+            </View>
+            <View style={styles.userInfo}>
+              <Text> {this.state.user.mobileNumber} </Text>
+            </View>
           </View>
-          <View style={styles.userInfo}>
-            <Label>Mobile</Label>
-            <Text> {this.state.user.mobileNumber} </Text>
-          </View>
-          <View style={styles.userInfo}>
-            <Label>Address</Label>
-            <Text> {this.state.user.address} </Text>
+          <View style={styles.addressDetails}>
+            <View style={styles.userInfo}>
+              <Text> {this.state.user.address.houseNumber} </Text>
+              <Text> {this.state.user.address.houseName} </Text>
+            </View>
+            <View style={styles.userInfo}>
+              <Text> {this.state.user.address.street} </Text>
+              <Text> {this.state.user.address.pincode} </Text>
+            </View>
           </View>
         </View>
         <Button
@@ -61,23 +62,24 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
+  personalDetails: {
+    fontWeight: '900',
+  },
+  addressDetails: {
+    top: 20,
+  },
   userInfo: {
     top: 20,
-    bottom: 100,
+    // bottom: 100,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: 'center',
   },
   actions: {
-    top: 50,
+    top: 100,
     alignSelf: 'center',
   },
 });
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getUser: () => dispatch(getUser()),
-  };
-};
 
 const mapStateToProps = (state) => {
   return {
@@ -85,4 +87,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConsumerProfile);
+export default connect(mapStateToProps, null)(ConsumerProfile);

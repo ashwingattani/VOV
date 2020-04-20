@@ -1,6 +1,6 @@
 import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet, View} from 'react-native';
-import {Item, Label, Input, Button, Text} from 'native-base';
+import {Item, Label, Input, Button, Text, Toast, Root} from 'native-base';
 import {getUser} from '../../actions/UserActions';
 import {connect} from 'react-redux';
 import firebase from 'react-native-firebase';
@@ -32,28 +32,24 @@ class Login extends React.Component {
 
   validatePhoneNumber = () => {
     var regexp = /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/;
-    return regexp.test('+91' + this.props.user.mobileNumber);
+    return regexp.test('+91' + this.state.mobileNumber);
   };
 
   handleSendCode = () => {
     // Request to send OTP
-    if (this.validatePhoneNumber()) {
-      firebase
-        .auth()
-        .signInWithPhoneNumber('+91' + this.props.user.mobileNumber)
-        .then((confirmResult) => {
-          this.setState({confirmResult}, () => {
-            this.handleLoginPress();
-          });
-        })
-        .catch((error) => {
-          alert(error.message);
-
-          console.log(error);
+    firebase
+      .auth()
+      .signInWithPhoneNumber('+91' + this.props.user.mobileNumber)
+      .then((confirmResult) => {
+        this.setState({confirmResult}, () => {
+          this.handleLoginPress();
         });
-    } else {
-      alert('Invalid Phone Number');
-    }
+      })
+      .catch((error) => {
+        alert(error.message);
+
+        console.log(error);
+      });
   };
 
   handleLoginPress = () => {
@@ -66,7 +62,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <>
+      <Root>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
           <View style={styles.content}>
@@ -83,7 +79,16 @@ class Login extends React.Component {
               <Button
                 rounded
                 onPress={() => {
-                  this.getUser(this.state.mobileNumber);
+                  if (this.validatePhoneNumber()) {
+                    this.props.getUser(this.state.mobileNumber);
+                  } else {
+                    Toast.show({
+                      text: 'Invalid Phone Number',
+                      position: 'bottom',
+                      type: 'warning',
+                      duration: 1000,
+                    });
+                  }
                 }}>
                 <Text>Login</Text>
               </Button>
@@ -112,7 +117,7 @@ class Login extends React.Component {
             </View>
           </View>
         </SafeAreaView>
-      </>
+      </Root>
     );
   }
 }
