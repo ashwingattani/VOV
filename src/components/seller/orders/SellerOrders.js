@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {Header, Title, ListItem, Label, Text, Icon} from 'native-base';
-import {getPreviousOrders} from '../../../actions/SellerActions';
+import {getOrderHistory} from '../../../actions/OrderActions';
 import {connect} from 'react-redux';
 
 class SellerOrders extends React.Component {
@@ -14,7 +14,7 @@ class SellerOrders extends React.Component {
 
   componentDidMount() {
     if (this.state.orderHistory.length == 0) {
-      this.props.getPreviousOrders();
+      this.props.getOrderHistory(this.props.user);
     }
   }
 
@@ -26,7 +26,9 @@ class SellerOrders extends React.Component {
 
   render() {
     let houseList = [
-      ...new Set(this.state.orderHistory.map(item => item.houseName)),
+      ...new Set(
+        this.state.orderHistory.map((item) => item.customer.address.houseName),
+      ),
     ];
     return (
       <SafeAreaView>
@@ -48,7 +50,8 @@ class SellerOrders extends React.Component {
                     onPress={() => {
                       this.props.navigation.navigate('Order List', {
                         orders: this.state.orderHistory.filter(
-                          order => order.houseName === houseName,
+                          (order) =>
+                            order.customer.address.houseName === houseName,
                         ),
                         isCurrentOrder: false,
                       });
@@ -72,15 +75,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDipatchToProps = dispatch => {
+const mapDipatchToProps = (dispatch) => {
   return {
-    getPreviousOrders: () => dispatch(getPreviousOrders()),
+    getOrderHistory: () => dispatch(getOrderHistory()),
   };
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    orderHistory: state.seller.previousOrders,
+    user: state.user.loggedinUser,
+    orderHistory: state.order.orderHistory,
   };
 };
 

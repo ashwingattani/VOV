@@ -64,7 +64,7 @@ class Login extends React.Component {
       mobileNumber: '1234567890',
       address: 'A2, ABC Complex, Road, City',
       pincode: 123456,
-      type: 'consumer',
+      type: 'seller',
     };
     this.props.navigation.navigate('OTP', {
       user,
@@ -88,31 +88,33 @@ class Login extends React.Component {
                 }}
               />
             </Item>
-            <Button
-              rounded
-              onPress={() => this.props.getUser(this.state.mobileNumber)}>
-              <Text>Login</Text>
-            </Button>
-            <Button
-              rounded
-              warning
-              onPress={() => {
-                this.props.navigation.navigate('Signup', {
-                  userType: UserTypes.Consumer,
-                });
-              }}>
-              <Text>Sign Up as Customer</Text>
-            </Button>
-            <Button
-              rounded
-              warning
-              onPress={() => {
-                this.props.navigation.navigate('Signup', {
-                  userType: UserTypes.Seller,
-                });
-              }}>
-              <Text>Sign Up as Seller</Text>
-            </Button>
+            <View style={styles.login}>
+              <Button rounded onPress={this.handleLoginPress}>
+                <Text>Login</Text>
+              </Button>
+            </View>
+            <View style={styles.signup}>
+              <Button
+                rounded
+                warning
+                onPress={() => {
+                  this.props.navigation.navigate('Signup', {
+                    userType: UserTypes.Consumer,
+                  });
+                }}>
+                <Text>Sign Up as Customer</Text>
+              </Button>
+              <Button
+                rounded
+                warning
+                onPress={() => {
+                  this.props.navigation.navigate('Signup', {
+                    userType: UserTypes.Seller,
+                  });
+                }}>
+                <Text>Sign Up as Seller</Text>
+              </Button>
+            </View>
           </View>
         </SafeAreaView>
       </>
@@ -124,6 +126,17 @@ const styles = StyleSheet.create({
   content: {
     top: 10,
     justifyContent: 'center',
+  },
+  login: {
+    top: 10,
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  signup: {
+    top: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
 });
 

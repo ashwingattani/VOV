@@ -16,14 +16,14 @@ export default class OrderDetails extends React.Component {
           <Left>
             <Text>House Number</Text>
             <Text note numberOfLines={1}>
-              {order.houseNumber}
+              {order.customer.address.houseNumber}
             </Text>
           </Left>
           <Right>
             <Body style={styles.rightItem}>
               <Text>House Name</Text>
               <Text note numberOfLines={1}>
-                {order.houseName}
+                {order.customer.address.houseName}
               </Text>
             </Body>
           </Right>

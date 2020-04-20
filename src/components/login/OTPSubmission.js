@@ -14,7 +14,7 @@ class OTPSubmission extends React.Component {
   }
 
   verifyOTP = () => {
-    this.props.navigation.navigate('Consumer');
+    this.props.navigation.navigate('Seller');
     return;
     // Request for OTP verification
     const {confirmResult, user, isNewUser} = this.props.navigation.state.params;
@@ -81,12 +81,14 @@ class OTPSubmission extends React.Component {
 
 const styles = StyleSheet.create({
   body: {
-    justifyContent: 'space-around',
-    margin: 'auto',
+    top: 10,
+    justifyContent: 'center',
   },
   actionItems: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    top: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
 });
 

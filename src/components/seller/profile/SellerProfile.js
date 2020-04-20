@@ -72,15 +72,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getUser: () => dispatch(getUser()),
   };
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.user.user,
+    user: state.user.loggedinUser,
   };
 };
 

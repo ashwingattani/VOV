@@ -11,32 +11,26 @@ import {
 } from 'native-base';
 import OrderItem from '../../common/OrderItem';
 
-import {
-  getOrderDetails,
-  getOrderHistory,
-} from '../../../actions/ConsumerActions';
+import {getOpenOrders, getOrderHistory} from '../../../actions/OrderActions';
 import {connect} from 'react-redux';
 
 class ConsumerOrders extends React.Component {
   constructor() {
     super();
     this.state = {
-      currentOrder: {},
+      openOrders: [],
       orderHistory: [],
     };
   }
 
   componentDidMount() {
-    this.props.getOrderDetails();
-    this.props.getOrderHistory();
+    this.props.getOpenOrders(this.props.user);
+    this.props.getOrderHistory(this.props.user);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      nextProps.currentOrder &&
-      nextProps.currentOrder !== prevState.currentOrder
-    ) {
-      return {currentOrder: nextProps.currentOrder};
+    if (nextProps.openOrders && nextProps.openOrders !== prevState.openOrders) {
+      return {openOrders: nextProps.openOrders};
     } else if (
       nextProps.orderHistory &&
       nextProps.orderHistory !== prevState.orderHistory
@@ -58,9 +52,14 @@ class ConsumerOrders extends React.Component {
             <Separator bordered>
               <Text>Current Order</Text>
             </Separator>
-            <ListItem>
-              <OrderItem item={this.state.currentOrder} />
-            </ListItem>
+            {this.state.openOrders.length > 0 &&
+              this.state.openOrders.map((order, index) => {
+                return (
+                  <ListItem key={index}>
+                    <OrderItem item={order} />
+                  </ListItem>
+                );
+              })}
             <Separator bordered>
               <Text>Previous Orders</Text>
             </Separator>
@@ -79,17 +78,18 @@ class ConsumerOrders extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getOrderDetails: () => dispatch(getOrderDetails()),
+    getOpenOrders: () => dispatch(getOpenOrders()),
     getOrderHistory: () => dispatch(getOrderHistory()),
   };
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    currentOrder: state.consumer.orderDetails,
-    orderHistory: state.consumer.orderHistory,
+    user: state.user.loggedinUser,
+    openOrders: state.order.openOrders,
+    orderHistory: state.order.orderHistory,
   };
 };
 

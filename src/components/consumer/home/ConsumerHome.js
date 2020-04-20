@@ -25,7 +25,7 @@ import {
 import Modal from 'react-native-modal';
 import Card from '../../common/Card';
 import OrderSummary from '../../common/OrderSummary';
-import {getVegetableList, createOrder} from '../../../actions/ConsumerActions';
+import {getVegetableList, createOrder} from '../../../actions/OrderActions';
 import {camelize} from '../../../constants/utils';
 import {connect} from 'react-redux';
 
@@ -90,6 +90,12 @@ class ConsumerHome extends React.Component {
             item.hindiName.includes(search);
         }),
       });
+    } else {
+      this.setState({
+        filtredItems: tthis.state.items.filter((item) => {
+          item.type == camelize(this.state.category);
+        }),
+      });
     }
   };
 
@@ -107,7 +113,7 @@ class ConsumerHome extends React.Component {
   };
 
   confirmOrderSummary = () => {
-    this.props.createOrder(this.cart);
+    this.props.createOrder(this.cart, user);
     this.cart = [];
     this.shouldResetCards = true;
     this.setState({showModal: false}, () => {
@@ -154,7 +160,13 @@ class ConsumerHome extends React.Component {
                     this.filtetSearchedItems(text);
                   }}
                 />
-                <Icon name="leaf" />
+                <Button
+                  transparent
+                  onPress={() => {
+                    this.filtetSearchedItems('');
+                  }}>
+                  <Icon name="ios-close-circle-outline" />
+                </Button>
               </Item>
             </Header>
           )}
@@ -248,7 +260,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    items: state.consumer.items,
+    user: state.user.loggedinUser,
+    items: state.order.items,
   };
 };
 

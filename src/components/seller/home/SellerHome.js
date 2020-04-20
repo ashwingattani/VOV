@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
-import {Header, Title, ListItem, Label, Text, Icon} from 'native-base';
-import {getCurrentOrders} from '../../../actions/SellerActions';
+import {Header, Title, ListItem, Label, Text, Icon, Button} from 'native-base';
+import {getOpenOrders} from '../../../actions/OrderActions';
 import {connect} from 'react-redux';
 
 class SellerHome extends React.Component {
@@ -18,7 +18,7 @@ class SellerHome extends React.Component {
 
   componentDidMount() {
     if (this.state.currentOrders.length == 0) {
-      this.props.getCurrentOrders();
+      this.props.getOpenOrders(this.props.user);
     }
   }
 
@@ -30,14 +30,26 @@ class SellerHome extends React.Component {
 
   render() {
     let houseList = [
-      ...new Set(this.state.currentOrders.map(item => item.houseName)),
+      ...new Set(
+        this.state.currentOrders.map((item) => item.customer.address.houseName),
+      ),
     ];
     return (
       <SafeAreaView>
         <Header>
-          {/* <Left /> */}
+          <Left />
           <Title> Current Orders </Title>
-          {/* <Right /> */}
+          <Right>
+            <Button
+              trasparent
+              onPress={() => {
+                console.log(
+                  'show item list and update for not available items',
+                );
+              }}>
+              <Text>Items</Text>
+            </Button>
+          </Right>
         </Header>
         <View>
           {houseList &&
@@ -52,7 +64,8 @@ class SellerHome extends React.Component {
                     onPress={() => {
                       this.props.navigation.navigate('Order List', {
                         orders: this.state.currentOrders.filter(
-                          order => order.houseName === houseName,
+                          (order) =>
+                            order.customer.address.houseName === houseName,
                         ),
                         isCurrentOrder: true,
                       });
@@ -76,15 +89,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getCurrentOrders: () => dispatch(getCurrentOrders()),
+    getOpenOrders: () => dispatch(getOpenOrders()),
   };
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    currentOrders: state.seller.currentOrders,
+    user: state.user.loggedinUser,
+    currentOrders: state.order.openOrders,
   };
 };
 

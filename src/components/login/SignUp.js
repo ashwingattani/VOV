@@ -13,10 +13,12 @@ export default class SignUp extends React.Component {
     let user = {
       name: this.username,
       mobileNumber: this.mobileNumber,
-      houseNumber: '',
-      houseName: '',
-      street: '',
-      pincode: '',
+      address: {
+        houseNumber: '',
+        houseName: '',
+        street: '',
+        pincode: '',
+      },
       type: navigation.state.params.userType,
     };
     navigation.navigate('OTP', {
@@ -31,9 +33,6 @@ export default class SignUp extends React.Component {
       <>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
-          <Header>
-            <Text>SIGN UP</Text>
-          </Header>
           <Item floatingLabel>
             <Label> Name </Label>
             <Input

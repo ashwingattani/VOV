@@ -1,10 +1,8 @@
 import {combineReducers} from 'redux';
-import consumer from './ConsumerReducer';
+import order from './OrderReducer';
 import user from './UserReducer';
-import seller from './SellerReducer';
 
 export default combineReducers({
   user,
-  consumer,
-  seller,
+  order,
 });

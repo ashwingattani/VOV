@@ -16,14 +16,14 @@ export default class OrderList extends React.Component {
     return (
       <SafeAreaView>
         <Header>
-          <Title> {params.orders[0].houseName} </Title>
+          <Title> {params.orders[0].customer.address.houseName} </Title>
         </Header>
         <List>
           {params.orders.map((order, index) => {
             return (
               <ListItem style={styles.listItem} key={index}>
                 <Label>
-                  <Text> {order.houseNumber} </Text>
+                  <Text> {order.customer.address.houseNumber} </Text>
                 </Label>
                 <Icon
                   onPress={() => {

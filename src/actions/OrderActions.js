@@ -1,9 +1,9 @@
-import * as ConsumerTypes from '../types/ConsumerTypes';
+import * as OrderTypes from '../types/OrderTypes';
 import {URLS} from '../api/urls';
 
 export function getVegetableList() {
   return {
-    type: ConsumerTypes.GET_VEGETABLE_LIST,
+    type: OrderTypes.GET_VEGETABLE_LIST,
     payload: {
       request: {
         url: URLS.ITEMS_LIST,
@@ -13,13 +13,13 @@ export function getVegetableList() {
   };
 }
 
-export function createOrder(items, userId) {
+export function createOrder(items, user) {
   let orderDetails = {
     items: items,
-    customerId: userId,
+    customer: user,
   };
   return {
-    type: ConsumerTypes.CREATE_ORDER,
+    type: OrderTypes.CREATE_ORDER,
     payload: {
       request: {
         url: URLS.ADD_ORDER,
@@ -30,32 +30,32 @@ export function createOrder(items, userId) {
   };
 }
 
-export function getOrderDetails(type, userId) {
+export function getOpenOrders(user) {
   return {
-    type: ConsumerTypes.GET_ORDER_DETAILS,
+    type: OrderTypes.OPEN_ORDERS,
     payload: {
       request: {
         url: URLS.CURRENT_ORDERS,
         method: 'GET',
         data: {
-          userId: userId,
-          userType: type,
+          userId: user.id,
+          userType: user.type,
         },
       },
     },
   };
 }
 
-export function getOrderHistory(type, userId) {
+export function getOrderHistory(user) {
   return {
-    type: ConsumerTypes.GET_ORDER_HISTORY,
+    type: OrderTypes.GET_ORDER_HISTORY,
     payload: {
       request: {
         url: URLS.PREVIOUS_ORDERS,
         method: 'GET',
         data: {
-          userId: userId,
-          userType: type,
+          userId: user.id,
+          userType: user.type,
         },
       },
     },
