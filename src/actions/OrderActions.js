@@ -35,12 +35,8 @@ export function getOpenOrders(user) {
     type: OrderTypes.OPEN_ORDERS,
     payload: {
       request: {
-        url: URLS.CURRENT_ORDERS,
+        url: `${URLS.CURRENT_ORDERS}?userId=${user.id}&userType=${user.type}`,
         method: 'GET',
-        data: {
-          userId: user.id,
-          userType: user.type,
-        },
       },
     },
   };
@@ -51,12 +47,8 @@ export function getOrderHistory(user) {
     type: OrderTypes.GET_ORDER_HISTORY,
     payload: {
       request: {
-        url: URLS.PREVIOUS_ORDERS,
+        url: `${URLS.PREVIOUS_ORDERS}?userId=${user.id}&userType=${user.type}`,
         method: 'GET',
-        data: {
-          userId: user.id,
-          userType: user.type,
-        },
       },
     },
   };

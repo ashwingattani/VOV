@@ -57,8 +57,9 @@ class ConsumerHome extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.items && nextProps.items !== prevState.items) {
       let categoryItems = nextProps.items.filter((item) => {
-        item.type == camelize(prevState.category);
+        return item.category == camelize(prevState.category);
       });
+      console.log('items', nextProps.items, 'filteredItems', categoryItems);
       return {items: nextProps.items, filtredItems: categoryItems};
     } else return null;
   }
@@ -76,7 +77,7 @@ class ConsumerHome extends React.Component {
 
   updateCategory = (category) => {
     let categoryItems = this.state.items.filter((item) => {
-      item.type == camelize(category);
+      return item.category == camelize(category);
     });
     this.setState({category: category, filtredItems: categoryItems});
   };
@@ -93,7 +94,7 @@ class ConsumerHome extends React.Component {
     } else {
       this.setState({
         filtredItems: tthis.state.items.filter((item) => {
-          item.type == camelize(this.state.category);
+          return item.category == camelize(this.state.category);
         }),
       });
     }
@@ -113,7 +114,7 @@ class ConsumerHome extends React.Component {
   };
 
   confirmOrderSummary = () => {
-    this.props.createOrder(this.cart, user);
+    this.props.createOrder(this.cart, this.props.user);
     this.cart = [];
     this.shouldResetCards = true;
     this.setState({showModal: false}, () => {
@@ -254,7 +255,7 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = (dispatch) => {
   return {
     getVegetableList: () => dispatch(getVegetableList()),
-    createOrder: (cart) => dispatch(createOrder(cart)),
+    createOrder: (cart, user) => dispatch(createOrder(cart, user)),
   };
 };
 

@@ -11,10 +11,6 @@ class SellerProfile extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.props.getUser();
-  }
-
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.user !== prevState.user) {
       return {user: nextProps.user};
@@ -30,17 +26,21 @@ class SellerProfile extends React.Component {
           </Body>
         </Header>
         <View style={styles.userInfoContainer}>
-          <View style={styles.userInfo}>
-            <Label>Name</Label>
-            <Text> {this.state.user.name} </Text>
+          <View style={styles.personalDetails}>
+            <View style={styles.userInfo}>
+              <Text> {this.state.user.name} </Text>
+            </View>
+            <View style={styles.userInfo}>
+              <Text> {this.state.user.mobileNumber} </Text>
+            </View>
           </View>
-          <View style={styles.userInfo}>
-            <Label>Mobile</Label>
-            <Text> {this.state.user.mobileNumber} </Text>
-          </View>
-          <View style={styles.userInfo}>
-            <Label>Pin Code</Label>
-            <Text> {this.state.user.pincode} </Text>
+          <View style={styles.addressDetails}>
+            <View style={styles.userInfo}>
+              <Text> {this.state.user.address.houseName} </Text>
+            </View>
+            <View style={styles.userInfo}>
+              <Text> {this.state.user.address.pincode} </Text>
+            </View>
           </View>
         </View>
         <Button
@@ -60,23 +60,23 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
+  personalDetails: {
+    fontWeight: '900',
+  },
+  addressDetails: {
+    top: 20,
+  },
   userInfo: {
     top: 20,
-    bottom: 100,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: 'center',
   },
   actions: {
-    top: 50,
+    top: 100,
     alignSelf: 'center',
   },
 });
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getUser: () => dispatch(getUser()),
-  };
-};
 
 const mapStateToProps = (state) => {
   return {
@@ -84,4 +84,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SellerProfile);
+export default connect(mapStateToProps, null)(SellerProfile);

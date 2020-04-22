@@ -33,49 +33,54 @@ export default class Card extends React.Component {
         <Left>
           <Thumbnail square source />
         </Left>
-        <Body style={styles.itemInfo}>
-          <Text numberOfLines={2}>{this.props.item.name}</Text>
-          <Text note numberOfLines={1}>
-            {this.props.item.name} {/* will contain hindi name later */}
-          </Text>
-          <Text note numberOfLines={1}>
-            {this.props.item.name} {/* will contain marathi name later */}
-          </Text>
-        </Body>
-        <Body style={styles.itemInfo}>
-          <Text note numberOfLines={1}>
-            Quantity
-          </Text>
-          <Picker
-            mode="dropdown"
-            placeholderIconColor="#007aff"
-            selectedValue={this.state.selectedValue}
-            onValueChange={(value) => {
-              this.setState({selectedValue: value});
-            }}>
-            {quantities.map((quantity, index) => {
-              return (
-                <Picker.Item
-                  key={index}
-                  label={quantity.label}
-                  value={quantity.value}
-                />
-              );
-            })}
-          </Picker>
-        </Body>
-        <Right style={styles.addItem}>
-          <Button
-            transparent={true}
-            onPress={() => {
-              this.props.updateQuantityForItem(
-                this.props.item,
-                this.state.selectedValue,
-              );
-            }}>
-            <Text>Add to cart</Text>
-          </Button>
-        </Right>
+        <View style={styles.details}>
+          <Body style={styles.itemInfo}>
+            <Text numberOfLines={2}>{this.props.item.name}</Text>
+            <Text note numberOfLines={1}>
+              {this.props.item.hindiName}
+            </Text>
+            <Text note numberOfLines={1}>
+              {this.props.item.marathiName}
+            </Text>
+          </Body>
+          <Body style={styles.cartInfo}>
+            <Text>{this.props.item.bundleSize}</Text>
+            <View style={styles.cartStatus}>
+              <Text note numberOfLines={1}>
+                Quantity
+              </Text>
+              <Picker
+                mode="dropdown"
+                placeholderIconColor="#007aff"
+                selectedValue={this.state.selectedValue}
+                onValueChange={(value) => {
+                  this.setState({selectedValue: value});
+                }}>
+                {quantities.map((quantity, index) => {
+                  return (
+                    <Picker.Item
+                      key={index}
+                      label={quantity.label}
+                      value={quantity.value}
+                    />
+                  );
+                })}
+              </Picker>
+              <Right style={styles.addItem}>
+                <Button
+                  transparent={true}
+                  onPress={() => {
+                    this.props.updateQuantityForItem(
+                      this.props.item,
+                      this.state.selectedValue,
+                    );
+                  }}>
+                  <Text>Add to cart</Text>
+                </Button>
+              </Right>
+            </View>
+          </Body>
+        </View>
       </ListItem>
     );
   }
@@ -85,15 +90,23 @@ const styles = StyleSheet.create({
   body: {
     borderBottomWidth: 1,
   },
+  details: {
+    width: '100%',
+    flexDirection: 'column',
+  },
   itemInfo: {
-    justifyContent: 'space-between',
+    flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 0,
+  },
+  cartInfo: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
+  cartStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   addItem: {
-    flexDirection: 'row',
-    right: 0,
     alignItems: 'center',
-    borderBottomWidth: 0,
   },
 });

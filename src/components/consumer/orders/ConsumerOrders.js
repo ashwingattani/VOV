@@ -8,6 +8,10 @@ import {
   List,
   Text,
   ListItem,
+  Right,
+  Button,
+  Icon,
+  Left,
 } from 'native-base';
 import OrderItem from '../../common/OrderItem';
 
@@ -24,9 +28,15 @@ class ConsumerOrders extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getOpenOrders(this.props.user);
-    this.props.getOrderHistory(this.props.user);
+    this.fetchOrders();
   }
+
+  fetchOrders = () => {
+    this.setState({openOrders: [], orderHistory: []}, () => {
+      this.props.getOpenOrders(this.props.user);
+      this.props.getOrderHistory(this.props.user);
+    });
+  };
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.openOrders && nextProps.openOrders !== prevState.openOrders) {
@@ -43,9 +53,15 @@ class ConsumerOrders extends React.Component {
     return (
       <SafeAreaView>
         <Header>
+          <Left />
           <Body>
             <Title>Orders</Title>
           </Body>
+          <Right>
+            <Button transparent onPress={this.fetchOrders}>
+              <Icon name="ios-refresh" />
+            </Button>
+          </Right>
         </Header>
         <View>
           <List>
@@ -80,8 +96,8 @@ class ConsumerOrders extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getOpenOrders: () => dispatch(getOpenOrders()),
-    getOrderHistory: () => dispatch(getOrderHistory()),
+    getOpenOrders: (user) => dispatch(getOpenOrders(user)),
+    getOrderHistory: (user) => dispatch(getOrderHistory(user)),
   };
 };
 

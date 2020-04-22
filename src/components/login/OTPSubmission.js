@@ -51,6 +51,7 @@ class OTPSubmission extends React.Component {
             <Item floatingLabel>
               <Label> Enter OTP </Label>
               <Input
+                maxLength={6}
                 keyboardType="numeric"
                 onChangeText={(text) => {
                   this.setState({verificationCode: text});

@@ -5,7 +5,7 @@ import axiosMiddleware from 'redux-axios-middleware';
 import reducer from '../reducers';
 
 const client = axios.create({
-  baseURL: 'https://us-central1-com-atizriicon-vov.cloudfunctions.net/',
+  baseURL: 'http://localhost:5001/com-atizriicon-vov/us-central1',
   responseType: 'json',
 });
 

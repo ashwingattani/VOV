@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
-import {Label, Text, Header, Body, Title, Button, Separator} from 'native-base';
+import {Text, Header, Body, Title, Button} from 'native-base';
 import {connect} from 'react-redux';
 
 class ConsumerProfile extends React.Component {
@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
   },
   userInfo: {
     top: 20,
-    // bottom: 100,
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'center',

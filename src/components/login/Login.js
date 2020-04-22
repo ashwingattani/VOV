@@ -1,6 +1,15 @@
 import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet, View} from 'react-native';
-import {Item, Label, Input, Button, Text, Toast, Root} from 'native-base';
+import {
+  Item,
+  Label,
+  Input,
+  Button,
+  Text,
+  Toast,
+  Root,
+  Spinner,
+} from 'native-base';
 import {getUser} from '../../actions/UserActions';
 import {connect} from 'react-redux';
 import firebase from 'react-native-firebase';
@@ -65,57 +74,62 @@ class Login extends React.Component {
       <Root>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
-          <View style={styles.content}>
-            <Item floatingLabel>
-              <Label> Mobile Number </Label>
-              <Input
-                keyboardType="numeric"
-                onChangeText={(text) => {
-                  this.setState({mobileNumber: text});
-                }}
-              />
-            </Item>
-            <View style={styles.login}>
-              <Button
-                rounded
-                onPress={() => {
-                  if (this.validatePhoneNumber()) {
-                    this.props.getUser(this.state.mobileNumber);
-                  } else {
-                    Toast.show({
-                      text: 'Invalid Phone Number',
-                      position: 'bottom',
-                      type: 'warning',
-                      duration: 1000,
+          {this.props.isLoading ? (
+            <Spinner color="green" />
+          ) : (
+            <View style={styles.content}>
+              <Item floatingLabel>
+                <Label> Mobile Number </Label>
+                <Input
+                  value={this.state.mobileNumber}
+                  keyboardType="numeric"
+                  onChangeText={(text) => {
+                    this.setState({mobileNumber: text});
+                  }}
+                />
+              </Item>
+              <View style={styles.login}>
+                <Button
+                  rounded
+                  onPress={() => {
+                    if (this.validatePhoneNumber()) {
+                      this.props.getUser(this.state.mobileNumber);
+                    } else {
+                      Toast.show({
+                        text: 'Invalid Phone Number',
+                        position: 'bottom',
+                        type: 'warning',
+                        duration: 1000,
+                      });
+                    }
+                  }}>
+                  <Text>Login</Text>
+                </Button>
+              </View>
+              <View style={styles.signup}>
+                <Button
+                  rounded
+                  warning
+                  onPress={() => {
+                    this.props.navigation.navigate('Signup', {
+                      userType: UserTypes.Consumer,
                     });
-                  }
-                }}>
-                <Text>Login</Text>
-              </Button>
+                  }}>
+                  <Text>Sign Up as Customer</Text>
+                </Button>
+                <Button
+                  rounded
+                  warning
+                  onPress={() => {
+                    this.props.navigation.navigate('Signup', {
+                      userType: UserTypes.Seller,
+                    });
+                  }}>
+                  <Text>Sign Up as Seller</Text>
+                </Button>
+              </View>
             </View>
-            <View style={styles.signup}>
-              <Button
-                rounded
-                warning
-                onPress={() => {
-                  this.props.navigation.navigate('Signup', {
-                    userType: UserTypes.Consumer,
-                  });
-                }}>
-                <Text>Sign Up as Customer</Text>
-              </Button>
-              <Button
-                rounded
-                warning
-                onPress={() => {
-                  this.props.navigation.navigate('Signup', {
-                    userType: UserTypes.Seller,
-                  });
-                }}>
-                <Text>Sign Up as Seller</Text>
-              </Button>
-            </View>
-          </View>
+          )}
         </SafeAreaView>
       </Root>
     );
@@ -143,6 +157,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     user: state.user.user,
+    isLoading: state.user.isLoading,
   };
 };
 

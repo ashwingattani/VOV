@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {List, ListItem, Text} from 'native-base';
 import {quantities} from '../../constants/Enums';
 
-export default OrderSummary = props => {
+export default OrderSummary = (props) => {
   return (
     <View>
       <List>
@@ -11,10 +11,11 @@ export default OrderSummary = props => {
           return (
             <ListItem key={index} style={styles.listBox}>
               <Text>{item.name}</Text>
+              <Text>{item.bundleSize}</Text>
               <Text>
                 {
                   quantities.find(
-                    quantity => quantity.value === item.selectedValue,
+                    (quantity) => quantity.value === item.selectedValue,
                   ).label
                 }
               </Text>

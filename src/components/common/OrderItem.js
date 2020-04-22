@@ -8,7 +8,7 @@ function getDisplayFormatForDate(date) {
   return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
 }
 
-export default OrderItem = props => {
+export default OrderItem = (props) => {
   let [render, setRender] = useState(false);
   return (
     <View
@@ -19,7 +19,7 @@ export default OrderItem = props => {
         }
       }}>
       <Label>
-        <Text> {getDisplayFormatForDate(props.item.date)} </Text>
+        <Text> {getDisplayFormatForDate(new Date(props.item.date))} </Text>
       </Label>
       <Icon
         onPress={() => {
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   modal: {
+    flex: 1,
     opacity: 0.9,
     bottom: 0,
     backgroundColor: 'white',
