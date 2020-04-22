@@ -46,6 +46,7 @@ class ConsumerHome extends React.Component {
     };
     this.cart = [];
     this.shouldResetCards = false;
+    this.searchText = '';
   }
 
   componentDidMount() {
@@ -86,14 +87,16 @@ class ConsumerHome extends React.Component {
     if (search.length >= 3) {
       this.setState({
         filtredItems: this.state.filtredItems.filter((item) => {
-          item.name.includes(search) ||
+          return (
+            item.name.includes(search) ||
             item.marathiName.includes(search) ||
-            item.hindiName.includes(search);
+            item.hindiName.includes(search)
+          );
         }),
       });
     } else {
       this.setState({
-        filtredItems: tthis.state.items.filter((item) => {
+        filtredItems: this.state.items.filter((item) => {
           return item.category == camelize(this.state.category);
         }),
       });
@@ -152,18 +155,21 @@ class ConsumerHome extends React.Component {
             </Right>
           </Header>
           {this.state.showSearchBar && (
-            <Header searchBar rounded hasTabs={true}>
+            <Header searchBar rounded>
               <Item>
                 <Icon name="ios-search" />
                 <Input
+                  value={this.searchText}
                   placeholder="for eg. Potato or बटाटा or आलू"
                   onChangeText={(text) => {
+                    this.searchText = text;
                     this.filtetSearchedItems(text);
                   }}
                 />
                 <Button
                   transparent
                   onPress={() => {
+                    this.searchText = '';
                     this.filtetSearchedItems('');
                   }}>
                   <Icon name="ios-close-circle-outline" />

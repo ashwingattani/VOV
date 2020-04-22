@@ -1,6 +1,16 @@
 import React from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
-import {Header, Title, ListItem, Label, Text, Icon, Button} from 'native-base';
+import {
+  Header,
+  Title,
+  ListItem,
+  Label,
+  Text,
+  Icon,
+  Button,
+  Left,
+  Right,
+} from 'native-base';
 import {getOpenOrders} from '../../../actions/OrderActions';
 import {connect} from 'react-redux';
 
@@ -41,7 +51,7 @@ class SellerHome extends React.Component {
           <Title> Current Orders </Title>
           <Right>
             <Button
-              trasparent
+              transparent
               onPress={() => {
                 console.log(
                   'show item list and update for not available items',
@@ -91,7 +101,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getOpenOrders: () => dispatch(getOpenOrders()),
+    getOpenOrders: (user) => dispatch(getOpenOrders(user)),
   };
 };
 

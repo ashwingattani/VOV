@@ -27,15 +27,13 @@ class ConsumerOrders extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     this.fetchOrders();
   }
 
   fetchOrders = () => {
-    this.setState({openOrders: [], orderHistory: []}, () => {
-      this.props.getOpenOrders(this.props.user);
-      this.props.getOrderHistory(this.props.user);
-    });
+    this.props.getOpenOrders(this.props.user);
+    this.props.getOrderHistory(this.props.user);
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -58,7 +56,13 @@ class ConsumerOrders extends React.Component {
             <Title>Orders</Title>
           </Body>
           <Right>
-            <Button transparent onPress={this.fetchOrders}>
+            <Button
+              transparent
+              onPress={() => {
+                this.setState({openOrders: [], orderHistory: []}, () => {
+                  this.fetchOrders();
+                });
+              }}>
               <Icon name="ios-refresh" />
             </Button>
           </Right>

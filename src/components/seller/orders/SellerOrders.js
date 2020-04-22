@@ -25,11 +25,16 @@ class SellerOrders extends React.Component {
   }
 
   render() {
-    let houseList = [
-      ...new Set(
-        this.state.orderHistory.map((item) => item.customer.address.houseName),
-      ),
-    ];
+    let houseList =
+      this.state.orderHistory.length > 0
+        ? [
+            ...new Set(
+              this.state.orderHistory.map(
+                (item) => item.customer.address.houseName,
+              ),
+            ),
+          ]
+        : [];
     return (
       <SafeAreaView>
         <Header>
@@ -77,7 +82,7 @@ const styles = StyleSheet.create({
 
 const mapDipatchToProps = (dispatch) => {
   return {
-    getOrderHistory: () => dispatch(getOrderHistory()),
+    getOrderHistory: (user) => dispatch(getOrderHistory(user)),
   };
 };
 
