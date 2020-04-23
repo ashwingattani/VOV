@@ -1,17 +1,15 @@
 import React from 'react';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {
   Text,
   Picker,
-  Item,
   Button,
   ListItem,
-  Left,
   Thumbnail,
   Body,
   Right,
 } from 'native-base';
-import {quantities} from '../../constants/Enums';
+import {quantities, BASE_URLS} from '../../constants/Enums';
 
 export default class Card extends React.Component {
   constructor() {
@@ -28,23 +26,30 @@ export default class Card extends React.Component {
   }
 
   render() {
+    let {item} = this.props;
     return (
       <ListItem thumbnail style={styles.body}>
-        <Left>
-          <Thumbnail square source />
-        </Left>
         <View style={styles.details}>
           <Body style={styles.itemInfo}>
-            <Text numberOfLines={2}>{this.props.item.name}</Text>
-            <Text note numberOfLines={1}>
-              {this.props.item.hindiName}
-            </Text>
-            <Text note numberOfLines={1}>
-              {this.props.item.marathiName}
-            </Text>
+            <Thumbnail
+              square
+              large
+              source={{
+                uri: `${BASE_URLS.imageBaseURL}${item.image}`,
+              }}
+            />
+            <View style={styles.nameFields}>
+              <Text numberOfLines={2}>{item.name}</Text>
+              <Text note numberOfLines={1}>
+                {item.hindiName}
+              </Text>
+              <Text note numberOfLines={1}>
+                {item.marathiName}
+              </Text>
+            </View>
           </Body>
           <Body style={styles.cartInfo}>
-            <Text>{this.props.item.bundleSize}</Text>
+            <Text>{item.bundleSize}</Text>
             <View style={styles.cartStatus}>
               <Text note numberOfLines={1}>
                 Quantity
@@ -70,10 +75,7 @@ export default class Card extends React.Component {
                 <Button
                   transparent={true}
                   onPress={() => {
-                    this.props.updateQuantityForItem(
-                      this.props.item,
-                      this.state.selectedValue,
-                    );
+                    updateQuantityForItem(item, this.state.selectedValue);
                   }}>
                   <Text>Add to cart</Text>
                 </Button>
@@ -93,6 +95,10 @@ const styles = StyleSheet.create({
   details: {
     width: '100%',
     flexDirection: 'column',
+  },
+  nameFields: {
+    left: 20,
+    flexDirection: 'row',
   },
   itemInfo: {
     flexDirection: 'row',

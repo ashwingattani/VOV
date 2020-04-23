@@ -33,7 +33,10 @@ class SellerHome extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.currentOrders !== prevState.currentOrders) {
+    if (
+      nextProps.currentOrders &&
+      nextProps.currentOrders !== prevState.currentOrders
+    ) {
       return {currentOrders: nextProps.currentOrders};
     } else return null;
   }

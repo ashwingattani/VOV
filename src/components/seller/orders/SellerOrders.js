@@ -19,22 +19,20 @@ class SellerOrders extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.orderHistory !== prevState.orderHistory) {
+    if (
+      nextProps.orderHistory &&
+      nextProps.orderHistory !== prevState.orderHistory
+    ) {
       return {orderHistory: nextProps.orderHistory};
     } else return null;
   }
 
   render() {
-    let houseList =
-      this.state.orderHistory.length > 0
-        ? [
-            ...new Set(
-              this.state.orderHistory.map(
-                (item) => item.customer.address.houseName,
-              ),
-            ),
-          ]
-        : [];
+    let houseList = [
+      ...new Set(
+        this.state.orderHistory.map((item) => item.customer.address.houseName),
+      ),
+    ];
     return (
       <SafeAreaView>
         <Header>

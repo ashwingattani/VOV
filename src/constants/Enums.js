@@ -12,3 +12,10 @@ export const quantities = [
 ];
 
 export const UserTypes = {Consumer: 'consumer', Seller: 'seller'};
+
+export const BASE_URLS = {
+  baseURL: 'http://localhost:5001/com-atizriicon-vov/us-central1',
+  localbaseURL: 'https://us-central1-com-atizriicon-vov.cloudfunctions.net',
+  imageBaseURL:
+    'https://firebasestorage.googleapis.com/v0/b/com-atizriicon-vov.appspot.com/o',
+};
