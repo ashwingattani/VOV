@@ -3,7 +3,7 @@ import {StatusBar, SafeAreaView, StyleSheet, View} from 'react-native';
 import {Item, Label, Input, Button, Text} from 'native-base';
 import {saveUser, addNewUser} from '../../actions/UserActions';
 import {connect} from 'react-redux';
-import {UserTypes} from '../../constants/Enums';
+import {USER_TYPES} from '../../constants/Enums';
 
 class OTPSubmission extends React.Component {
   constructor() {
@@ -26,7 +26,7 @@ class OTPSubmission extends React.Component {
             this.props.saveUser(user);
           }
 
-          if (user.type === UserTypes.Consumer) {
+          if (user.type === USER_TYPES.Consumer) {
             this.props.navigation.navigate('Consumer');
           } else {
             this.props.navigation.navigate('Seller');

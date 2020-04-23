@@ -28,12 +28,8 @@ import OrderSummary from '../../common/OrderSummary';
 import {getVegetableList, createOrder} from '../../../actions/OrderActions';
 import {camelize} from '../../../constants/utils';
 import {connect} from 'react-redux';
+import {CATEGORIES} from '../../../constants/Enums';
 
-const CATEGORIES = {
-  VEGGY: 'Vegetable',
-  LEAFY_VEGGY: 'Leafy Vegetable',
-  FRUITS: 'Fruit',
-};
 class ConsumerHome extends React.Component {
   constructor() {
     super();
@@ -60,7 +56,6 @@ class ConsumerHome extends React.Component {
       let categoryItems = nextProps.items.filter((item) => {
         return item.category == camelize(prevState.category);
       });
-      console.log('items', nextProps.items, 'filteredItems', categoryItems);
       return {items: nextProps.items, filtredItems: categoryItems};
     } else return null;
   }

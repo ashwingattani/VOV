@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {List, ListItem, Text} from 'native-base';
-import {quantities} from '../../constants/Enums';
+import {QUANTITIES} from '../../constants/Enums';
 
 export default OrderSummary = (props) => {
   return (
@@ -14,12 +14,11 @@ export default OrderSummary = (props) => {
               <Text>{item.bundleSize}</Text>
               <Text>
                 {
-                  quantities.find(
+                  QUANTITIES.find(
                     (quantity) => quantity.value === item.selectedValue,
                   ).label
                 }
               </Text>
-              {props.accessoryView ? props.accessoryView : <></>}
             </ListItem>
           );
         })}

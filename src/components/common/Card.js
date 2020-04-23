@@ -9,7 +9,7 @@ import {
   Body,
   Right,
 } from 'native-base';
-import {quantities, BASE_URLS} from '../../constants/Enums';
+import {QUANTITIES, BASE_URLS} from '../../constants/Enums';
 
 export default class Card extends React.Component {
   constructor() {
@@ -61,7 +61,7 @@ export default class Card extends React.Component {
                 onValueChange={(value) => {
                   this.setState({selectedValue: value});
                 }}>
-                {quantities.map((quantity, index) => {
+                {QUANTITIES.map((quantity, index) => {
                   return (
                     <Picker.Item
                       key={index}

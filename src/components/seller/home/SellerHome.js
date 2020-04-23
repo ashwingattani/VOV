@@ -41,6 +41,10 @@ class SellerHome extends React.Component {
     } else return null;
   }
 
+  showItemList = () => {
+    this.props.navigation.navigate('Items');
+  };
+
   render() {
     let houseList = [
       ...new Set(
@@ -53,13 +57,7 @@ class SellerHome extends React.Component {
           <Left />
           <Title> Current Orders </Title>
           <Right>
-            <Button
-              transparent
-              onPress={() => {
-                console.log(
-                  'show item list and update for not available items',
-                );
-              }}>
+            <Button transparent onPress={this.showItemList}>
               <Text>Items</Text>
             </Button>
           </Right>

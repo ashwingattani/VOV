@@ -1,7 +1,7 @@
 import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet} from 'react-native';
 import {Item, Label, Input, Button, Text, View, Separator} from 'native-base';
-import {UserTypes} from '../../constants/Enums';
+import {USER_TYPES} from '../../constants/Enums';
 import firebase from 'react-native-firebase';
 
 export default class SignUp extends React.Component {
@@ -65,7 +65,7 @@ export default class SignUp extends React.Component {
           <Separator bordered>
             <Text>Address</Text>
           </Separator>
-          {userType == UserTypes.Consumer ? (
+          {userType == USER_TYPES.Consumer ? (
             <View>
               <Item placeholderLabel>
                 <Label> House Number </Label>

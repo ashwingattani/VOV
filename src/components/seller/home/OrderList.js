@@ -1,5 +1,14 @@
 import React from 'react';
-import {ListItem, Label, Text, Icon, List, Header, Title} from 'native-base';
+import {
+  ListItem,
+  Label,
+  Text,
+  Icon,
+  List,
+  Header,
+  Title,
+  Button,
+} from 'native-base';
 import {SafeAreaView, StyleSheet} from 'react-native';
 
 export default class OrderList extends React.Component {
@@ -25,6 +34,18 @@ export default class OrderList extends React.Component {
                 <Label>
                   <Text> {order.customer.address.houseNumber} </Text>
                 </Label>
+                <Button transparent>
+                  <Icon
+                    name="ios-checkmark-circle-outline"
+                    style={{fontSize: 30, color: 'green'}}
+                  />
+                </Button>
+                <Button transparent>
+                  <Icon
+                    name="ios-close-circle-outline"
+                    style={{fontSize: 30, color: 'red'}}
+                  />
+                </Button>
                 <Icon
                   onPress={() => {
                     this.props.navigation.navigate('Order Details', {

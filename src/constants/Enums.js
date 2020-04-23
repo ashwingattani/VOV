@@ -1,4 +1,4 @@
-export const quantities = [
+export const QUANTITIES = [
   {label: '1', value: '1'},
   {label: '2', value: '2'},
   {label: '3', value: '3'},
@@ -11,7 +11,13 @@ export const quantities = [
   {label: '10', value: '10'},
 ];
 
-export const UserTypes = {Consumer: 'consumer', Seller: 'seller'};
+export const USER_TYPES = {Consumer: 'consumer', Seller: 'seller'};
+
+export const CATEGORIES = {
+  VEGGY: 'Vegetable',
+  LEAFY_VEGGY: 'Leafy Vegetable',
+  FRUITS: 'Fruit',
+};
 
 export const BASE_URLS = {
   baseURL: 'http://localhost:5001/com-atizriicon-vov/us-central1',

@@ -13,7 +13,7 @@ import {
 import {getUser} from '../../actions/UserActions';
 import {connect} from 'react-redux';
 import firebase from 'react-native-firebase';
-import {UserTypes} from '../../constants/Enums';
+import {USER_TYPES} from '../../constants/Enums';
 
 class Login extends React.Component {
   constructor() {
@@ -112,7 +112,7 @@ class Login extends React.Component {
                   warning
                   onPress={() => {
                     this.props.navigation.navigate('Signup', {
-                      userType: UserTypes.Consumer,
+                      userType: USER_TYPES.Consumer,
                     });
                   }}>
                   <Text>Sign Up as Customer</Text>
@@ -122,7 +122,7 @@ class Login extends React.Component {
                   warning
                   onPress={() => {
                     this.props.navigation.navigate('Signup', {
-                      userType: UserTypes.Seller,
+                      userType: USER_TYPES.Seller,
                     });
                   }}>
                   <Text>Sign Up as Seller</Text>
