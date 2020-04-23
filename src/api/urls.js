@@ -1,6 +1,7 @@
 export const URLS = {
   USER_TYPE: '/userType',
   ADD_USER: '/addUser',
+  UPDATE_USER: '/updateUser',
   ITEMS_LIST: '/items',
   ADD_ITEM: '/addItem',
   ADD_ORDER: '/addOrder',

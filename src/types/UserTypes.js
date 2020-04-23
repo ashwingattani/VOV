@@ -9,3 +9,7 @@ export const GET_USER_FAIL = 'getUser/LOAD_FAIL';
 export const ADD_NEW_USER = 'addNewUser/LOAD';
 export const ADD_NEW_USER_SUCCESS = 'addNewUser/LOAD_SUCCESS';
 export const ADD_NEW_USER_FAIL = 'addNewUser/LOAD_FAIL';
+
+export const UPDATE_USER = 'updateUser/LOAD';
+export const UPDATE_USER_SUCCESS = 'updateUser/LOAD_SUCCESS';
+export const UPDATE_USER_FAIL = 'updateUser/LOAD_FAIL';

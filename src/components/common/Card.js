@@ -75,7 +75,10 @@ export default class Card extends React.Component {
                 <Button
                   transparent={true}
                   onPress={() => {
-                    updateQuantityForItem(item, this.state.selectedValue);
+                    this.props.updateQuantityForItem(
+                      item,
+                      this.state.selectedValue,
+                    );
                   }}>
                   <Text>Add to cart</Text>
                 </Button>
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
   },
   nameFields: {
     left: 20,
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   itemInfo: {
     flexDirection: 'row',

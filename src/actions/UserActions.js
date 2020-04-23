@@ -21,6 +21,19 @@ export function addNewUser(user) {
   };
 }
 
+export function updateUser(user) {
+  return {
+    type: UserTypes.UPDATE_USER,
+    payload: {
+      request: {
+        url: URLS.UPDATE_USER,
+        method: 'POST',
+        data: user,
+      },
+    },
+  };
+}
+
 export function getUser(mobileNumber) {
   return {
     type: UserTypes.GET_USER,

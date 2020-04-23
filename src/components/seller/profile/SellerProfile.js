@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
-import {Header, Body, Title, Label, Text, Button} from 'native-base';
+import {Header, Body, Title, Label, Text, Button, Switch} from 'native-base';
 import {connect} from 'react-redux';
-import {getUser} from '../../../actions/UserActions';
+import {updateUser} from '../../../actions/UserActions';
 class SellerProfile extends React.Component {
   constructor() {
     super();
@@ -16,6 +16,14 @@ class SellerProfile extends React.Component {
       return {user: nextProps.user};
     } else return null;
   }
+
+  updateUserStatus = (value) => {
+    let updatedUser = this.state.user;
+    updatedUser.isOnline = value;
+    this.setState({user: updateUser}, () => {
+      this.props.updateUser(updatedUser);
+    });
+  };
 
   render() {
     return (
@@ -50,6 +58,13 @@ class SellerProfile extends React.Component {
           }}>
           <Text> Logout </Text>
         </Button>
+        <View style={styles.switch}>
+          <Text>Online</Text>
+          <Switch
+            value={this.state.user.isOnline}
+            onValueChange={this.updateUserStatus}
+          />
+        </View>
       </SafeAreaView>
     );
   }
@@ -76,6 +91,11 @@ const styles = StyleSheet.create({
     top: 100,
     alignSelf: 'center',
   },
+  switch: {
+    flexDirection: 'row',
+    top: 20,
+    alignSelf: 'center',
+  },
 });
 
 const mapStateToProps = (state) => {
@@ -84,4 +104,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(SellerProfile);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (user) => dispatch(updateUser(user)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SellerProfile);

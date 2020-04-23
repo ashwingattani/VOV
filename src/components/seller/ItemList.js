@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
   nameFields: {
     left: 20,
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   itemInfo: {
     flexDirection: 'row',
