@@ -1,6 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {getVegetableList} from '../../actions/OrderActions';
+import {
+  getVegetableList,
+  updateItemsForOrder,
+} from '../../actions/OrderActions';
 import {StyleSheet, ScrollView, SafeAreaView, View} from 'react-native';
 import {
   Segment,
@@ -16,7 +19,7 @@ import {
   Thumbnail,
 } from 'native-base';
 import {camelize} from '../../constants/utils';
-import {CATEGORIES, BASE_URLS} from '../../constants/Enums';
+import {CATEGORIES, URLS} from '../../constants/Enums';
 
 class ItemList extends React.Component {
   constructor() {
@@ -26,6 +29,7 @@ class ItemList extends React.Component {
       filtredItems: [],
       category: CATEGORIES.VEGGY,
     };
+    this.unAvailableItems = [];
   }
 
   static navigationOptions = {
@@ -55,7 +59,20 @@ class ItemList extends React.Component {
   };
 
   updateOrdersStatus = () => {
+    this.props.currentOrders.forEach((order) => {
+      this.props.updateItemsForOrder(order, this.unAvailableItems);
+    });
     this.props.navigation.goBack();
+  };
+
+  addItemToUnavailableList = (item) => {
+    item.isAvailable = false;
+    let index = this.unAvailableItems.findIndex(() => {
+      $0.id == item.id;
+    });
+    if (index == -1) {
+      this.unAvailableItems.push(item);
+    }
   };
 
   render() {
@@ -119,7 +136,7 @@ class ItemList extends React.Component {
                             square
                             large
                             source={{
-                              uri: `${BASE_URLS.imageBaseURL}${item.image}`,
+                              uri: `${URLS.imageBaseURL}${item.image}`,
                             }}
                           />
                           <View style={styles.nameFields}>
@@ -136,9 +153,7 @@ class ItemList extends React.Component {
                           <Text>{item.bundleSize}</Text>
                           <Button
                             transparent
-                            onPress={() => {
-                              item.isAvailable = false;
-                            }}>
+                            onPress={() => this.addItemToUnavailableList(item)}>
                             <Text>Not Available</Text>
                           </Button>
                         </View>
@@ -186,12 +201,14 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     items: state.order.items,
+    currentOrders: state.order.openOrders,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getVegetableList: () => dispatch(getVegetableList()),
+    updateItemsForOrder: (id, items) => dispatch(getVegetableList(id, items)),
   };
 };
 

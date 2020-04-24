@@ -78,7 +78,6 @@ class SellerHome extends React.Component {
                           (order) =>
                             order.customer.address.houseName === houseName,
                         ),
-                        isCurrentOrder: true,
                       });
                     }}
                     name="ios-arrow-forward"

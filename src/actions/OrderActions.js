@@ -53,3 +53,29 @@ export function getOrderHistory(user) {
     },
   };
 }
+
+export function updateOrderStatus(order) {
+  return {
+    type: OrderTypes.UPDATE_ORDER_STATUS,
+    payload: {
+      request: {
+        url: URLS.UPDATE_ORDER_STATUS,
+        method: 'POST',
+        data: order,
+      },
+    },
+  };
+}
+
+export function updateItemsForOrder(id, items) {
+  return {
+    type: OrderTypes.UPDATE_ORDER_ITEMS,
+    payload: {
+      request: {
+        url: URLS.UPDATE_ORDER_ITEMS,
+        method: 'POST',
+        data: {id, items},
+      },
+    },
+  };
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
-import {Header, Body, Title, Label, Text, Button, Switch} from 'native-base';
+import {Header, Body, Title, Text, Button, Switch} from 'native-base';
 import {connect} from 'react-redux';
 import {updateUser} from '../../../actions/UserActions';
 class SellerProfile extends React.Component {

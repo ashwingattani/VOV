@@ -19,9 +19,16 @@ export const CATEGORIES = {
   FRUITS: 'Fruit',
 };
 
-export const BASE_URLS = {
-  baseURL: 'http://localhost:5001/com-atizriicon-vov/us-central1',
-  localbaseURL: 'https://us-central1-com-atizriicon-vov.cloudfunctions.net',
+export const ORDER_STATUS = {
+  OPEN: 'open',
+  READY: 'ready',
+  DELIVERED: 'delivered',
+  FAILED: 'failed',
+};
+
+export const URLS = {
+  baseURL: 'https://us-central1-com-atizriicon-vov.cloudfunctions.net',
+  localbaseURL: 'http://localhost:5001/com-atizriicon-vov/us-central1',
   imageBaseURL:
     'https://firebasestorage.googleapis.com/v0/b/com-atizriicon-vov.appspot.com/o',
 };

@@ -9,7 +9,7 @@ export default class OrderDetails extends React.Component {
   }
 
   render() {
-    let {order, isCurrentOrder} = this.props.navigation.state.params;
+    let {order} = this.props.navigation.state.params;
     return (
       <SafeAreaView>
         <Header>

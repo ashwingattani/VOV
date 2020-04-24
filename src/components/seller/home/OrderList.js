@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {
   ListItem,
   Label,
@@ -10,14 +11,21 @@ import {
   Button,
 } from 'native-base';
 import {SafeAreaView, StyleSheet} from 'react-native';
+import {ORDER_STATUS} from '../../../constants/Enums';
+import {updateOrderStatus} from '../../../actions/OrderActions';
 
-export default class OrderList extends React.Component {
+class OrderList extends React.Component {
   constructor() {
     super();
   }
 
   static navigationOptions = {
     headerBackTitle: 'Orders',
+  };
+
+  updateOrder = (order, orderStatus) => {
+    order.status = orderStatus;
+    this.props.updateOrderStatus(order);
   };
 
   render() {
@@ -34,13 +42,21 @@ export default class OrderList extends React.Component {
                 <Label>
                   <Text> {order.customer.address.houseNumber} </Text>
                 </Label>
-                <Button transparent>
+                <Button
+                  transparent
+                  onPress={() => {
+                    this.updateOrder(order, ORDER_STATUS.READY);
+                  }}>
                   <Icon
                     name="ios-checkmark-circle-outline"
                     style={{fontSize: 30, color: 'green'}}
                   />
                 </Button>
-                <Button transparent>
+                <Button
+                  transparent
+                  onPress={() => {
+                    this.updateOrder(order, ORDER_STATUS.FAILED);
+                  }}>
                   <Icon
                     name="ios-close-circle-outline"
                     style={{fontSize: 30, color: 'red'}}
@@ -50,7 +66,6 @@ export default class OrderList extends React.Component {
                   onPress={() => {
                     this.props.navigation.navigate('Order Details', {
                       order,
-                      isCurrentOrder: params.isCurrentOrder,
                     });
                   }}
                   name="ios-arrow-forward"
@@ -71,3 +86,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 });
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateOrderStatus: (order) => dispatch(updateOrderStatus(order)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(OrderList);

@@ -9,7 +9,7 @@ import {
   Body,
   Right,
 } from 'native-base';
-import {QUANTITIES, BASE_URLS} from '../../constants/Enums';
+import {QUANTITIES, URLS} from '../../constants/Enums';
 
 export default class Card extends React.Component {
   constructor() {
@@ -35,7 +35,7 @@ export default class Card extends React.Component {
               square
               large
               source={{
-                uri: `${BASE_URLS.imageBaseURL}${item.image}`,
+                uri: `${URLS.imageBaseURL}${item.image}`,
               }}
             />
             <View style={styles.nameFields}>

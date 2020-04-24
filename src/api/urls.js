@@ -6,7 +6,8 @@ export const URLS = {
   ADD_ITEM: '/addItem',
   ADD_ORDER: '/addOrder',
   ORDERS_LIST: '/orders',
-  UPDATE_ORDER: '/udpateOrder',
+  UPDATE_ORDER_STATUS: '/udpateOrderStatus',
+  UPDATE_ORDER_ITEMS: '/udpateOrderItems',
   CURRENT_ORDERS: '/currentOrders',
   PREVIOUS_ORDERS: '/orderHistory',
 };
