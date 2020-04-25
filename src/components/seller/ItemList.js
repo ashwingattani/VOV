@@ -17,6 +17,7 @@ import {
   Body,
   Title,
   Thumbnail,
+  CheckBox,
 } from 'native-base';
 import {camelize} from '../../constants/utils';
 import {CATEGORIES, URLS} from '../../constants/Enums';
@@ -59,20 +60,32 @@ class ItemList extends React.Component {
   };
 
   updateOrdersStatus = () => {
-    this.props.currentOrders.forEach((order) => {
-      this.props.updateItemsForOrder(order, this.unAvailableItems);
-    });
+    if (this.unAvailableItems.length > 0) {
+      this.props.currentOrders.forEach((order) => {
+        this.props.updateItemsForOrder(order, this.unAvailableItems);
+      });
+    }
     this.props.navigation.goBack();
   };
 
   addItemToUnavailableList = (item) => {
-    item.isAvailable = false;
-    let index = this.unAvailableItems.findIndex(() => {
-      $0.id == item.id;
+    let index = this.unAvailableItems.findIndex((value) => {
+      return value.id == item.id;
     });
     if (index == -1) {
+      item.isAvailable = false;
       this.unAvailableItems.push(item);
+    } else {
+      item.isAvailable = true;
+      this.unAvailableItems.pop(item);
     }
+
+    let newList = this.state.filtredItems;
+    let filterIndex = newList.findIndex((value) => {
+      return value.id == item.id;
+    });
+    newList[filterIndex] = item;
+    this.setState({filtredItems: newList});
   };
 
   render() {
@@ -83,7 +96,10 @@ class ItemList extends React.Component {
             <Button
               transparent
               onPress={() => {
-                this.props.navigation.goBack();
+                this.unAvailableItems = [];
+                this.setState({items: [], filtredItems: []}, () => {
+                  this.props.navigation.goBack();
+                });
               }}>
               <Text> Cancel </Text>
             </Button>
@@ -151,11 +167,20 @@ class ItemList extends React.Component {
                         </Body>
                         <View style={styles.cartInfo}>
                           <Text>{item.bundleSize}</Text>
-                          <Button
-                            transparent
-                            onPress={() => this.addItemToUnavailableList(item)}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                            }}>
                             <Text>Not Available</Text>
-                          </Button>
+                            <CheckBox
+                              style={{left: 15}}
+                              checked={item.isAvailable == false}
+                              onPress={() =>
+                                this.addItemToUnavailableList(item)
+                              }
+                            />
+                          </View>
                         </View>
                       </View>
                     </ListItem>
@@ -188,6 +213,7 @@ const styles = StyleSheet.create({
   cartInfo: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    height: 30,
   },
   cartStatus: {
     flexDirection: 'row',
@@ -208,7 +234,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getVegetableList: () => dispatch(getVegetableList()),
-    updateItemsForOrder: (id, items) => dispatch(getVegetableList(id, items)),
+    updateItemsForOrder: (id, items) =>
+      dispatch(updateItemsForOrder(id, items)),
   };
 };
 
