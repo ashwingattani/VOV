@@ -27,17 +27,21 @@ class ConsumerOrders extends React.Component {
     };
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     this.fetchOrders();
   }
 
   fetchOrders = () => {
-    this.props.getOpenOrders(this.props.user);
-    this.props.getOrderHistory(this.props.user);
+    if (this.state.openOrders.length == 0) {
+      this.props.getOpenOrders(this.props.user);
+    }
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.openOrders && nextProps.openOrders !== prevState.openOrders) {
+      if (prevState.orderHistory.length == 0) {
+        nextProps.getOrderHistory(nextProps.user);
+      }
       return {openOrders: nextProps.openOrders};
     } else if (
       nextProps.orderHistory &&
@@ -69,20 +73,24 @@ class ConsumerOrders extends React.Component {
         </Header>
         <View>
           <List>
-            <Separator bordered>
-              <Text>Current Order</Text>
-            </Separator>
+            {this.state.openOrders.length > 0 && (
+              <Separator bordered>
+                <Text>Current Order</Text>
+              </Separator>
+            )}
             {this.state.openOrders.length > 0 &&
               this.state.openOrders.map((order, index) => {
                 return (
                   <ListItem key={index}>
-                    <OrderItem item={order} />
+                    <OrderItem item={order} isCurrentOrder={true} />
                   </ListItem>
                 );
               })}
-            <Separator bordered>
-              <Text>Previous Orders</Text>
-            </Separator>
+            {this.state.orderHistory.length > 0 && (
+              <Separator bordered>
+                <Text>Previous Orders</Text>
+              </Separator>
+            )}
             {this.state.orderHistory.length > 0 &&
               this.state.orderHistory.map((order, index) => {
                 return (

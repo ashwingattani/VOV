@@ -67,8 +67,18 @@ class ConsumerHome extends React.Component {
   updateQuantityForItem = (item, selectedValue) => {
     if (parseInt(selectedValue)) {
       item.selectedValue = selectedValue;
+    } else {
+      return;
     }
-    this.cart.push(item);
+
+    let cartItemIndex = this.cart.findIndex((value) => value.id === item.id);
+    if (cartItemIndex == -1) {
+      this.cart.push(item);
+    } else {
+      let cartItem = this.cart[cartItemIndex];
+      cartItem.selectedValue = cartItem.selectedValue + item.selectedValue;
+      this.cart[cartItemIndex] = cartItem;
+    }
   };
 
   updateCategory = (category) => {

@@ -9,7 +9,12 @@ export default OrderSummary = (props) => {
       <List>
         {props.items.map((item, index) => {
           return (
-            <ListItem key={index} style={styles.listBox}>
+            <ListItem
+              key={index}
+              style={[
+                styles.listBox,
+                !item.isAvailable == false ? styles.notAvailable : {},
+              ]}>
               <Text>{item.name}</Text>
               <Text>{item.bundleSize}</Text>
               <Text>
@@ -31,5 +36,8 @@ const styles = StyleSheet.create({
   listBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  notAvailable: {
+    backgroundColor: 'tomato',
   },
 });

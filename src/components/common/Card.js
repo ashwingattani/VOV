@@ -25,6 +25,10 @@ export default class Card extends React.Component {
     }
   }
 
+  addItemToCart = () => {
+    this.props.updateQuantityForItem(this.props.item, this.state.selectedValue);
+  };
+
   render() {
     let {item} = this.props;
     return (
@@ -72,14 +76,7 @@ export default class Card extends React.Component {
                 })}
               </Picker>
               <Right style={styles.addItem}>
-                <Button
-                  transparent={true}
-                  onPress={() => {
-                    this.props.updateQuantityForItem(
-                      item,
-                      this.state.selectedValue,
-                    );
-                  }}>
+                <Button transparent={true} onPress={this.addItemToCart}>
                   <Text>Add to cart</Text>
                 </Button>
               </Right>

@@ -30,5 +30,5 @@ export const URLS = {
   baseURL: 'https://us-central1-com-atizriicon-vov.cloudfunctions.net',
   localbaseURL: 'http://localhost:5001/com-atizriicon-vov/us-central1',
   imageBaseURL:
-    'https://firebasestorage.googleapis.com/v0/b/com-atizriicon-vov.appspot.com/o',
+    'https://firebasestorage.googleapis.com/v0/b/com-atizriicon-vov.appspot.com/o/',
 };

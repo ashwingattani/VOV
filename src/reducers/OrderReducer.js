@@ -33,7 +33,6 @@ export default orderReducer = (state = initialState, action) => {
         error: action.error,
       };
     case OrderTypes.CREATE_ORDER:
-      state.orderDetails = action.payload;
       return {
         isLoading: true,
       };

@@ -28,7 +28,10 @@ export default OrderItem = (props) => {
         name="ios-arrow-forward"
       />
       <Modal style={styles.modal} isVisible={render} transparent={true}>
-        <OrderSummary items={props.item.items} />
+        <OrderSummary
+          items={props.item.items}
+          isCurrentOrder={props.isCurrentOrder}
+        />
       </Modal>
     </View>
   );
