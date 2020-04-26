@@ -65,8 +65,9 @@ class ConsumerHome extends React.Component {
   }
 
   updateQuantityForItem = (item, selectedValue) => {
-    if (parseInt(selectedValue)) {
-      item.selectedValue = selectedValue;
+    let selectedValueNumber = parseInt(selectedValue);
+    if (selectedValueNumber) {
+      item.selectedValue = selectedValueNumber;
     } else {
       return;
     }
@@ -76,7 +77,8 @@ class ConsumerHome extends React.Component {
       this.cart.push(item);
     } else {
       let cartItem = this.cart[cartItemIndex];
-      cartItem.selectedValue = cartItem.selectedValue + item.selectedValue;
+      cartItem.selectedValue =
+        parseInt(cartItem.selectedValue) + parseInt(item.selectedValue);
       this.cart[cartItemIndex] = cartItem;
     }
   };
