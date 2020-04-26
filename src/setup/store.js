@@ -11,7 +11,36 @@ const client = axios.create({
   responseType: 'json',
 });
 
+const options = {
+  // not required, but use-full configuration option
+  returnRejectedPromiseOnError: true,
+  interceptors: {
+    request: [
+      ({getState, dispatch}, config) => {
+        // Request interception
+        return config;
+      },
+    ],
+    response: [
+      {
+        success: ({dispatch}, response) => {
+          // Response interception
+          if (response.status == 204) {
+            let error = {data: 'No Data Found'};
+            return Promise.reject(error);
+          }
+          return response;
+        },
+        error: ({dispatch}, error) => {
+          // Response Error Interception
+          return Promise.reject(error);
+        },
+      },
+    ],
+  },
+};
+
 export default store = createStore(
   reducer,
-  applyMiddleware(axiosMiddleware(client)),
+  applyMiddleware(axiosMiddleware(client, options)),
 );

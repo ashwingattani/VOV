@@ -1,16 +1,6 @@
 import * as UserTypes from '../types/UserTypes';
 
-let initalState = {
-  user: {
-    name: 'Test',
-    mobileNumber: '1234567890',
-    address: 'A2, ABC Complex, Road, City',
-    pincode: 123456,
-    type: 'consumer',
-  },
-};
-
-export default userReducer = (state = initalState, action) => {
+export default userReducer = (state = {}, action) => {
   switch (action.type) {
     case UserTypes.SET_USER:
       return {
@@ -18,12 +8,14 @@ export default userReducer = (state = initalState, action) => {
       };
     case UserTypes.GET_USER:
       return {
+        error: undefined,
         isLoading: true,
       };
     case UserTypes.GET_USER_SUCCESS:
       return {
         user: action.payload.data,
         isLoading: false,
+        error: undefined,
       };
     case UserTypes.GET_USER_FAIL:
       return {
