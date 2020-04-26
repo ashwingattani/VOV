@@ -13,8 +13,8 @@ import {
   Icon,
   Left,
 } from 'native-base';
+import Spinner from 'react-native-loading-spinner-overlay';
 import OrderItem from '../../common/OrderItem';
-
 import {getOpenOrders, getOrderHistory} from '../../../actions/OrderActions';
 import {connect} from 'react-redux';
 
@@ -101,6 +101,11 @@ class ConsumerOrders extends React.Component {
               })}
           </List>
         </View>
+        <Spinner
+          visible={this.props.isLoading}
+          textContent={'Loading...'}
+          textStyle={{color: '#fff'}}
+        />
       </SafeAreaView>
     );
   }
@@ -118,6 +123,8 @@ const mapStateToProps = (state) => {
     user: state.user.loggedinUser,
     openOrders: state.order.openOrders,
     orderHistory: state.order.orderHistory,
+    error: state.order.error,
+    isLoading: state.order.isLoading,
   };
 };
 

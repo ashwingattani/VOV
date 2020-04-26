@@ -1,15 +1,7 @@
 import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet, View} from 'react-native';
-import {
-  Item,
-  Label,
-  Input,
-  Button,
-  Text,
-  Toast,
-  Root,
-  Spinner,
-} from 'native-base';
+import {Item, Label, Input, Button, Text, Toast, Root} from 'native-base';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {getUser} from '../../actions/UserActions';
 import {connect} from 'react-redux';
 import firebase from 'react-native-firebase';
@@ -74,62 +66,64 @@ class Login extends React.Component {
       <Root>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
-          {this.props.isLoading ? (
-            <Spinner color="green" />
-          ) : (
-            <View style={styles.content}>
-              <Item floatingLabel>
-                <Label> Mobile Number </Label>
-                <Input
-                  value={this.state.mobileNumber}
-                  keyboardType="numeric"
-                  onChangeText={(text) => {
-                    this.setState({mobileNumber: text});
-                  }}
-                />
-              </Item>
-              <View style={styles.login}>
-                <Button
-                  rounded
-                  onPress={() => {
-                    if (this.validatePhoneNumber()) {
-                      this.props.getUser(this.state.mobileNumber);
-                    } else {
-                      Toast.show({
-                        text: 'Invalid Phone Number',
-                        position: 'bottom',
-                        type: 'warning',
-                        duration: 1000,
-                      });
-                    }
-                  }}>
-                  <Text>Login</Text>
-                </Button>
-              </View>
-              <View style={styles.signup}>
-                <Button
-                  rounded
-                  warning
-                  onPress={() => {
-                    this.props.navigation.navigate('Signup', {
-                      userType: USER_TYPES.Consumer,
+          <View style={styles.content}>
+            <Item floatingLabel>
+              <Label> Mobile Number </Label>
+              <Input
+                maxLength={10}
+                value={this.state.mobileNumber}
+                keyboardType="numeric"
+                onChangeText={(text) => {
+                  this.setState({mobileNumber: text});
+                }}
+              />
+            </Item>
+            <View style={styles.login}>
+              <Button
+                rounded
+                onPress={() => {
+                  if (this.validatePhoneNumber()) {
+                    this.props.getUser(this.state.mobileNumber);
+                  } else {
+                    Toast.show({
+                      text: 'Invalid Phone Number',
+                      position: 'bottom',
+                      type: 'warning',
+                      duration: 1000,
                     });
-                  }}>
-                  <Text>Sign Up as Customer</Text>
-                </Button>
-                <Button
-                  rounded
-                  warning
-                  onPress={() => {
-                    this.props.navigation.navigate('Signup', {
-                      userType: USER_TYPES.Seller,
-                    });
-                  }}>
-                  <Text>Sign Up as Seller</Text>
-                </Button>
-              </View>
+                  }
+                }}>
+                <Text>Login</Text>
+              </Button>
             </View>
-          )}
+            <View style={styles.signup}>
+              <Button
+                rounded
+                warning
+                onPress={() => {
+                  this.props.navigation.navigate('Signup', {
+                    userType: USER_TYPES.Consumer,
+                  });
+                }}>
+                <Text>Sign Up as Customer</Text>
+              </Button>
+              <Button
+                rounded
+                warning
+                onPress={() => {
+                  this.props.navigation.navigate('Signup', {
+                    userType: USER_TYPES.Seller,
+                  });
+                }}>
+                <Text>Sign Up as Seller</Text>
+              </Button>
+            </View>
+          </View>
+          <Spinner
+            visible={this.props.isLoading}
+            textContent={'Loading...'}
+            textStyle={{color: '#fff'}}
+          />
         </SafeAreaView>
       </Root>
     );
@@ -151,6 +145,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+  },
+  spinnerTextStyle: {
+    color: '#FFF',
   },
 });
 

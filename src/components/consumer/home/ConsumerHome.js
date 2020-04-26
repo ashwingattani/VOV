@@ -22,6 +22,7 @@ import {
   Icon,
   Input,
 } from 'native-base';
+import Spinner from 'react-native-loading-spinner-overlay';
 import Modal from 'react-native-modal';
 import Card from '../../common/Card';
 import OrderSummary from '../../common/OrderSummary';
@@ -243,6 +244,11 @@ class ConsumerHome extends React.Component {
               </View>
             </View>
           </Modal>
+          <Spinner
+            visible={this.props.isLoading}
+            textContent={'Loading...'}
+            textStyle={{color: '#fff'}}
+          />
         </SafeAreaView>
       </Root>
     );
@@ -276,6 +282,8 @@ const mapStateToProps = (state) => {
   return {
     user: state.user.loggedinUser,
     items: state.order.items,
+    error: state.order.error,
+    isLoading: state.order.isLoading,
   };
 };
 

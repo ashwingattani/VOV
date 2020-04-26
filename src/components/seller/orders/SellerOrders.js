@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {Header, Title, ListItem, Label, Text, Icon} from 'native-base';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {getOrderHistory} from '../../../actions/OrderActions';
 import {connect} from 'react-redux';
 
@@ -64,6 +65,11 @@ class SellerOrders extends React.Component {
               );
             })}
         </View>
+        <Spinner
+          visible={this.props.isLoading}
+          textContent={'Loading...'}
+          textStyle={{color: '#fff'}}
+        />
       </SafeAreaView>
     );
   }
@@ -87,6 +93,8 @@ const mapStateToProps = (state) => {
   return {
     user: state.user.loggedinUser,
     orderHistory: state.order.orderHistory,
+    error: state.order.error,
+    isLoading: state.order.isLoading,
   };
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {Header, Body, Title, Text, Button, Switch} from 'native-base';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {connect} from 'react-redux';
 import {updateUser} from '../../../actions/UserActions';
 class SellerProfile extends React.Component {
@@ -65,6 +66,11 @@ class SellerProfile extends React.Component {
             onValueChange={this.updateUserStatus}
           />
         </View>
+        <Spinner
+          visible={this.props.isLoading}
+          textContent={'Loading...'}
+          textStyle={{color: '#fff'}}
+        />
       </SafeAreaView>
     );
   }
@@ -101,6 +107,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     user: state.user.loggedinUser,
+    error: state.user.error,
+    isLoading: state.user.isLoading,
   };
 };
 

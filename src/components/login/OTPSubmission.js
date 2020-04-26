@@ -1,5 +1,6 @@
 import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet, View} from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {Item, Label, Input, Button, Text} from 'native-base';
 import {saveUser, addNewUser} from '../../actions/UserActions';
 import {connect} from 'react-redux';
@@ -72,6 +73,11 @@ class OTPSubmission extends React.Component {
               </Button>
             </View>
           </View>
+          <Spinner
+            visible={this.props.isLoading}
+            textContent={'Loading...'}
+            textStyle={{color: '#fff'}}
+          />
         </SafeAreaView>
       </>
     );
@@ -91,6 +97,13 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.user.isLoading,
+    error: state.user.error,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     saveUser: (user) => dispatch(saveUser(user)),
@@ -99,3 +112,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default OTPModule = connect(null, mapDispatchToProps)(OTPSubmission);
+mapStateToProps;
