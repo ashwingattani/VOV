@@ -3,6 +3,16 @@ import {View, StyleSheet} from 'react-native';
 import {List, ListItem, Text} from 'native-base';
 import {QUANTITIES} from '../../constants/Enums';
 
+function showQuantity(item) {
+  let selectedValue = QUANTITIES.find(
+    (quantity) => quantity.value === item.selectedValue,
+  );
+  if (selectedValue) {
+    return selectedValue.label;
+  }
+  return '';
+}
+
 export default OrderSummary = (props) => {
   return (
     <View>
@@ -17,13 +27,7 @@ export default OrderSummary = (props) => {
               ]}>
               <Text>{item.name}</Text>
               <Text>{item.bundleSize}</Text>
-              <Text>
-                {
-                  QUANTITIES.find(
-                    (quantity) => quantity.value === item.selectedValue,
-                  ).label
-                }
-              </Text>
+              <Text>{showQuantity(item)}</Text>
             </ListItem>
           );
         })}

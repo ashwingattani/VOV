@@ -234,7 +234,7 @@ class ConsumerHome extends React.Component {
               </List>
             </ScrollView>
           </View>
-          <Modal isVisible={this.state.showModal} transparent={true}>
+          <Modal isVisible={this.state.showModal}>
             <View style={styles.modal}>
               <OrderSummary items={this.cart} />
               <View style={styles.modalActions}>
@@ -271,7 +271,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   modalActions: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
