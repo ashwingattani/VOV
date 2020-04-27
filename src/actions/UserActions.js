@@ -45,3 +45,9 @@ export function getUser(mobileNumber) {
     },
   };
 }
+
+export function logoutUser() {
+  return {
+    type: UserTypes.LOGOUT,
+  };
+}

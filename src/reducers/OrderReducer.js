@@ -1,4 +1,5 @@
 import * as OrderTypes from '../types/OrderTypes';
+import * as UserTypes from '../types/UserTypes';
 
 const initialState = {
   orderDetails: {
@@ -17,18 +18,15 @@ export default orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case OrderTypes.GET_VEGETABLE_LIST:
       return {
-        ...state,
         isLoading: true,
       };
     case OrderTypes.GET_VEGETABLE_LIST_SUCCESS:
       return {
-        ...state,
         isLoading: false,
         items: action.payload.data,
       };
     case OrderTypes.GET_VEGETABLE_LIST_FAIL:
       return {
-        ...state,
         isLoading: false,
         error: action.error,
       };
@@ -72,6 +70,12 @@ export default orderReducer = (state = initialState, action) => {
     case OrderTypes.GET_ORDER_HISTORY_FAIL:
       return {
         error: action.error,
+        isLoading: false,
+      };
+    case UserTypes.LOGOUT:
+      return {
+        items: [],
+        error: undefined,
         isLoading: false,
       };
     default:

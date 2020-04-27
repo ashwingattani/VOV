@@ -87,6 +87,15 @@ class SellerHome extends React.Component {
               );
             })}
         </View>
+        {this.state.currentOrders.length == 0 && (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text>No Data Found</Text>
+          </View>
+        )}
         <Spinner
           visible={this.props.isLoading}
           textContent={'Loading...'}

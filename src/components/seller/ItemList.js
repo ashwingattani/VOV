@@ -19,6 +19,7 @@ import {
   Thumbnail,
   CheckBox,
 } from 'native-base';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {camelize} from '../../constants/utils';
 import {CATEGORIES, URLS} from '../../constants/Enums';
 
@@ -189,6 +190,20 @@ class ItemList extends React.Component {
             </List>
           </ScrollView>
         </View>
+        {this.state.items.length == 0 && (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text>No Data Found</Text>
+          </View>
+        )}
+        <Spinner
+          visible={this.props.isLoading}
+          textContent={'Loading...'}
+          textStyle={{color: '#fff'}}
+        />
       </SafeAreaView>
     );
   }
@@ -228,6 +243,8 @@ const mapStateToProps = (state) => {
   return {
     items: state.order.items,
     currentOrders: state.order.openOrders,
+    isLoading: state.order.isLoading,
+    error: state.order.error,
   };
 };
 

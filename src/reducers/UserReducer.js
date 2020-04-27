@@ -36,6 +36,14 @@ export default userReducer = (state = {}, action) => {
         error: action.error,
         isLoading: false,
       };
+    case UserTypes.LOGOUT:
+      return {
+        loggedinUser: {},
+        user: {},
+        error: undefined,
+        isLoading: false,
+        logoutSuccessfull: true,
+      };
     default:
       return state;
   }

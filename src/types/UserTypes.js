@@ -13,3 +13,5 @@ export const ADD_NEW_USER_FAIL = 'addNewUser/LOAD_FAIL';
 export const UPDATE_USER = 'updateUser/LOAD';
 export const UPDATE_USER_SUCCESS = 'updateUser/LOAD_SUCCESS';
 export const UPDATE_USER_FAIL = 'updateUser/LOAD_FAIL';
+
+export const LOGOUT = 'logout';

@@ -101,6 +101,16 @@ class ConsumerOrders extends React.Component {
               })}
           </List>
         </View>
+        {this.state.openOrders.length == 0 &&
+          this.state.orderHistory.length == 0 && (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text>No Data Found</Text>
+            </View>
+          )}
         <Spinner
           visible={this.props.isLoading}
           textContent={'Loading...'}

@@ -143,6 +143,12 @@ class ConsumerHome extends React.Component {
       <Root>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
+          {this.state.filtredItems.length == 0 && (
+            <View
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Text>No Data Found</Text>
+            </View>
+          )}
           <Header>
             <Left>
               <Button
