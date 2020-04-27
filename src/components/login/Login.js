@@ -4,7 +4,8 @@ import {Item, Label, Input, Button, Text, Toast, Root} from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {getUser} from '../../actions/UserActions';
 import {connect} from 'react-redux';
-import firebase from 'react-native-firebase';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/auth';
 import {USER_TYPES} from '../../constants/Enums';
 
 class Login extends React.Component {

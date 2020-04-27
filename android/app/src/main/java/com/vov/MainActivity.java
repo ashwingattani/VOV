@@ -1,4 +1,4 @@
-package com.vov;
+package com.atizriicon.vov;
 
 import com.facebook.react.ReactActivity;
 

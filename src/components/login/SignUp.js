@@ -2,7 +2,8 @@ import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet} from 'react-native';
 import {Item, Label, Input, Button, Text, View, Separator} from 'native-base';
 import {USER_TYPES} from '../../constants/Enums';
-import firebase from 'react-native-firebase';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/auth';
 
 export default class SignUp extends React.Component {
   constructor() {

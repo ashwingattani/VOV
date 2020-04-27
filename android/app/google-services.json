@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "128503970599",
+    "firebase_url": "https://com-atizriicon-vov.firebaseio.com",
+    "project_id": "com-atizriicon-vov",
+    "storage_bucket": "com-atizriicon-vov.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128503970599:android:5c0d80eb60fcd261324702",
+        "android_client_info": {
+          "package_name": "com.atizriicon.vov"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128503970599-5vjrcfv8qgnp35sio99vb4j4a6g6ptbk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEH_gPZW64fgysQkGDHdXpMtlZFre-QMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "128503970599-5vjrcfv8qgnp35sio99vb4j4a6g6ptbk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "128503970599-am7u7v7qlhqfnokkeghjreacn0kloq8u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com-atizriicon-vov"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

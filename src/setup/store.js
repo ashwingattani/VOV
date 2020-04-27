@@ -6,8 +6,8 @@ import {URLS} from '../constants/Enums';
 import reducer from '../reducers';
 
 const client = axios.create({
-  // baseURL: URLS.baseURL,
-  baseURL: URLS.localbaseURL,
+  baseURL: URLS.baseURL,
+  // baseURL: URLS.localbaseURL,
   responseType: 'json',
 });
 
