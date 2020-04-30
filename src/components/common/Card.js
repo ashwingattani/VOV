@@ -55,12 +55,9 @@ export default class Card extends React.Component {
           <Body style={styles.cartInfo}>
             <Text>{item.bundleSize}</Text>
             <View style={styles.cartStatus}>
-              <Text note numberOfLines={1}>
-                Quantity
-              </Text>
               <Picker
                 mode="dropdown"
-                placeholderIconColor="#007aff"
+                placeholder="Quantity"
                 selectedValue={this.state.selectedValue}
                 onValueChange={(value) => {
                   this.setState({selectedValue: value});
@@ -110,7 +107,7 @@ const styles = StyleSheet.create({
   },
   cartStatus: {
     flexDirection: 'row',
-    alignItems: 'center',
+    marginLeft: -15,
   },
   addItem: {
     alignItems: 'center',
