@@ -1,5 +1,11 @@
 import React from 'react';
-import {StatusBar, SafeAreaView, StyleSheet, Platform} from 'react-native';
+import {
+  StatusBar,
+  SafeAreaView,
+  StyleSheet,
+  Platform,
+  Keyboard,
+} from 'react-native';
 import {
   Item,
   Label,
@@ -75,6 +81,7 @@ class SignUp extends React.Component {
   };
 
   signupUser = () => {
+    Keyboard.dismiss();
     if (!this.validateFields()) {
       Toast.show({
         text: 'Please provide all details',

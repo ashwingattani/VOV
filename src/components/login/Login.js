@@ -1,5 +1,11 @@
 import React from 'react';
-import {StatusBar, SafeAreaView, StyleSheet, View} from 'react-native';
+import {
+  StatusBar,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Keyboard,
+} from 'react-native';
 import {Item, Label, Input, Button, Text, Toast, Root} from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {getUser, saveUser} from '../../actions/UserActions';
@@ -54,6 +60,20 @@ class Login extends React.Component {
     return null;
   }
 
+  handleLogin = () => {
+    Keyboard.dismiss();
+    if (this.validatePhoneNumber()) {
+      this.props.getUser(this.state.mobileNumber);
+    } else {
+      Toast.show({
+        text: 'Invalid Phone Number',
+        position: 'bottom',
+        type: 'warning',
+        duration: 1000,
+      });
+    }
+  };
+
   validatePhoneNumber = () => {
     var regexp = /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/;
     return regexp.test('+91' + this.state.mobileNumber);
@@ -66,7 +86,7 @@ class Login extends React.Component {
       .signInWithPhoneNumber('+91' + this.props.user.mobileNumber)
       .then((confirmResult) => {
         this.setState({confirmResult}, () => {
-          this.handleLoginPress();
+          this.submitOTP();
         });
       })
       .catch((error) => {
@@ -76,7 +96,7 @@ class Login extends React.Component {
       });
   };
 
-  handleLoginPress = () => {
+  submitOTP = () => {
     this.props.navigation.navigate('OTP', {
       user: this.props.user,
       isNewUser: false,
@@ -102,20 +122,7 @@ class Login extends React.Component {
               />
             </Item>
             <View style={styles.login}>
-              <Button
-                rounded
-                onPress={() => {
-                  if (this.validatePhoneNumber()) {
-                    this.props.getUser(this.state.mobileNumber);
-                  } else {
-                    Toast.show({
-                      text: 'Invalid Phone Number',
-                      position: 'bottom',
-                      type: 'warning',
-                      duration: 1000,
-                    });
-                  }
-                }}>
+              <Button rounded onPress={this.handleLogin}>
                 <Text>Login</Text>
               </Button>
             </View>

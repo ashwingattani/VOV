@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {List, ListItem, Text, Button, Icon} from 'native-base';
 import {QUANTITIES} from '../../constants/Enums';
 
@@ -15,7 +15,7 @@ function showQuantity(item) {
 
 export default OrderSummary = (props) => {
   return (
-    <View>
+    <ScrollView>
       <List>
         {props.items.map((item, index) => {
           return (
@@ -37,7 +37,7 @@ export default OrderSummary = (props) => {
           );
         })}
       </List>
-    </View>
+    </ScrollView>
   );
 };
 

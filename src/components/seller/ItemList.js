@@ -140,7 +140,7 @@ class ItemList extends React.Component {
               <Text>{CATEGORIES.FRUITS}</Text>
             </Button>
           </Segment>
-          <ScrollView>
+          <ScrollView keyboardDismissMode="on-drag">
             <List>
               {this.state.filtredItems &&
                 this.state.filtredItems.length > 0 &&
