@@ -1,8 +1,10 @@
+import React from 'react';
 import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import SellerHome from '../components/seller/home/SellerHome';
 import SellerOrders from '../components/seller/orders/SellerOrders';
 import SellerProfile from '../components/seller/profile/SellerProfile';
+import {Icon} from 'native-base';
 
 const navigator = createBottomTabNavigator(
   {
@@ -12,24 +14,19 @@ const navigator = createBottomTabNavigator(
   },
   {
     defaultNavigationOptions: ({navigation}) => ({
-      //   tabBarIcon: ({focused, horizontal, tintColor}) => {
-      //     const {routeName} = navigation.state;
-      //     if (routeName === 'Home') {
-      //       return (
-      //         <Image
-      //           source={require('./assets/home.png')}
-      //           style={{width: 20, height: 20}}
-      //         />
-      //       );
-      //     } else {
-      //       return (
-      //         <Image
-      //           source={require('./assets/settings.png')}
-      //           style={{width: 20, height: 20}}
-      //         />
-      //       );
-      //     }
-      //   },
+      tabBarIcon: ({focused, horizontal, tintColor}) => {
+        const {routeName} = navigation.state;
+        switch (routeName) {
+          case 'Home':
+            return <Icon name="home" />;
+          case 'Order History':
+            return <Icon name="albums" />;
+          case 'Profile':
+            return <Icon name="person" />;
+          default:
+            break;
+        }
+      },
     }),
     tabBarOptions: {
       activeTintColor: '#FF6F00',

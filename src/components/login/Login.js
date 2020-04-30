@@ -122,7 +122,7 @@ class Login extends React.Component {
               />
             </Item>
             <View style={styles.login}>
-              <Button rounded onPress={this.handleLogin}>
+              <Button rounded onPress={() => this.handleLogin()}>
                 <Text>Login</Text>
               </Button>
             </View>
