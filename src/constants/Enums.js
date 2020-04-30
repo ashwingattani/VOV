@@ -32,3 +32,14 @@ export const URLS = {
   imageBaseURL:
     'https://firebasestorage.googleapis.com/v0/b/com-atizriicon-vov.appspot.com/o/',
 };
+
+export const REGEX = {
+  email: /^[ \w-+.]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}[ ]*$/,
+  name: /[a-zA-Z]+('[a-zA-Z])?[a-zA-Z]*/,
+  address: /[A-Za-z0-9'.\-\s,]/,
+  phone: /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/,
+  about: /[A-Za-z]{1,50}/,
+  pincode: /^\d{5}(?:[-\s]\d{4})?$/,
+  search: /[A-Za-z0-9]/,
+  number: /^[0-9]*$/,
+};

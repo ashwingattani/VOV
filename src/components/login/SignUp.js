@@ -1,8 +1,18 @@
 import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet, Platform} from 'react-native';
-import {Item, Label, Input, Button, Text, View, Separator} from 'native-base';
+import {
+  Item,
+  Label,
+  Input,
+  Button,
+  Text,
+  View,
+  Separator,
+  Toast,
+  Root,
+} from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {USER_TYPES} from '../../constants/Enums';
+import {USER_TYPES, REGEX} from '../../constants/Enums';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 import {addNewUser} from '../../actions/UserActions';
@@ -46,7 +56,35 @@ class SignUp extends React.Component {
     });
   }
 
+  validateFields = () => {
+    let isNameValid = REGEX.name.test(this.username);
+    let isMobileNumberValid = REGEX.phone.test('+91' + this.mobileNumber);
+    let isHouseNumberValid = REGEX.address.test(this.address.houseNumber);
+    let isHouseNameValid = REGEX.address.test(this.address.houseName);
+    let isStreetValid = REGEX.address.test(this.address.street);
+    let isPinCodeValid = REGEX.pincode.test(this.address.pincode);
+
+    return (
+      isNameValid &&
+      isMobileNumberValid &&
+      isHouseNumberValid &&
+      isHouseNameValid &&
+      isStreetValid &&
+      isPinCodeValid
+    );
+  };
+
   signupUser = () => {
+    if (!this.validateFields()) {
+      Toast.show({
+        text: 'Please provide all details',
+        position: 'bottom',
+        type: 'warning',
+        duration: 1000,
+      });
+      return;
+    }
+
     let user = {
       name: this.username,
       mobileNumber: this.mobileNumber,
@@ -78,7 +116,7 @@ class SignUp extends React.Component {
   render() {
     let {userType} = this.props.navigation.state.params;
     return (
-      <>
+      <Root>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
           <Item placeholderLabel>
@@ -178,7 +216,7 @@ class SignUp extends React.Component {
             textStyle={{color: '#fff'}}
           />
         </SafeAreaView>
-      </>
+      </Root>
     );
   }
 }
