@@ -19,9 +19,9 @@ export default class Card extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.shouldReset) {
-      this.setState({selectedValue: '1'});
+      return {selectedValue: '1'};
     }
   }
 
@@ -76,7 +76,7 @@ export default class Card extends React.Component {
                 })}
               </Picker>
               <Right style={styles.addItem}>
-                <Button transparent={true} onPress={this.addItemToCart}>
+                <Button onPress={this.addItemToCart}>
                   <Text>Add to cart</Text>
                 </Button>
               </Right>

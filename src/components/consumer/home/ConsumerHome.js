@@ -21,6 +21,7 @@ import {
   Item,
   Icon,
   Input,
+  Badge,
 } from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Modal from 'react-native-modal';
@@ -40,8 +41,8 @@ class ConsumerHome extends React.Component {
       items: [],
       filtredItems: [],
       category: CATEGORIES.VEGGY,
+      cart: [],
     };
-    this.cart = [];
     this.shouldResetCards = false;
     this.searchText = '';
   }
@@ -68,19 +69,20 @@ class ConsumerHome extends React.Component {
   updateQuantityForItem = (item, selectedValue) => {
     let selectedValueNumber = parseInt(selectedValue);
     if (selectedValueNumber) {
-      item.selectedValue = selectedValueNumber;
+      item.selectedValue = item.selectedValue
+        ? item.selectedValue + selectedValueNumber
+        : selectedValueNumber;
     } else {
       return;
     }
 
-    let cartItemIndex = this.cart.findIndex((value) => value.id === item.id);
+    let cartItemIndex = this.state.cart.findIndex(
+      (value) => value.id === item.id,
+    );
     if (cartItemIndex == -1) {
-      this.cart.push(item);
-    } else {
-      let cartItem = this.cart[cartItemIndex];
-      cartItem.selectedValue =
-        parseInt(cartItem.selectedValue) + parseInt(item.selectedValue);
-      this.cart[cartItemIndex] = cartItem;
+      let updatedCart = this.state.cart;
+      updatedCart.push(item);
+      this.setState({cart: updatedCart});
     }
   };
 
@@ -112,7 +114,7 @@ class ConsumerHome extends React.Component {
   };
 
   createOrderSummary = () => {
-    if (this.cart.length === 0) {
+    if (this.state.cart.length === 0) {
       Toast.show({
         text: 'Please add items to the cart before proceeding!',
         position: 'bottom',
@@ -125,10 +127,9 @@ class ConsumerHome extends React.Component {
   };
 
   confirmOrderSummary = () => {
-    this.props.createOrder(this.cart, this.props.user);
-    this.cart = [];
+    this.props.createOrder(this.state.cart, this.props.user);
     this.shouldResetCards = true;
-    this.setState({showModal: false}, () => {
+    this.setState({showModal: false, cart: []}, () => {
       Toast.show({
         text: 'Order generated successfully!!',
         position: 'bottom',
@@ -163,8 +164,11 @@ class ConsumerHome extends React.Component {
               <Title>Home</Title>
             </Body>
             <Right>
-              <Button hasText transparent onPress={this.createOrderSummary}>
-                <Text>Buy</Text>
+              <Button transparent onPress={this.createOrderSummary}>
+                <Icon name="ios-cart" />
+                <Badge>
+                  <Text>{this.state.cart.length}</Text>
+                </Badge>
               </Button>
             </Right>
           </Header>
@@ -236,7 +240,7 @@ class ConsumerHome extends React.Component {
           </View>
           <Modal isVisible={this.state.showModal}>
             <View style={styles.modal}>
-              <OrderSummary items={this.cart} />
+              <OrderSummary items={this.state.cart} />
               <View style={styles.modalActions}>
                 <Button onPress={this.confirmOrderSummary}>
                   <Text>Confirm</Text>
