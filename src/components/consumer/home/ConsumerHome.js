@@ -79,11 +79,19 @@ class ConsumerHome extends React.Component {
     let cartItemIndex = this.state.cart.findIndex(
       (value) => value.id === item.id,
     );
+    let updatedCart = this.state.cart;
     if (cartItemIndex == -1) {
-      let updatedCart = this.state.cart;
       updatedCart.push(item);
-      this.setState({cart: updatedCart});
+    } else {
+      if (item.selectedValue == 0) {
+        updatedCart.splice(cartItemIndex, 1);
+      }
     }
+
+    this.setState({
+      cart: updatedCart,
+      showModal: this.state.showModal ? updatedCart.length > 0 : false,
+    });
   };
 
   updateCategory = (category) => {
@@ -240,7 +248,11 @@ class ConsumerHome extends React.Component {
           </View>
           <Modal isVisible={this.state.showModal}>
             <View style={styles.modal}>
-              <OrderSummary items={this.state.cart} />
+              <OrderSummary
+                items={this.state.cart}
+                createOrder
+                summaryAction={(item) => this.updateQuantityForItem(item, '-1')}
+              />
               <View style={styles.modalActions}>
                 <Button onPress={this.confirmOrderSummary}>
                   <Text>Confirm</Text>
@@ -272,7 +284,6 @@ const styles = StyleSheet.create({
   modal: {
     opacity: 0.9,
     bottom: 0,
-    backgroundColor: 'white',
   },
   modalActions: {
     flexDirection: 'row',

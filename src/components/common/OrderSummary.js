@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {List, ListItem, Text} from 'native-base';
+import {List, ListItem, Text, Button, Icon} from 'native-base';
 import {QUANTITIES} from '../../constants/Enums';
 
 function showQuantity(item) {
@@ -28,6 +28,11 @@ export default OrderSummary = (props) => {
               <Text>{item.name}</Text>
               <Text>{item.bundleSize}</Text>
               <Text>{showQuantity(item)}</Text>
+              {props.createOrder && (
+                <Button transparent onPress={() => props.summaryAction(item)}>
+                  <Icon name="remove-circle-outline" />
+                </Button>
+              )}
             </ListItem>
           );
         })}
@@ -40,6 +45,8 @@ const styles = StyleSheet.create({
   listBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: 'white',
+    paddingLeft: 20,
   },
   notAvailable: {
     backgroundColor: 'tomato',
