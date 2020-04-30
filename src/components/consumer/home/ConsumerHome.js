@@ -229,7 +229,7 @@ class ConsumerHome extends React.Component {
                 <Text>{CATEGORIES.FRUITS}</Text>
               </Button>
             </Segment>
-            <ScrollView keyboardDismissMode="on-drag">
+            <ScrollView style={styles.scrollview} keyboardDismissMode="on-drag">
               <List>
                 {this.state.filtredItems &&
                   this.state.filtredItems.length > 0 &&
@@ -281,11 +281,16 @@ const styles = StyleSheet.create({
   body: {
     width: '100%',
   },
+  scrollview: {
+    marginBottom: 220,
+  },
   modal: {
+    top: 40,
     opacity: 0.9,
-    bottom: 0,
+    marginBottom: 100,
   },
   modalActions: {
+    top: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
