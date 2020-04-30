@@ -2,7 +2,7 @@ import React from 'react';
 import {StatusBar, SafeAreaView, StyleSheet, View} from 'react-native';
 import {Item, Label, Input, Button, Text, Toast, Root} from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {getUser} from '../../actions/UserActions';
+import {getUser, saveUser} from '../../actions/UserActions';
 import {connect} from 'react-redux';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
@@ -15,11 +15,33 @@ class Login extends React.Component {
       mobileNumber: '',
       confirmResult: null,
     };
+    this.preLoggedUser = undefined;
+  }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user && !this.preLoggedUser) {
+        this.preLoggedUser = user;
+        this.props.getUser(user._user.phoneNumber.replace('+91', ''));
+      }
+    });
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.user && prevProps.user !== this.props.user) {
-      this.handleSendCode();
+      if (this.preLoggedUser) {
+        this.preLoggedUser = undefined;
+        this.props.saveUser(this.props.user);
+        if (this.props.user.type === USER_TYPES.Consumer) {
+          this.props.navigation.navigate('Consumer');
+        } else {
+          this.props.navigation.navigate('Seller');
+        }
+      } else {
+        if (Platform.OS == 'ios') {
+          this.handleSendCode();
+        }
+      }
     }
   }
 
@@ -103,20 +125,20 @@ class Login extends React.Component {
                 warning
                 onPress={() => {
                   this.props.navigation.navigate('Signup', {
-                    userType: USER_TYPES.Consumer,
+                    userType: USER_TYPES.Seller,
                   });
                 }}>
-                <Text>Sign Up as Customer</Text>
+                <Text>Sign Up as Seller</Text>
               </Button>
               <Button
                 rounded
                 warning
                 onPress={() => {
                   this.props.navigation.navigate('Signup', {
-                    userType: USER_TYPES.Seller,
+                    userType: USER_TYPES.Consumer,
                   });
                 }}>
-                <Text>Sign Up as Seller</Text>
+                <Text>Sign Up as Customer</Text>
               </Button>
             </View>
           </View>
@@ -163,6 +185,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getUser: (mobileNumber) => dispatch(getUser(mobileNumber)),
+    saveUser: (user) => dispatch(saveUser(user)),
   };
 };
 

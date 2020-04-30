@@ -1,16 +1,49 @@
 import React from 'react';
-import {StatusBar, SafeAreaView, StyleSheet} from 'react-native';
+import {StatusBar, SafeAreaView, StyleSheet, Platform} from 'react-native';
 import {Item, Label, Input, Button, Text, View, Separator} from 'native-base';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {USER_TYPES} from '../../constants/Enums';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
+import {addNewUser} from '../../actions/UserActions';
+import {connect} from 'react-redux';
 
-export default class SignUp extends React.Component {
+class SignUp extends React.Component {
   constructor() {
     super();
     this.username = '';
     this.mobileNumber = '';
     this.address = {};
+    this.confirmResult = undefined;
+  }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        if (Platform.OS == 'android') {
+          let user = {
+            name: this.username,
+            mobileNumber: this.mobileNumber,
+            address: this.address,
+            type: this.props.navigation.state.params.userType,
+          };
+          this.props.addNewUser(user);
+          if (
+            this.props.navigation.state.params.userType === USER_TYPES.Consumer
+          ) {
+            this.props.navigation.navigate('Consumer');
+          } else {
+            this.props.navigation.navigate('Seller');
+          }
+        }
+      } else if (this.confirmResult) {
+        this.props.navigation.navigate('OTP', {
+          user,
+          isNewUser: true,
+          confirmResult: this.confirmResult,
+        });
+      }
+    });
   }
 
   signupUser = () => {
@@ -25,11 +58,15 @@ export default class SignUp extends React.Component {
       .auth()
       .signInWithPhoneNumber('+91' + this.mobileNumber)
       .then((confirmResult) => {
-        this.props.navigation.navigate('OTP', {
-          user,
-          isNewUser: true,
-          confirmResult: confirmResult,
-        });
+        this.confirmResult = confirmResult;
+
+        if (Platform.OS == 'ios') {
+          this.props.navigation.navigate('OTP', {
+            user,
+            isNewUser: true,
+            confirmResult: confirmResult,
+          });
+        }
       })
       .catch((error) => {
         alert(error.message);
@@ -135,6 +172,11 @@ export default class SignUp extends React.Component {
           <Button rounded style={styles.actions} onPress={this.signupUser}>
             <Text>SignUp</Text>
           </Button>
+          <Spinner
+            visible={this.props.isLoading}
+            textContent={'Loading...'}
+            textStyle={{color: '#fff'}}
+          />
         </SafeAreaView>
       </>
     );
@@ -147,3 +189,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 });
+
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.user.isLoading,
+    error: state.user.error,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addNewUser: (user) => dispatch(addNewUser(user)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

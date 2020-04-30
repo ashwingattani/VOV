@@ -4,6 +4,8 @@ import {Header, Body, Title, Text, Button, Switch} from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {connect} from 'react-redux';
 import {updateUser} from '../../../actions/UserActions';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/auth';
 class SellerProfile extends React.Component {
   constructor() {
     super();
@@ -55,7 +57,15 @@ class SellerProfile extends React.Component {
         <Button
           style={styles.actions}
           onPress={() => {
-            this.props.navigation.navigate('Login');
+            firebase
+              .auth()
+              .signOut()
+              .then(function () {
+                this.props.navigation.navigate('Login');
+              })
+              .catch(function (error) {
+                // An error happened.
+              });
           }}>
           <Text> Logout </Text>
         </Button>

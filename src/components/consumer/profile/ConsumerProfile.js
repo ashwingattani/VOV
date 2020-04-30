@@ -2,6 +2,8 @@ import React from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {Text, Header, Body, Title, Button} from 'native-base';
 import {connect} from 'react-redux';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/auth';
 
 class ConsumerProfile extends React.Component {
   constructor() {
@@ -48,6 +50,15 @@ class ConsumerProfile extends React.Component {
         <Button
           style={styles.actions}
           onPress={() => {
+            firebase
+              .auth()
+              .signOut()
+              .then(function () {})
+              .catch(function (error) {
+                // An error happened.
+                console.log(error);
+              });
+
             this.props.navigation.navigate('Login');
           }}>
           <Text> Logout </Text>
