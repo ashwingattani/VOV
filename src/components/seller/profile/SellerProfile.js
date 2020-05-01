@@ -36,36 +36,39 @@ class SellerProfile extends React.Component {
             <Title>Profile</Title>
           </Body>
         </Header>
-        <View style={styles.userInfoContainer}>
-          <View style={styles.personalDetails}>
-            <View style={styles.userInfo}>
-              <Text> {this.state.user.name} </Text>
+        {this.state.user && (
+          <View style={styles.userInfoContainer}>
+            <View style={styles.personalDetails}>
+              <View style={styles.userInfo}>
+                <Text> {this.state.user.name} </Text>
+              </View>
+              <View style={styles.userInfo}>
+                <Text> {this.state.user.mobileNumber} </Text>
+              </View>
             </View>
-            <View style={styles.userInfo}>
-              <Text> {this.state.user.mobileNumber} </Text>
+            <View style={styles.addressDetails}>
+              <View style={styles.userInfo}>
+                <Text> {this.state.user.address.houseName} </Text>
+              </View>
+              <View style={styles.userInfo}>
+                <Text> {this.state.user.address.pincode} </Text>
+              </View>
             </View>
           </View>
-          <View style={styles.addressDetails}>
-            <View style={styles.userInfo}>
-              <Text> {this.state.user.address.houseName} </Text>
-            </View>
-            <View style={styles.userInfo}>
-              <Text> {this.state.user.address.pincode} </Text>
-            </View>
-          </View>
-        </View>
+        )}
         <Button
           style={styles.actions}
           onPress={() => {
             firebase
               .auth()
               .signOut()
-              .then(function () {
-                this.props.navigation.navigate('Login');
-              })
+              .then(function () {})
               .catch(function (error) {
                 // An error happened.
+                console.log(error);
               });
+
+            this.props.navigation.navigate('Login');
           }}>
           <Text> Logout </Text>
         </Button>
