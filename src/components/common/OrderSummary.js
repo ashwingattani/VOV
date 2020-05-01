@@ -25,7 +25,9 @@ export default OrderSummary = (props) => {
                 styles.listBox,
                 !item.isAvailable == false ? styles.notAvailable : {},
               ]}>
-              <Text>{item.name}</Text>
+              <Text lineBreakMode="tail" style={{width: 100}}>
+                {item.name}
+              </Text>
               <Text>{item.bundleSize}</Text>
               <Text>{showQuantity(item)}</Text>
               {props.createOrder && (

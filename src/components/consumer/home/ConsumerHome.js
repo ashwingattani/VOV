@@ -280,6 +280,7 @@ class ConsumerHome extends React.Component {
 const styles = StyleSheet.create({
   body: {
     width: '100%',
+    backgroundColor: 'white',
   },
   scrollview: {
     marginBottom: 220,

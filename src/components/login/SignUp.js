@@ -21,20 +21,25 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import {USER_TYPES, REGEX} from '../../constants/Enums';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
-import {addNewUser} from '../../actions/UserActions';
+import {addNewUser, getUser} from '../../actions/UserActions';
 import {connect} from 'react-redux';
 
 class SignUp extends React.Component {
   constructor() {
     super();
+    this.state = {
+      user: undefined,
+    };
+
     this.username = '';
     this.mobileNumber = '';
     this.address = {};
     this.confirmResult = undefined;
+    this.authSubscriber = undefined;
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged((user) => {
+    this.authSubscriber = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         if (Platform.OS == 'android') {
           let user = {
@@ -62,36 +67,92 @@ class SignUp extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    if (this.authSubscriber) {
+      this.authSubscriber();
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.user && nextProps.user !== prevState.user) {
+      return {user: nextProps.user};
+    }
+    return null;
+  }
+
+  componentDidUpdate() {
+    if (this.state.user) {
+      Toast.show({
+        text:
+          'User with this mobile number exists, please login or signup with another mobile number',
+        position: 'bottom',
+        type: 'warning',
+        duration: 1000,
+        onClose: () => {
+          this.setState({user: undefined});
+        },
+      });
+    } else {
+      if (!this.confirmResult) {
+        this.authenticateUserForSignup();
+      }
+    }
+  }
+
   validateFields = () => {
     let isNameValid = REGEX.name.test(this.username);
     let isMobileNumberValid = REGEX.phone.test('+91' + this.mobileNumber);
-    let isHouseNumberValid = REGEX.address.test(this.address.houseNumber);
+    let isHouseNumberValid = REGEX.houseNumber.test(this.address.houseNumber);
     let isHouseNameValid = REGEX.address.test(this.address.houseName);
     let isStreetValid = REGEX.address.test(this.address.street);
     let isPinCodeValid = REGEX.pincode.test(this.address.pincode);
 
-    return (
-      isNameValid &&
-      isMobileNumberValid &&
-      isHouseNumberValid &&
-      isHouseNameValid &&
-      isStreetValid &&
-      isPinCodeValid
-    );
-  };
-
-  signupUser = () => {
-    Keyboard.dismiss();
-    if (!this.validateFields()) {
+    if (!isNameValid) {
       Toast.show({
-        text: 'Please provide all details',
+        text: 'Please enter valid name',
         position: 'bottom',
         type: 'warning',
         duration: 1000,
       });
-      return;
+      return false;
     }
 
+    if (!isMobileNumberValid) {
+      Toast.show({
+        text: 'Please enter valid mobile number',
+        position: 'bottom',
+        type: 'warning',
+        duration: 1000,
+      });
+      return false;
+    }
+
+    if (
+      !isHouseNumberValid ||
+      !isHouseNameValid ||
+      !isStreetValid ||
+      !isPinCodeValid
+    ) {
+      Toast.show({
+        text: 'Please enter valid address details',
+        position: 'bottom',
+        type: 'warning',
+        duration: 5000,
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  signupUser = () => {
+    Keyboard.dismiss();
+    if (this.validateFields()) {
+      this.props.getUser(this.mobileNumber);
+    }
+  };
+
+  authenticateUserForSignup = () => {
     let user = {
       name: this.username,
       mobileNumber: this.mobileNumber,
@@ -130,6 +191,7 @@ class SignUp extends React.Component {
             <Label> Name </Label>
             <Input
               autoCapitalize="words"
+              autoCorrect={false}
               onChangeText={(text) => {
                 this.username = text;
               }}
@@ -153,7 +215,8 @@ class SignUp extends React.Component {
               <Item placeholderLabel>
                 <Label> House Number </Label>
                 <Input
-                  autoCapitalize="words"
+                  placeholder="Eg. A-210 or AB-210"
+                  autoCorrect={false}
                   onChangeText={(text) => {
                     this.address.houseNumber = text;
                   }}
@@ -163,6 +226,7 @@ class SignUp extends React.Component {
                 <Label> House Name </Label>
                 <Input
                   autoCapitalize="words"
+                  autoCorrect={false}
                   onChangeText={(text) => {
                     this.address.houseName = text;
                   }}
@@ -172,6 +236,7 @@ class SignUp extends React.Component {
                 <Label> Street </Label>
                 <Input
                   multiline={true}
+                  autoCorrect={false}
                   style={{
                     height: 50,
                   }}
@@ -197,6 +262,7 @@ class SignUp extends React.Component {
                 <Label> Shop Name </Label>
                 <Input
                   autoCapitalize="words"
+                  autoCorrect={false}
                   onChangeText={(text) => {
                     this.address.houseName = text;
                   }}
@@ -239,12 +305,14 @@ const mapStateToProps = (state) => {
   return {
     isLoading: state.user.isLoading,
     error: state.user.error,
+    user: state.user.user,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addNewUser: (user) => dispatch(addNewUser(user)),
+    getUser: (mobileNumber) => dispatch(getUser(mobileNumber)),
   };
 };
 

@@ -22,15 +22,22 @@ class Login extends React.Component {
       confirmResult: null,
     };
     this.preLoggedUser = undefined;
+    this.authSubscriber = undefined;
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged((user) => {
+    this.authSubscriber = firebase.auth().onAuthStateChanged((user) => {
       if (user && !this.preLoggedUser) {
         this.preLoggedUser = user;
         this.props.getUser(user._user.phoneNumber.replace('+91', ''));
       }
     });
+  }
+
+  componentWillUnmount() {
+    if (this.authSubscriber) {
+      this.authSubscriber();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -44,9 +51,7 @@ class Login extends React.Component {
           this.props.navigation.navigate('Seller');
         }
       } else {
-        if (Platform.OS == 'ios') {
-          this.handleSendCode();
-        }
+        this.handleSendCode();
       }
     }
   }

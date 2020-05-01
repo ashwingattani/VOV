@@ -27,26 +27,28 @@ class ConsumerProfile extends React.Component {
             <Title>Profile</Title>
           </Body>
         </Header>
-        <View style={styles.userInfoContainer}>
-          <View style={styles.personalDetails}>
-            <View style={styles.userInfo}>
-              <Text> {this.state.user.name} </Text>
+        {this.state.user && (
+          <View style={styles.userInfoContainer}>
+            <View style={styles.personalDetails}>
+              <View style={styles.userInfo}>
+                <Text> {this.state.user.name} </Text>
+              </View>
+              <View style={styles.userInfo}>
+                <Text> {this.state.user.mobileNumber} </Text>
+              </View>
             </View>
-            <View style={styles.userInfo}>
-              <Text> {this.state.user.mobileNumber} </Text>
+            <View style={styles.addressDetails}>
+              <View style={styles.userInfo}>
+                <Text> {this.state.user.address.houseNumber} </Text>
+                <Text> {this.state.user.address.houseName} </Text>
+              </View>
+              <View style={styles.userInfo}>
+                <Text> {this.state.user.address.street} </Text>
+                <Text> {this.state.user.address.pincode} </Text>
+              </View>
             </View>
           </View>
-          <View style={styles.addressDetails}>
-            <View style={styles.userInfo}>
-              <Text> {this.state.user.address.houseNumber} </Text>
-              <Text> {this.state.user.address.houseName} </Text>
-            </View>
-            <View style={styles.userInfo}>
-              <Text> {this.state.user.address.street} </Text>
-              <Text> {this.state.user.address.pincode} </Text>
-            </View>
-          </View>
-        </View>
+        )}
         <Button
           style={styles.actions}
           onPress={() => {

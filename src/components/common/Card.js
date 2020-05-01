@@ -23,6 +23,7 @@ export default class Card extends React.Component {
     if (nextProps.shouldReset) {
       return {selectedValue: '1'};
     }
+    return null;
   }
 
   addItemToCart = () => {
