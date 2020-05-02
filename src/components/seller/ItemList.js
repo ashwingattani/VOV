@@ -69,7 +69,15 @@ class ItemList extends React.Component {
   updateOrdersStatus = () => {
     if (this.unAvailableItems.length > 0) {
       this.props.currentOrders.forEach((order) => {
-        this.props.updateItemsForOrder(order, this.unAvailableItems);
+        let commonItems = order.items.filter((item) => {
+          let index = this.unAvailableItems.findIndex(
+            (value) => value.id == item.id,
+          );
+          return index !== -1;
+        });
+        if (commonItems && commonItems.length > 0) {
+          this.props.updateItemsForOrder(order, commonItems);
+        }
       });
     }
     this.props.navigation.goBack();

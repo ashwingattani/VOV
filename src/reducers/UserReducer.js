@@ -8,31 +8,38 @@ export default userReducer = (state = {}, action) => {
       };
     case UserTypes.GET_USER:
       return {
+        ...state,
         error: undefined,
         isLoading: true,
       };
     case UserTypes.GET_USER_SUCCESS:
       return {
+        ...state,
         user: action.payload.data,
         isLoading: false,
         error: undefined,
       };
     case UserTypes.GET_USER_FAIL:
       return {
+        ...state,
         error: action.error.response.request._response,
         isLoading: false,
       };
     case UserTypes.ADD_NEW_USER:
       return {
+        ...state,
         isLoading: true,
       };
     case UserTypes.ADD_NEW_USER_SUCCESS:
       return {
+        ...state,
         loggedinUser: action.payload.data,
         isLoading: false,
+        error: undefined,
       };
     case UserTypes.ADD_NEW_USER_FAIL:
       return {
+        ...state,
         error: action.error.response.request._response,
         isLoading: false,
       };
