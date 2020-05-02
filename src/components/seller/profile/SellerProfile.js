@@ -64,6 +64,13 @@ class SellerProfile extends React.Component {
                 <Text> {this.state.user.address.pincode} </Text>
               </View>
             </View>
+            <View style={styles.switch}>
+              <Text>Online</Text>
+              <Switch
+                value={this.state.user.isOnline}
+                onValueChange={this.updateUserStatus}
+              />
+            </View>
           </View>
         )}
         <Button
@@ -82,13 +89,6 @@ class SellerProfile extends React.Component {
           }}>
           <Text> Logout </Text>
         </Button>
-        <View style={styles.switch}>
-          <Text>Online</Text>
-          <Switch
-            value={this.state.user.isOnline}
-            onValueChange={this.updateUserStatus}
-          />
-        </View>
         <Spinner
           visible={this.props.isLoading}
           textContent={'Loading...'}
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   switch: {
     flexDirection: 'row',
-    top: 20,
+    top: 80,
     alignSelf: 'center',
   },
 });
