@@ -38,6 +38,12 @@ class ItemList extends React.Component {
     headerMode: 'none',
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.error && this.props.error !== prevProps.error) {
+      showToast(this.props.error, 'danger');
+    }
+  }
+
   componentDidMount() {
     if (this.state.items.length == 0) {
       this.props.getVegetableList();

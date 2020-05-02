@@ -3,15 +3,25 @@ import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {Header, Body, Title, Text, Button, Switch} from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {connect} from 'react-redux';
-import {updateUser} from '../../../actions/UserActions';
+import {updateUser, logoutUser} from '../../../actions/UserActions';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
+import {showToast} from '../../../constants/utils';
 class SellerProfile extends React.Component {
   constructor() {
     super();
     this.state = {
       user: {},
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.error && this.props.error !== prevProps.error) {
+      showToast(this.props.error, 'danger');
+    }
+    if (this.state.user == undefined) {
+      this.props.navigation.navigate('Login');
+    }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -68,7 +78,7 @@ class SellerProfile extends React.Component {
                 console.log(error);
               });
 
-            this.props.navigation.navigate('Login');
+            this.props.logoutUser();
           }}>
           <Text> Logout </Text>
         </Button>
@@ -128,6 +138,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (user) => dispatch(updateUser(user)),
+    logoutUser: () => dispatch(logoutUser()),
   };
 };
 

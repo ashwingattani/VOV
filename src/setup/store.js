@@ -26,7 +26,8 @@ const options = {
         success: ({dispatch}, response) => {
           // Response interception
           if (response.status == 204) {
-            let error = {data: 'No Data Found'};
+            response.request._response = 'No Content Found!';
+            let error = {response: response};
             return Promise.reject(error);
           }
           return response;

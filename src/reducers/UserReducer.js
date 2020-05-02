@@ -19,7 +19,7 @@ export default userReducer = (state = {}, action) => {
       };
     case UserTypes.GET_USER_FAIL:
       return {
-        error: action.error,
+        error: action.error.response.request._response,
         isLoading: false,
       };
     case UserTypes.ADD_NEW_USER:
@@ -33,13 +33,13 @@ export default userReducer = (state = {}, action) => {
       };
     case UserTypes.ADD_NEW_USER_FAIL:
       return {
-        error: action.error,
+        error: action.error.response.request._response,
         isLoading: false,
       };
     case UserTypes.LOGOUT:
       return {
-        loggedinUser: {},
-        user: {},
+        loggedinUser: undefined,
+        user: undefined,
         error: undefined,
         isLoading: false,
         logoutSuccessfull: true,

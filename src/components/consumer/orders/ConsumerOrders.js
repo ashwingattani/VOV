@@ -17,6 +17,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import OrderItem from '../../common/OrderItem';
 import {getOpenOrders, getOrderHistory} from '../../../actions/OrderActions';
 import {connect} from 'react-redux';
+import {showToast} from '../../../constants/utils';
 
 class ConsumerOrders extends React.Component {
   constructor() {
@@ -29,6 +30,12 @@ class ConsumerOrders extends React.Component {
 
   componentDidMount() {
     this.fetchOrders();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.error && this.props.error !== prevProps.error) {
+      showToast(this.props.error, 'danger');
+    }
   }
 
   fetchOrders = () => {

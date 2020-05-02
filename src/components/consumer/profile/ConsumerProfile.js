@@ -2,6 +2,7 @@ import React from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {Text, Header, Body, Title, Button} from 'native-base';
 import {connect} from 'react-redux';
+import {logoutUser} from '../../../actions/UserActions';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 
@@ -9,7 +10,7 @@ class ConsumerProfile extends React.Component {
   constructor() {
     super();
     this.state = {
-      user: {},
+      user: undefined,
     };
   }
 
@@ -17,6 +18,12 @@ class ConsumerProfile extends React.Component {
     if (nextProps.user !== prevState.user) {
       return {user: nextProps.user};
     } else return null;
+  }
+
+  componentDidUpdate() {
+    if (this.state.user == undefined) {
+      this.props.navigation.navigate('Login');
+    }
   }
 
   render() {
@@ -61,7 +68,7 @@ class ConsumerProfile extends React.Component {
                 console.log(error);
               });
 
-            this.props.navigation.navigate('Login');
+            this.props.logoutUser();
           }}>
           <Text> Logout </Text>
         </Button>
@@ -99,4 +106,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(ConsumerProfile);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logoutUser: () => dispatch(logoutUser()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConsumerProfile);

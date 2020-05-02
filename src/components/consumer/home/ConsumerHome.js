@@ -15,7 +15,6 @@ import {
   Body,
   Title,
   Left,
-  Toast,
   Root,
   Segment,
   Item,
@@ -28,7 +27,7 @@ import Modal from 'react-native-modal';
 import Card from '../../common/Card';
 import OrderSummary from '../../common/OrderSummary';
 import {getVegetableList, createOrder} from '../../../actions/OrderActions';
-import {camelize} from '../../../constants/utils';
+import {camelize, showToast} from '../../../constants/utils';
 import {connect} from 'react-redux';
 import {CATEGORIES} from '../../../constants/Enums';
 
@@ -62,8 +61,11 @@ class ConsumerHome extends React.Component {
     } else return null;
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.shouldResetCards = false;
+    if (this.props.error && this.props.error !== prevProps.error) {
+      showToast(this.props.error, 'danger');
+    }
   }
 
   updateQuantityForItem = (item, selectedValue) => {
@@ -123,12 +125,7 @@ class ConsumerHome extends React.Component {
 
   createOrderSummary = () => {
     if (this.state.cart.length === 0) {
-      Toast.show({
-        text: 'Please add items to the cart before proceeding!',
-        position: 'bottom',
-        type: 'warning',
-        duration: 5000,
-      });
+      showToast('Please add items to the cart before proceeding!', 'warning');
     } else {
       this.setState({showModal: true});
     }
@@ -138,12 +135,7 @@ class ConsumerHome extends React.Component {
     this.props.createOrder(this.state.cart, this.props.user);
     this.shouldResetCards = true;
     this.setState({showModal: false, cart: []}, () => {
-      Toast.show({
-        text: 'Order generated successfully!!',
-        position: 'bottom',
-        type: 'success',
-        duration: 5000,
-      });
+      showToast('Order generated successfully!', 'success');
     });
   };
 

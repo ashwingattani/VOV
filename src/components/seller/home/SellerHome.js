@@ -14,6 +14,7 @@ import {
 import Spinner from 'react-native-loading-spinner-overlay';
 import {getOpenOrders} from '../../../actions/OrderActions';
 import {connect} from 'react-redux';
+import {showToast} from '../../../constants/utils';
 
 class SellerHome extends React.Component {
   constructor() {
@@ -30,6 +31,12 @@ class SellerHome extends React.Component {
   componentDidMount() {
     if (this.state.currentOrders.length == 0) {
       this.props.getOpenOrders(this.props.user);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.error && this.props.error !== prevProps.error) {
+      showToast(this.props.error, 'danger');
     }
   }
 

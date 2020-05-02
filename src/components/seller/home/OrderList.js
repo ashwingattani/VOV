@@ -13,6 +13,7 @@ import {
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {ORDER_STATUS} from '../../../constants/Enums';
 import {updateOrderStatus} from '../../../actions/OrderActions';
+import {showToast} from '../../../constants/utils';
 
 class OrderList extends React.Component {
   constructor() {
@@ -22,6 +23,12 @@ class OrderList extends React.Component {
   static navigationOptions = {
     headerBackTitle: 'Orders',
   };
+
+  componentDidUpdate(prevProps) {
+    if (this.props.error && this.props.error !== prevProps.error) {
+      showToast(this.props.error, 'danger');
+    }
+  }
 
   updateOrder = (order, orderStatus) => {
     order.status = orderStatus;
@@ -93,4 +100,10 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(OrderList);
+const mapStateToProps = (state) => {
+  return {
+    error: state.order.error,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderList);

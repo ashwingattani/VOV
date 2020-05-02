@@ -4,6 +4,7 @@ import {Header, Title, ListItem, Label, Text, Icon} from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {getOrderHistory} from '../../../actions/OrderActions';
 import {connect} from 'react-redux';
+import {showToast} from '../../../constants/utils';
 
 class SellerOrders extends React.Component {
   constructor() {
@@ -16,6 +17,12 @@ class SellerOrders extends React.Component {
   componentDidMount() {
     if (this.state.orderHistory.length == 0) {
       this.props.getOrderHistory(this.props.user);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.error && this.props.error !== prevProps.error) {
+      showToast(this.props.error, 'danger');
     }
   }
 

@@ -6,13 +6,14 @@ import {
   View,
   Keyboard,
 } from 'react-native';
-import {Item, Label, Input, Button, Text, Toast, Root} from 'native-base';
+import {Item, Label, Input, Button, Text, Root} from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {getUser, saveUser} from '../../actions/UserActions';
 import {connect} from 'react-redux';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 import {USER_TYPES} from '../../constants/Enums';
+import {showToast} from '../../constants/utils';
 
 class Login extends React.Component {
   constructor() {
@@ -54,6 +55,9 @@ class Login extends React.Component {
         this.handleSendCode();
       }
     }
+    if (this.props.error && this.props.error !== prevProps.error) {
+      showToast(this.props.error, 'danger');
+    }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -70,12 +74,7 @@ class Login extends React.Component {
     if (this.validatePhoneNumber()) {
       this.props.getUser(this.state.mobileNumber);
     } else {
-      Toast.show({
-        text: 'Invalid Phone Number',
-        position: 'bottom',
-        type: 'warning',
-        duration: 5000,
-      });
+      showToast('Invalid Phone Number', 'warning');
     }
   };
 

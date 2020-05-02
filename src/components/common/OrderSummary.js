@@ -5,7 +5,7 @@ import {QUANTITIES} from '../../constants/Enums';
 
 function showQuantity(item) {
   let selectedValue = QUANTITIES.find(
-    (quantity) => quantity.value === item.selectedValue,
+    (quantity) => quantity.value === parseInt(item.selectedValue),
   );
   if (selectedValue) {
     return selectedValue.label;

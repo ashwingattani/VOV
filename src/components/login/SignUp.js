@@ -14,7 +14,6 @@ import {
   Text,
   View,
   Separator,
-  Toast,
   Root,
 } from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -23,6 +22,7 @@ import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 import {addNewUser, getUser} from '../../actions/UserActions';
 import {connect} from 'react-redux';
+import {showToast} from '../../constants/utils';
 
 class SignUp extends React.Component {
   constructor() {
@@ -82,16 +82,13 @@ class SignUp extends React.Component {
 
   componentDidUpdate() {
     if (this.state.user) {
-      Toast.show({
-        text:
-          'User with this mobile number exists, please login or signup with another mobile number',
-        position: 'bottom',
-        type: 'warning',
-        duration: 5000,
-        onClose: () => {
+      showToast(
+        'User with this mobile number exists, please login or signup with another mobile number',
+        'warning',
+        () => {
           this.setState({user: undefined});
         },
-      });
+      );
     } else {
       if (!this.confirmResult) {
         this.authenticateUserForSignup();
@@ -108,22 +105,12 @@ class SignUp extends React.Component {
     let isPinCodeValid = REGEX.pincode.test(this.address.pincode);
 
     if (!isNameValid) {
-      Toast.show({
-        text: 'Please enter valid name',
-        position: 'bottom',
-        type: 'warning',
-        duration: 5000,
-      });
+      showToast('Please enter valid name', 'warning');
       return false;
     }
 
     if (!isMobileNumberValid) {
-      Toast.show({
-        text: 'Please enter valid mobile number',
-        position: 'bottom',
-        type: 'warning',
-        duration: 5000,
-      });
+      showToast('Please enter valid mobile number', 'warning');
       return false;
     }
 
@@ -134,22 +121,12 @@ class SignUp extends React.Component {
         !isStreetValid ||
         !isPinCodeValid
       ) {
-        Toast.show({
-          text: 'Please enter valid address details',
-          position: 'bottom',
-          type: 'warning',
-          duration: 5000,
-        });
+        showToast('Please enter valid address details', 'warning');
         return false;
       }
     } else {
       if (!isHouseNameValid || !isPinCodeValid) {
-        Toast.show({
-          text: 'Please enter valid address details',
-          position: 'bottom',
-          type: 'warning',
-          duration: 5000,
-        });
+        showToast('Please enter valid name', 'warning');
         return false;
       }
     }
