@@ -74,7 +74,7 @@ class Login extends React.Component {
         text: 'Invalid Phone Number',
         position: 'bottom',
         type: 'warning',
-        duration: 1000,
+        duration: 5000,
       });
     }
   };

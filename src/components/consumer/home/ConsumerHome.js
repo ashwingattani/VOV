@@ -127,7 +127,7 @@ class ConsumerHome extends React.Component {
         text: 'Please add items to the cart before proceeding!',
         position: 'bottom',
         type: 'warning',
-        duration: 1000,
+        duration: 5000,
       });
     } else {
       this.setState({showModal: true});
@@ -142,7 +142,7 @@ class ConsumerHome extends React.Component {
         text: 'Order generated successfully!!',
         position: 'bottom',
         type: 'success',
-        duration: 1000,
+        duration: 5000,
       });
     });
   };

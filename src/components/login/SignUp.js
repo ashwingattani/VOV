@@ -87,7 +87,7 @@ class SignUp extends React.Component {
           'User with this mobile number exists, please login or signup with another mobile number',
         position: 'bottom',
         type: 'warning',
-        duration: 1000,
+        duration: 5000,
         onClose: () => {
           this.setState({user: undefined});
         },
@@ -112,7 +112,7 @@ class SignUp extends React.Component {
         text: 'Please enter valid name',
         position: 'bottom',
         type: 'warning',
-        duration: 1000,
+        duration: 5000,
       });
       return false;
     }
@@ -122,24 +122,36 @@ class SignUp extends React.Component {
         text: 'Please enter valid mobile number',
         position: 'bottom',
         type: 'warning',
-        duration: 1000,
+        duration: 5000,
       });
       return false;
     }
 
-    if (
-      !isHouseNumberValid ||
-      !isHouseNameValid ||
-      !isStreetValid ||
-      !isPinCodeValid
-    ) {
-      Toast.show({
-        text: 'Please enter valid address details',
-        position: 'bottom',
-        type: 'warning',
-        duration: 5000,
-      });
-      return false;
+    if (this.props.navigation.state.params.userType === USER_TYPES.Consumer) {
+      if (
+        !isHouseNumberValid ||
+        !isHouseNameValid ||
+        !isStreetValid ||
+        !isPinCodeValid
+      ) {
+        Toast.show({
+          text: 'Please enter valid address details',
+          position: 'bottom',
+          type: 'warning',
+          duration: 5000,
+        });
+        return false;
+      }
+    } else {
+      if (!isHouseNameValid || !isPinCodeValid) {
+        Toast.show({
+          text: 'Please enter valid address details',
+          position: 'bottom',
+          type: 'warning',
+          duration: 5000,
+        });
+        return false;
+      }
     }
 
     return true;
