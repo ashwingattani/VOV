@@ -36,7 +36,7 @@ export const URLS = {
 export const REGEX = {
   email: /^[ \w-+.]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}[ ]*$/,
   name: /[a-zA-Z]+('[a-zA-Z])?[a-zA-Z]*/,
-  houseNumber: /^[a-zA-Z]{1,2}-\d{1,4}$/,
+  houseNumber: /[A-Za-z0-9'.\-\s,]{1,10}/,
   address: /[A-Za-z0-9'.\-\s,]{5,30}/,
   phone: /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/,
   about: /[A-Za-z]{1,50}/,

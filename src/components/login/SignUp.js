@@ -100,7 +100,7 @@ class SignUp extends React.Component {
   validateFields = () => {
     let isNameValid = REGEX.name.test(this.username);
     let isMobileNumberValid = REGEX.phone.test('+91' + this.mobileNumber);
-    let isHouseNumberValid = REGEX.address.test(this.address.houseNumber);
+    let isHouseNumberValid = REGEX.houseNumber.test(this.address.houseNumber);
     let isHouseNameValid = REGEX.address.test(this.address.houseName);
     let isStreetValid = REGEX.address.test(this.address.street);
     let isPinCodeValid = REGEX.pincode.test(this.address.pincode);
@@ -111,23 +111,42 @@ class SignUp extends React.Component {
     }
 
     if (!isMobileNumberValid) {
-      showToast('Please enter valid mobile number', 'warning');
+      showToast(
+        'Please enter valid mobile number, do not add country code (+91)',
+        'warning',
+      );
+      return false;
+    }
+
+    if (!isPinCodeValid) {
+      showToast(
+        'Please enter valid Pincode, Pincode should be of 6 digit',
+        'warning',
+      );
+      return false;
+    }
+
+    if (!isHouseNameValid) {
+      showToast(
+        'Please enter valid house name, should be of minimum 5 characters',
+        'warning',
+      );
       return false;
     }
 
     if (this.props.navigation.state.params.userType === USER_TYPES.Consumer) {
-      if (
-        !isHouseNumberValid ||
-        !isHouseNameValid ||
-        !isStreetValid ||
-        !isPinCodeValid
-      ) {
-        showToast('Please enter valid address details', 'warning');
+      if (!isHouseNumberValid) {
+        showToast(
+          'Please enter valid house number, should be of maximum 10 characters',
+          'warning',
+        );
         return false;
       }
-    } else {
-      if (!isHouseNameValid || !isPinCodeValid) {
-        showToast('Please enter valid name', 'warning');
+      if (!isStreetValid) {
+        showToast(
+          'Please enter valid street details, should be of minimum 5 characters',
+          'warning',
+        );
         return false;
       }
     }
