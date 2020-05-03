@@ -1,17 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import {List, ListItem, Text, Button, Icon} from 'native-base';
-import {QUANTITIES} from '../../constants/Enums';
-
-function showQuantity(item) {
-  let selectedValue = QUANTITIES.find(
-    (quantity) => quantity.value === parseInt(item.selectedValue),
-  );
-  if (selectedValue) {
-    return selectedValue.label;
-  }
-  return '';
-}
 
 export default OrderSummary = (props) => {
   return (
@@ -29,7 +18,7 @@ export default OrderSummary = (props) => {
                 {item.name}
               </Text>
               <Text>{item.bundleSize}</Text>
-              <Text>{showQuantity(item)}</Text>
+              <Text>{parseInt(item.selectedValue)}</Text>
               {props.createOrder && (
                 <Button transparent onPress={() => props.summaryAction(item)}>
                   <Icon name="remove-circle-outline" />

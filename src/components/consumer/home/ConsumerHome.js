@@ -26,7 +26,11 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import Modal from 'react-native-modal';
 import Card from '../../common/Card';
 import OrderSummary from '../../common/OrderSummary';
-import {getVegetableList, createOrder} from '../../../actions/OrderActions';
+import {
+  getVegetableList,
+  createOrder,
+  getOpenOrders,
+} from '../../../actions/OrderActions';
 import {camelize, showToast} from '../../../constants/utils';
 import {connect} from 'react-redux';
 import {CATEGORIES} from '../../../constants/Enums';
@@ -65,6 +69,10 @@ class ConsumerHome extends React.Component {
     this.shouldResetCards = false;
     if (this.props.error && this.props.error !== prevProps.error) {
       showToast(this.props.error, 'danger');
+    }
+    if (this.props.newOrder && this.props.newOrder !== prevProps.newOrder) {
+      showToast('Order generated successfully!', 'success');
+      this.props.getOpenOrders(this.props.user);
     }
   }
 
@@ -134,9 +142,7 @@ class ConsumerHome extends React.Component {
   confirmOrderSummary = () => {
     this.props.createOrder(this.state.cart, this.props.user);
     this.shouldResetCards = true;
-    this.setState({showModal: false, cart: []}, () => {
-      showToast('Order generated successfully!', 'success');
-    });
+    this.setState({showModal: false, cart: []});
   };
 
   render() {
@@ -293,6 +299,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getVegetableList: () => dispatch(getVegetableList()),
     createOrder: (cart, user) => dispatch(createOrder(cart, user)),
+    getOpenOrders: (user) => dispatch(getOpenOrders(user)),
   };
 };
 
@@ -302,6 +309,7 @@ const mapStateToProps = (state) => {
     items: state.order.items,
     error: state.order.error,
     isLoading: state.order.isLoading,
+    newOrder: state.order.newOrder,
   };
 };
 

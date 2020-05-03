@@ -37,18 +37,20 @@ export default orderReducer = (state = initialState, action) => {
     case OrderTypes.CREATE_ORDER:
       return {
         ...state,
+        newOrder: false,
         isLoading: true,
       };
     case OrderTypes.CREATE_ORDER_SUCCESS:
       return {
         ...state,
-        order: action.payload.data,
+        newOrder: true,
         isLoading: false,
         error: undefined,
       };
     case OrderTypes.CREATE_ORDER_FAIL:
       return {
         ...state,
+        newOrder: false,
         error: action.error.response.request._response,
         isLoading: false,
       };

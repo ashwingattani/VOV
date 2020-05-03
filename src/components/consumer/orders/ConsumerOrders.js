@@ -39,16 +39,12 @@ class ConsumerOrders extends React.Component {
   }
 
   fetchOrders = () => {
-    if (this.state.openOrders.length == 0) {
-      this.props.getOpenOrders(this.props.user);
-    }
+    this.props.getOpenOrders(this.props.user);
+    this.props.getOrderHistory(this.props.user);
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.openOrders && nextProps.openOrders !== prevState.openOrders) {
-      if (prevState.orderHistory.length == 0) {
-        nextProps.getOrderHistory(nextProps.user);
-      }
       return {openOrders: nextProps.openOrders};
     } else if (
       nextProps.orderHistory &&
@@ -88,9 +84,7 @@ class ConsumerOrders extends React.Component {
             {this.state.openOrders.length > 0 &&
               this.state.openOrders.map((order, index) => {
                 return (
-                  <ListItem key={index}>
-                    <OrderItem item={order} isCurrentOrder={true} />
-                  </ListItem>
+                  <OrderItem key={index} item={order} isCurrentOrder={true} />
                 );
               })}
             {this.state.orderHistory.length > 0 && (
@@ -100,11 +94,7 @@ class ConsumerOrders extends React.Component {
             )}
             {this.state.orderHistory.length > 0 &&
               this.state.orderHistory.map((order, index) => {
-                return (
-                  <ListItem key={index}>
-                    <OrderItem item={order} />
-                  </ListItem>
-                );
+                return <OrderItem key={index} item={order} />;
               })}
           </List>
         </View>

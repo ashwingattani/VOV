@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Label, Text, Icon, Button} from 'native-base';
+import {Label, Text, Icon, Button, ListItem} from 'native-base';
 import Modal from 'react-native-modal';
 import OrderSummary from './OrderSummary';
 
@@ -13,16 +13,15 @@ function getDisplayFormatForDate(date) {
 export default OrderItem = (props) => {
   let [render, setRender] = useState(false);
   return (
-    <View style={styles.body}>
+    <ListItem
+      style={styles.body}
+      onPress={() => {
+        setRender(true);
+      }}>
       <Label>
         <Text> {getDisplayFormatForDate(new Date(props.item.date))} </Text>
       </Label>
-      <Icon
-        onPress={() => {
-          setRender(true);
-        }}
-        name="ios-arrow-forward"
-      />
+      <Icon name="ios-arrow-forward" />
       <Modal style={styles.modal} isVisible={render} transparent={true}>
         <OrderSummary
           items={props.item.items}
@@ -38,13 +37,12 @@ export default OrderItem = (props) => {
           <Text>Close</Text>
         </Button>
       </Modal>
-    </View>
+    </ListItem>
   );
 };
 
 const styles = StyleSheet.create({
   body: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
