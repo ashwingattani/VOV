@@ -177,106 +177,108 @@ class SignUp extends React.Component {
       <Root>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
-          <ScrollView style={styles.scrollview}>
-            <Item placeholderLabel>
-              <Label> Name </Label>
-              <Input
-                autoCapitalize="words"
-                autoCorrect={false}
-                onChangeText={(text) => {
-                  this.username = text;
-                }}
-              />
-            </Item>
-            <Item placeholderLabel>
-              <Label> Mobile Number </Label>
-              <Input
-                maxLength={10}
-                keyboardType="numeric"
-                onChangeText={(text) => {
-                  this.mobileNumber = text;
-                }}
-              />
-            </Item>
-            <Separator bordered>
-              <Text>Address</Text>
-            </Separator>
-            {userType == USER_TYPES.Consumer ? (
-              <View>
-                <Item placeholderLabel>
-                  <Label> House Number </Label>
-                  <Input
-                    placeholder="Wing/Flat No"
-                    autoCorrect={false}
-                    onChangeText={(text) => {
-                      this.address.houseNumber = text;
-                    }}
-                  />
-                </Item>
-                <Item placeholderLabel>
-                  <Label> House Name </Label>
-                  <Input
-                    autoCapitalize="words"
-                    autoCorrect={false}
-                    onChangeText={(text) => {
-                      this.address.houseName = text;
-                    }}
-                  />
-                </Item>
-                <Item placeholderLabel>
-                  <Label> Street </Label>
-                  <Input
-                    multiline={true}
-                    autoCorrect={false}
-                    style={{
-                      minHeight: 50,
-                      lineHeight: 17 * 1.5,
-                      paddingTop: 17 - 17 * 1.5,
-                      marginBottom: 17 * 0.5,
-                    }}
-                    onChangeText={(text) => {
-                      this.address.street = text;
-                    }}
-                  />
-                </Item>
-                <Item placeholderLabel>
-                  <Label> Pincode </Label>
-                  <Input
-                    keyboardType="numeric"
-                    maxLength={6}
-                    onChangeText={(text) => {
-                      this.address.pincode = text;
-                    }}
-                  />
-                </Item>
-              </View>
-            ) : (
-              <View>
-                <Item placeholderLabel>
-                  <Label> Shop Name </Label>
-                  <Input
-                    autoCapitalize="words"
-                    autoCorrect={false}
-                    onChangeText={(text) => {
-                      this.address.houseName = text;
-                    }}
-                  />
-                </Item>
-                <Item placeholderLabel>
-                  <Label> PinCode </Label>
-                  <Input
-                    keyboardType="numeric"
-                    maxLength={6}
-                    onChangeText={(text) => {
-                      this.address.pincode = text;
-                    }}
-                  />
-                </Item>
-              </View>
-            )}
-            <Button rounded style={styles.actions} onPress={this.signupUser}>
-              <Text>SignUp</Text>
-            </Button>
+          <ScrollView>
+            <View style={styles.container}>
+              <Item placeholderLabel>
+                <Label> Name </Label>
+                <Input
+                  autoCapitalize="words"
+                  autoCorrect={false}
+                  onChangeText={(text) => {
+                    this.username = text;
+                  }}
+                />
+              </Item>
+              <Item placeholderLabel>
+                <Label> Mobile Number </Label>
+                <Input
+                  maxLength={10}
+                  keyboardType="numeric"
+                  onChangeText={(text) => {
+                    this.mobileNumber = text;
+                  }}
+                />
+              </Item>
+              <Separator bordered>
+                <Text>Address</Text>
+              </Separator>
+              {userType == USER_TYPES.Consumer ? (
+                <View>
+                  <Item placeholderLabel>
+                    <Label> House Number </Label>
+                    <Input
+                      placeholder="Wing/Flat No"
+                      autoCorrect={false}
+                      onChangeText={(text) => {
+                        this.address.houseNumber = text;
+                      }}
+                    />
+                  </Item>
+                  <Item placeholderLabel>
+                    <Label> House Name </Label>
+                    <Input
+                      autoCapitalize="words"
+                      autoCorrect={false}
+                      onChangeText={(text) => {
+                        this.address.houseName = text;
+                      }}
+                    />
+                  </Item>
+                  <Item placeholderLabel>
+                    <Label> Street </Label>
+                    <Input
+                      multiline={true}
+                      autoCorrect={false}
+                      style={{
+                        minHeight: 50,
+                        lineHeight: 17 * 1.5,
+                        paddingTop: 17 - 17 * 1.5,
+                        marginBottom: 17 * 0.5,
+                      }}
+                      onChangeText={(text) => {
+                        this.address.street = text;
+                      }}
+                    />
+                  </Item>
+                  <Item placeholderLabel>
+                    <Label> Pincode </Label>
+                    <Input
+                      keyboardType="numeric"
+                      maxLength={6}
+                      onChangeText={(text) => {
+                        this.address.pincode = text;
+                      }}
+                    />
+                  </Item>
+                </View>
+              ) : (
+                <View>
+                  <Item placeholderLabel>
+                    <Label> Shop Name </Label>
+                    <Input
+                      autoCapitalize="words"
+                      autoCorrect={false}
+                      onChangeText={(text) => {
+                        this.address.houseName = text;
+                      }}
+                    />
+                  </Item>
+                  <Item placeholderLabel>
+                    <Label> PinCode </Label>
+                    <Input
+                      keyboardType="numeric"
+                      maxLength={6}
+                      onChangeText={(text) => {
+                        this.address.pincode = text;
+                      }}
+                    />
+                  </Item>
+                </View>
+              )}
+              <Button rounded style={styles.actions} onPress={this.signupUser}>
+                <Text>SignUp</Text>
+              </Button>
+            </View>
           </ScrollView>
           <Spinner
             visible={this.props.isLoading}
@@ -290,8 +292,8 @@ class SignUp extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  scrollview: {
-    height: '100%',
+  container: {
+    paddingBottom: 30,
   },
   actions: {
     top: 20,
