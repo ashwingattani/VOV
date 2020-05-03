@@ -45,7 +45,14 @@ class OrderList extends React.Component {
         <List>
           {params.orders.map((order, index) => {
             return (
-              <ListItem style={styles.listItem} key={index}>
+              <ListItem
+                style={styles.listItem}
+                key={index}
+                onPress={() => {
+                  this.props.navigation.navigate('Order Details', {
+                    order,
+                  });
+                }}>
                 <Label>
                   <Text> {order.customer.address.houseNumber} </Text>
                 </Label>
@@ -69,14 +76,7 @@ class OrderList extends React.Component {
                     style={{fontSize: 30, color: 'red'}}
                   />
                 </Button>
-                <Icon
-                  onPress={() => {
-                    this.props.navigation.navigate('Order Details', {
-                      order,
-                    });
-                  }}
-                  name="ios-arrow-forward"
-                />
+                <Icon name="ios-arrow-forward" />
               </ListItem>
             );
           })}

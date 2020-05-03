@@ -53,21 +53,21 @@ class SellerOrders extends React.Component {
             houseList.length > 0 &&
             houseList.map((houseName, index) => {
               return (
-                <ListItem style={styles.listItem} key={index}>
+                <ListItem
+                  style={styles.listItem}
+                  key={index}
+                  onPress={() => {
+                    this.props.navigation.navigate('Order List', {
+                      orders: this.state.orderHistory.filter(
+                        (order) =>
+                          order.customer.address.houseName === houseName,
+                      ),
+                    });
+                  }}>
                   <Label>
                     <Text> {houseName} </Text>
                   </Label>
-                  <Icon
-                    onPress={() => {
-                      this.props.navigation.navigate('Order List', {
-                        orders: this.state.orderHistory.filter(
-                          (order) =>
-                            order.customer.address.houseName === houseName,
-                        ),
-                      });
-                    }}
-                    name="ios-arrow-forward"
-                  />
+                  <Icon name="ios-arrow-forward" />
                 </ListItem>
               );
             })}

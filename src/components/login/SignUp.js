@@ -99,7 +99,7 @@ class SignUp extends React.Component {
   validateFields = () => {
     let isNameValid = REGEX.name.test(this.username);
     let isMobileNumberValid = REGEX.phone.test('+91' + this.mobileNumber);
-    let isHouseNumberValid = REGEX.houseNumber.test(this.address.houseNumber);
+    let isHouseNumberValid = REGEX.address.test(this.address.houseNumber);
     let isHouseNameValid = REGEX.address.test(this.address.houseName);
     let isStreetValid = REGEX.address.test(this.address.street);
     let isPinCodeValid = REGEX.pincode.test(this.address.pincode);
@@ -204,7 +204,7 @@ class SignUp extends React.Component {
               <Item placeholderLabel>
                 <Label> House Number </Label>
                 <Input
-                  placeholder="Eg. A-210 or AB-210"
+                  placeholder="Wing/Flat No"
                   autoCorrect={false}
                   onChangeText={(text) => {
                     this.address.houseNumber = text;
