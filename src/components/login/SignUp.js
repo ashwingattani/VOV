@@ -230,7 +230,6 @@ class SignUp extends React.Component {
                     autoCorrect={false}
                     style={{
                       minHeight: 50,
-                      fontSize: 17,
                       lineHeight: 17 * 1.5,
                       paddingTop: 17 - 17 * 1.5,
                       marginBottom: 17 * 0.5,
