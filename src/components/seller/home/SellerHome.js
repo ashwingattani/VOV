@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, SafeAreaView, StyleSheet} from 'react-native';
+import {View, SafeAreaView, StyleSheet, Alert} from 'react-native';
 import {
   Header,
   Title,
@@ -15,6 +15,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import {getOpenOrders} from '../../../actions/OrderActions';
 import {connect} from 'react-redux';
 import {showToast} from '../../../constants/utils';
+import messaging from '@react-native-firebase/messaging';
 
 class SellerHome extends React.Component {
   constructor() {
@@ -32,6 +33,9 @@ class SellerHome extends React.Component {
     if (this.state.currentOrders.length == 0) {
       this.props.getOpenOrders(this.props.user);
     }
+    messaging()
+      .subscribeToTopic('new-order')
+      .then(() => console.log('Subscribed to topic!'));
   }
 
   componentDidUpdate(prevProps) {

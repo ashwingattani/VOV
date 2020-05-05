@@ -11,8 +11,9 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.7",
-    "@react-native-firebase/app": "^6.4.0",
+    "@react-native-firebase/app": "^6.7.1",
     "@react-native-firebase/auth": "^6.7.1",
+    "@react-native-firebase/messaging": "^6.7.1",
     "axios": "^0.19.2",
     "jetifier": "^1.6.5",
     "native-base": "^2.13.12",
